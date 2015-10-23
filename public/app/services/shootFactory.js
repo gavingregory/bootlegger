@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-  .factory('shootsFactory', function ($http) {
+  .factory('shootFactory', function ($http) {
     var factory = {};
 
     factory.getShoots = function () {

@@ -1,12 +1,12 @@
 angular.module('bootleggerApp')
-.controller('shootsController', function ($scope, $log, shootsFactory, appSettings, $localstorage) {
+.controller('shootsController', function ($scope, $log, shootFactory, appSettings, $localstorage) {
   $scope.sortBy = 'name';
   $scope.reverse = false;
   $scope.shoots = [];
   $scope.appSettings = appSettings;
 
   function init() {
-      shootsFactory.getShoots()
+      shootFactory.getShoots()
         .success(function (shoots) {
           $scope.shoots = shoots;
         })

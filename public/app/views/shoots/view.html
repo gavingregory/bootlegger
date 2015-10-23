@@ -1,4 +1,4 @@
-<h2>Shoots</h2>
+<h2>Shoot</h2>
 <div>
   <p>
     Filter: <input type="text" ng-model="shootFilter" />
@@ -18,9 +18,21 @@
       <video id="video" width="320" height="240" controls></video>
   </div>
 </div>
-
 <span>Total Shots: {{ shots.length }}</span>
-
+<div class="row-fluid">
+  <table class="table table-striped">
+    <thead>
+      <tr><td>Task ID</td><td>Name</td><td>Running?</td></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="task in tasks">
+        <td>{{ task._id }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.running }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <footer>
   Version: {{appSettings.version}}
 </footer>

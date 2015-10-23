@@ -1,18 +1,33 @@
 angular.module('bootleggerApp')
-.controller('shootController', function ($scope, $log, shootsFactory, appSettings, $localstorage, $routeParams) {
+.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, appSettings, $localstorage, $routeParams) {
   $scope.sortBy = 'name';
   $scope.reverse = false;
   $scope.shoot = [];
   $scope.appSettings = appSettings;
-
+  $scope.taskTemplates = [];
+  $scope.tasks = [];
   function init() {
-      shootsFactory.getShoot($routeParams.id)
-        .success(function (shoot) {
-          $scope.shoot = shoot;
-        })
-        .error(function (data, status, headers, config) {
-          $log.log(data.error + ' ' + status);
-        });
+    taskFactory.getTasks($routeParams.id)
+      .success(function (tasks) {
+        $scope.tasks = tasks;
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.error + ' ' + status);
+      });
+    taskTemplateFactory.getTemplates()
+      .success(function (templates) {
+        $scope.taskTemplates = templates;
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.error + ' ' + status);
+      });
+    shootFactory.getShoot($routeParams.id)
+      .success(function (shoot) {
+        $scope.shoot = shoot;
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.error + ' ' + status);
+      });
   };
 
   $scope.play = function (url) {
