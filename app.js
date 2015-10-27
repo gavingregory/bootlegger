@@ -37,6 +37,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+app.get('/dbseed', function (req, res) {
+    var seed = require('./src/config/seed');
+    seed.seed();
+    return res.send('successful');
+});
+
 app.use('/api/v1/tasks', tasks);
 app.use('/api/v1/task-templates', taskTemplates);
 
