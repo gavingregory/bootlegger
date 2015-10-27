@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-  .factory('$localstorage', function ($window) {
+  .factory('localStorage', function ($window) {
     var factory = {};
     factory.set = function(key, value) {
       $window.localStorage[key] = value;

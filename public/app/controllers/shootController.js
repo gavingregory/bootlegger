@@ -1,11 +1,12 @@
 angular.module('bootleggerApp')
-.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, appSettings, $localstorage, $routeParams) {
+.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, localStorage, $routeParams) {
   $scope.sortBy = 'name';
   $scope.reverse = false;
   $scope.shoot = [];
-  $scope.appSettings = appSettings;
   $scope.taskTemplates = [];
   $scope.tasks = [];
+  $scope.loading = 3; // 3 http requests to load!
+
   function init() {
     taskFactory.getTasks($routeParams.id)
       .success(function (tasks) {
@@ -13,6 +14,9 @@ angular.module('bootleggerApp')
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);
+      })
+      .finally(function () {
+        $scope.loading--;
       });
     taskTemplateFactory.getTemplates()
       .success(function (templates) {
@@ -20,6 +24,9 @@ angular.module('bootleggerApp')
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);
+      })
+      .finally(function () {
+        $scope.loading--;
       });
     shootFactory.getShoot($routeParams.id)
       .success(function (shoot) {
@@ -27,8 +34,13 @@ angular.module('bootleggerApp')
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);
+      })
+      .finally(function () {
+        $scope.loading--;
       });
   };
+
+  init();
 
   $scope.play = function (url) {
     var myVideo = document.getElementsByTagName('video')[0];
@@ -41,8 +53,6 @@ angular.module('bootleggerApp')
     // video.load();
     // video.play();
   };
-
-  init();
 
   $scope.doSort = function (colName) {
     $scope.sortBy = colName;

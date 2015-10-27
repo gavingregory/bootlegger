@@ -1,9 +1,9 @@
 angular.module('bootleggerApp')
-.controller('shootsController', function ($scope, $log, shootFactory, appSettings, $localstorage) {
+.controller('shootsController', function ($scope, $log, shootFactory, localStorage) {
   $scope.sortBy = 'name';
   $scope.reverse = false;
   $scope.shoots = [];
-  $scope.appSettings = appSettings;
+  $scope.loading = true;
 
   function init() {
       shootFactory.getShoots()
@@ -12,6 +12,9 @@ angular.module('bootleggerApp')
         })
         .error(function (data, status, headers, config) {
           $log.log(data.error + ' ' + status);
+        })
+        .finally(function () {
+          $scope.loading = false;
         });
   };
 
