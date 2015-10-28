@@ -1,12 +1,13 @@
 angular.module('bootleggerApp')
 .controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, localStorage, $routeParams) {
   $scope.sortBy = 'name';
+  $scope.eventId = $routeParams.id;
   $scope.reverse = false;
   $scope.shoot = [];
   $scope.taskTemplates = [];
   $scope.tasks = [];
   $scope.loading = 3; // 3 http requests to load!
-
+  $scope.totalLength = Date();
   function init() {
     taskFactory.getTasks($routeParams.id)
       .success(function (tasks) {
@@ -31,6 +32,9 @@ angular.module('bootleggerApp')
     shootFactory.getShoot($routeParams.id)
       .success(function (shoot) {
         $scope.shoot = shoot;
+        $scope.shoot.forEach(function (s) {
+          $scope.totalLength = $scope.totalLength + Date(s.meta.static_meta.clip_length);
+        });
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);

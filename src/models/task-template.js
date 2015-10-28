@@ -1,4 +1,5 @@
-var mongoose = require('mongoose')
+var restful  = require('node-restful')
+  , mongoose = restful.mongoose
   , Schema   = mongoose.Schema
 
 var schema = Schema({
@@ -22,6 +23,6 @@ schema.pre('save', function (next) {
 });
 
 module.exports = {
-  model: mongoose.model('TaskTemplate', schema),
+  model: restful.model('tasktemplate', schema),
   schema: schema
 }

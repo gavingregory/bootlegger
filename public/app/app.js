@@ -12,17 +12,17 @@ angular.module('bootleggerApp')
       controller: 'loginController',
       template: '<div></div>'
     })
-    .when('/loginSuccess', {
-      controller:'loginSuccessController',
-      template: '<div></div>'
-    })
     .when('/shoots',{
-        controller: 'shootsController',
-        templateUrl: '/app/views/shoots/list.html'
+      controller: 'shootsController',
+      templateUrl: '/app/views/shoots/list.html'
     })
     .when('/shoots/:id',{
-        controller: 'shootController',
-        templateUrl: '/app/views/shoots/view.html'
+      controller: 'shootController',
+      templateUrl: '/app/views/shoots/view.html'
+    })
+    .when('/shoots/:id/task/create', {
+      controller: 'taskCreateController',
+      templateUrl: '/app/views/tasks/create.html'
     })
     .when('/orders/:customerId',{
         controller: 'ordersController',

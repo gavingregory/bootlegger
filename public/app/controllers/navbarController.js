@@ -18,15 +18,13 @@ angular.module('bootleggerApp')
       if (resp.session) {
        $scope.loggedIn = true;
        $cookies.put('sessionid', resp.session);
-       console.log('session exists!');
-     } else {
-       console.log('uhhh')
+       authFactory.profile()
+         .success(function(me){
+           $scope.me = me;
+         });
      }
     })
     .error(function (data, status, headers, config) {
       $log.log(data.error + ' ' + status);
-    })
-    .finally(function () {
-      $log.log('finally');
     });
 });

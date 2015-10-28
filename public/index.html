@@ -2,17 +2,20 @@
 <html ng-app="bootleggerApp">
 <head>
   <title>AngularJS App</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/moment/min/moment.min.js"></script>
+  <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
   <script src="app/app.js"></script>
   <script src="app/controllers/navbarController.js"></script>
   <script src="app/controllers/indexController.js"></script>
   <script src="app/controllers/loginController.js"></script>
-  <script src="app/controllers/loginSuccessController.js"></script>
+  <script src="app/controllers/taskCreateController.js"></script>
   <script src="app/controllers/shootController.js"></script>
   <script src="app/controllers/shootsController.js"></script>
   <script src="app/services/taskFactory.js"></script>
@@ -21,14 +24,13 @@
   <script src="app/services/authFactory.js"></script>
   <script src="app/services/localStorage.js"></script>
   <script src="app/services/values.js"></script>
-  <script src="js/jquery-1.11.3.js"></script>
-  <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
   <div id="menu" class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="navbarController">
     <div class="container-fluid">
         <div class="navbar-header"><a class="navbar-brand" href="#">bootlegger</a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
             </button>
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
@@ -39,6 +41,10 @@
                 </li>
                 <li ng-show="loggedIn"><a href="#" ng-click="logout()">Logout</a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <p ng-show="loggedIn" class="navbar-text">Welcome, {{me.profile.displayName}}</p>
+              <li ng-show="loggedIn"><a class="navbar-brand" href="#"><span class="glyphicon glyphicon-cog"></span></a></li>
             </ul>
         </div>
     </div>

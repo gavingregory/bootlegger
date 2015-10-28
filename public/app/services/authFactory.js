@@ -20,6 +20,10 @@ angular.module('bootleggerApp')
       return $http.get('/api/v1/auth/session');
     };
 
+    factory.profile = function () {
+      return $http.get('http://localhost:1337/api/profile/me?apikey='+apikey);
+    }
+
     return factory;
 
   });

@@ -4,7 +4,7 @@ var express = require('express')
   , Task = require('../models/task');
 
 var Resource = router.resource = restful.model('task', Task.schema)
-    .methods(['get', 'post', 'put', 'delete']);
+    .methods(['get', 'post', 'put']);
 
 Resource.register(router, '/');
 

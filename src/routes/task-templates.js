@@ -3,9 +3,9 @@ var express = require('express')
   , restful = require('node-restful')
   , TaskTemplate = require('../models/task-template');
 
-var Resource = router.resource = restful.model('task-template', TaskTemplate.schema)
-    .methods(['get', 'post', 'put', 'delete']);
-
+var Resource = router.resource = restful.model('tasktemplate', TaskTemplate.schema)
+    .methods(['get', 'post', 'put']);
+    
 Resource.register(router, '/');
 
 module.exports = router;
