@@ -1,22 +1,32 @@
 angular.module('bootleggerApp')
-.controller('navbarController', function ($scope, $cookies) {
+.controller('navbarController', function ($scope, $cookies, authFactory) {
   $scope.loggedIn = false;
-  var sessionId = $cookies.get("sails.sid");
-  if (typeof sessionId === "undefined") {
-    $scope.loggedIn = true;
-    console.log('undefined!');
-  } else {
-    $scope.loggedIn = false;
-    console.log('defined?');
-  }
+
   $scope.logout = function () {
-    $cookies.remove("sails.sid");
-    $scope.loggedIn = false;
+    authFactory.logout()
+      .success(function () {
+        $scope.loggedIn = false;
+        $cookies.remove('sessionid');
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.error + ' ' + status);
+      });
   };
-  $scope.test = function () {
-    $cookies.put('test', 'test');
-    $cookies.put("test.test", 'test');
-    console.log('test' + $cookies.get('test'));
-    console.log('dbl: ' + $cookies.get("test.test"));
-  };
+
+  authFactory.isAuthenticated()
+    .success(function (resp) {
+      if (resp.session) {
+       $scope.loggedIn = true;
+       $cookies.put('sessionid', resp.session);
+       console.log('session exists!');
+     } else {
+       console.log('uhhh')
+     }
+    })
+    .error(function (data, status, headers, config) {
+      $log.log(data.error + ' ' + status);
+    })
+    .finally(function () {
+      $log.log('finally');
+    });
 });

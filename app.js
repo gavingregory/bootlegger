@@ -8,19 +8,23 @@ var express = require('express')
   , db = require('./src/config/db')
   , bodyParser = require('body-parser')
   , mongoose = require('mongoose')
-  , swig = require('swig');
-
-var routes = require('./src/routes/index')
+  , session = require('express-session')
+  , swig = require('swig')
+  , routes = require('./src/routes/index')
+  , auth = require('./src/routes/auth')
   , tasks = require('./src/routes/tasks')
-  , taskTemplates = require('./src/routes/task-templates');
-
-var app = express();
+  , taskTemplates = require('./src/routes/task-templates')
+  , app = express();
 
 // database
 mongoose.connect(db.url, function (err) {
   if (err) {console.log(err);}
   else {console.log('Successfully connected to the mongo database');}
 });
+
+app.use(session({
+  secret: 'lkashdklajsdklajsdkljaskldjaklsdjaklsjd'
+}));
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -44,6 +48,7 @@ app.get('/dbseed', function (req, res) {
     return res.send('successful');
 });
 
+app.use('/api/v1/auth', auth);
 app.use('/api/v1/tasks', tasks);
 app.use('/api/v1/task-templates', taskTemplates);
 

@@ -1,39 +1,67 @@
-<h2>Shoot</h2>
+<div class="row-fluid">
+  <div class="span12">
+    <!-- Main Page Heading -->
+    <h2>Shoot</h2>
+    <div class="loader" ng-show="loading">Loading...</div>
 
-<div class="loader" ng-show="loading">Loading...</div>
-<div ng-hide="loading">
-  <div>
-    <p>
-      Filter: <input type="text" ng-model="shootFilter" />
-    </p>
+    <div class="row-fluid">
+      <div class="span8">
+        <!-- Results Panel (left hand side) -->
+        <div class="row-fluid">
+          <div class="span4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse">
+            <a href="" ng-click="play(shot.lowres)">
+              <img src="{{ shot.thumb }}" height="75"  width="100" />
+            </a>
+            <span>{{shot.user.profile.displayName}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <!-- Control Panel (right hand side) -->
+        <div class="row-fluid">
+          <div class="span12">
+            <p>
+              Filter: <input type="text" ng-model="shootFilter" />
+            </p>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span12">
+            <table class="table table-striped">
+              <thead>
+                <tr><td>Task ID</td><td>Name</td><td>Running?</td></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="task in tasks">
+                  <td>{{ task._id }}</td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.running }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span12">
+            <h3>Video player:</h3>
+            <video id="video" width="320" height="240" controls></video>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+
+<div ng-hide="loading">
+
 
   <div class="row-fluid">
-    <div class="col-md-3" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse">
-      <a href="" ng-click="play(shot.lowres)">
-        <img src="{{ shot.thumb }}" height="75"  width="100" />
-      </a>
-      <span>{{shot.user.profile.displayName}}</span>
-    </div>
 
-    <div class="col-xs-6 col-md-4">
-        <h3>Video player:</h3>
-        <video id="video" width="320" height="240" controls></video>
-    </div>
+
+
   </div>
   <span>Total Shots: {{ shots.length }}</span>
-  <div class="row-fluid">
-    <table class="table table-striped">
-      <thead>
-        <tr><td>Task ID</td><td>Name</td><td>Running?</td></tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="task in tasks">
-          <td>{{ task._id }}</td>
-          <td>{{ task.name }}</td>
-          <td>{{ task.running }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
 </div>
