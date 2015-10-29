@@ -7,7 +7,7 @@ angular.module('bootleggerApp')
   $scope.taskTemplates = [];
   $scope.tasks = [];
   $scope.loading = 3; // 3 http requests to load!
-  $scope.totalLength = Date();
+  $scope.totalLength = moment.duration();
   function init() {
     taskFactory.getTasks($routeParams.id)
       .success(function (tasks) {
@@ -33,7 +33,8 @@ angular.module('bootleggerApp')
       .success(function (shoot) {
         $scope.shoot = shoot;
         $scope.shoot.forEach(function (s) {
-          $scope.totalLength = $scope.totalLength + Date(s.meta.static_meta.clip_length);
+          var time = moment.duration(s.meta.static_meta.clip_length, "HH:MM:SS.SSSS");
+          $scope.totalLength.add(time);
         });
       })
       .error(function (data, status, headers, config) {
