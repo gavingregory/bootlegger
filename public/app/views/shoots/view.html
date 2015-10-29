@@ -8,7 +8,7 @@
         <!-- Results Panel (left hand side) -->
         <div class="row">
           <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse">
-            <a href="" ng-click="play(shot.lowres)">
+            <a href="" ng-click="play(shot.lowres, shot.id)">
               <img src="{{ shot.thumb }}" height="75"  width="100" />
             </a>
             <span>{{shot.user.profile.displayName}}</span>
@@ -50,9 +50,32 @@
           </div>
         </div>
         <div class="row">
-          <h3>Statistics:</h3>
-          Total Shots: {{ shoot.length }}<br />
-          Total Footage Length: {{totalLength.humanize()}}<br />
+          <div class="col-md-12">
+            <h3>meta</h3>
+            <p>
+              {{meta| json}}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h3>Statistics:</h3>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>total shoots:</td>
+                  <td>{{shoot.length}}</td>
+                </tr>
+                <tr>
+                  <td>total shoot length:</td>
+                  <td>{{totalLength.humanize()}}</td>
+                </tr>
+                <tr>
+                  <td>cameraperson:</td><td>{{meta.user.profile.displayName}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
