@@ -6,11 +6,12 @@ var schema = Schema({
   creator		: { type: String, required: true  },
   name          : { type: String, required: true  },
   description   : { type: String, required: true  },
-  imageUrl      : { type: String, required: true  },
+  imageurl      : { type: String, required: true  },
   created 		: { type: Date, default: Date.now },
   updated		: { type: Date, default: Date.now },
-  refImageReq   : { type: Boolean, default: true  },
-  showVideo     : { type: Boolean, default: true  }
+  imagereq   : { type: Boolean, default: true  },
+  showvideo     : { type: Boolean, default: true  },
+  validationreq : { type: Boolean, default: true  }
 });
 
 schema.pre('save', function (next) {

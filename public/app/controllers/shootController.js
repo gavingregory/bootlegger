@@ -8,6 +8,8 @@ angular.module('bootleggerApp')
   $scope.tasks = [];
   $scope.loading = 3; // 3 http requests to load!
   $scope.totalLength = moment.duration();
+  $scope.meta = 'No video selected';
+
   function init() {
     taskFactory.getTasks($routeParams.id)
       .success(function (tasks) {

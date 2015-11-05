@@ -1,3 +1,3 @@
 module.exports = {
-  'url' : 'mongodb://localhost/bootleggerclient'
+  'url' : 'mongodb://localhost/bl'
 }

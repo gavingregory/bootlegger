@@ -6,9 +6,10 @@ module.exports = {
         t.creator = 'Gavin Gregory';
         t.name = 'Verify';
         t.description = 'Verify meta-data obtained through normal bootlegger channels ...';
-        t.imageUrl = 'img/template1.png';
-        t.refImageReq = true;
-        t.showVideo = true;
+        t.imageurl = 'img/template1.png';
+        t.imagereq = true;
+        t.showvideo = true;
+        t.validationreq = true;
         t.save(function (err) {
             if (err)    console.log(err);
         });
@@ -16,9 +17,10 @@ module.exports = {
         t2.creator = 'Gavin Gregory';
         t2.name = 'Add';
         t2.description = 'Add meta-data to a shoot by asking operators to tag items they see in the reference images you supply.';
-        t2.imageUrl = 'img/template2.png';
-        t2.refImageReq = true;
-        t2.showVideo = true;
+        t2.imageurl = 'img/template2.png';
+        t2.imagereq = true;
+        t2.showvideo = true;
+        t.validationreq = true;
         t2.save(function (err) {
             if (err) console.log(err);
         });
@@ -26,9 +28,10 @@ module.exports = {
         t3.creator = 'Gavin Gregory';
         t3.name = 'Quality';
         t3.description = 'Verify quality of audio and video.';
-        t3.imageUrl = 'img/template3.png';
-        t3.refImageReq = false;
-        t3.showVideo = true;
+        t3.imageurl = 'img/template3.png';
+        t3.imagereq = false;
+        t3.showvideo = true;
+        t.validationreq = true;
         t3.save(function (err) {
             if (err) console.log(err);
         });
@@ -36,8 +39,9 @@ module.exports = {
         t4.creator = 'Gavin Gregory';
         t4.name = 'Subjective';
         t4.description = 'Ask operators to tag videos with subjective meta-data. Questions such as do you find this video funny?';
-        t4.imageUrl = 'img/template4.png';
-        t4.showVideo = true;
+        t4.imageurl = 'img/template4.png';
+        t4.showvideo = true;
+        t.validationreq = true;
         t4.save(function (err) {
             if (err) console.log(err);
         });

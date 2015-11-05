@@ -15,11 +15,13 @@ var schema = Schema({
   running       : { type: Boolean, default: false, required: true },
   ref_images    : [{ url: {type: String, required: true} }],
   instructions  : { type: String, required: true  },
-  jobs          : { type: Number, required: true  }, /* number of jobs to generate */
-  completed     : { type: Number, default: 0 },      /* completed number of jobs */
+  job_count     : { type: Number, required: true  }, /* number of jobs to generate */
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */
-  tokens        : [{
-      token: {type: String},
+  jobs          : [{
+      id: {type: String},
+      video_id: { type: String, required: true },
+      start: { type: Number, required: true },
+      finish: { type: Number, required: true },
       issued_to: {type: String},
       completed_at: {type: Date},
       result: {type: String}
