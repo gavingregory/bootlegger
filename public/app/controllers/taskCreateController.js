@@ -10,8 +10,8 @@ angular.module('bootleggerApp')
   // the form data
   $scope.formData = angular.copy(initialTask);
 
-  // templates array (filled in from factory below)
-  $scope.templates = [];
+  // template (filled in from factory below)
+  $scope.template = {};
 
   $scope.uploader = new FileUploader({
     url: '/api/v1/fileupload/', //TODO: change this url, or create it
@@ -27,16 +27,16 @@ angular.module('bootleggerApp')
     selectedTemplate = data;
   }
 
-  taskTemplateFactory.getTemplates()
+  taskTemplateFactory.getTemplate($routeParams.templateid)
     .success(function (data) {
-      $scope.templates = data;
+      $scope.template = data;
     })
     .error(function (data, status, headers, config) {
       $log.log(data.error + ' ' + status);
     });
 
   $scope.reset = function () {
-    $scope.task = angular.copy(initialTask);
+    $scope.formData = angular.copy(initialTask);
   }
 
   $scope.submit = function (task) {

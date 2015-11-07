@@ -13,23 +13,23 @@
 #menu.navbar-default .navbar-nav>li>a:hover,
 #menu.navbar-default .navbar-nav>li>a:focus {
     color: rgba(85, 85, 85, 1);
-    background-color: rgba(86, 168, 90, 1);
+    background-color: rgba(39, 129, 106, 1);
 }
 #menu.navbar-default .navbar-nav>.active>a,
 #menu.navbar-default .navbar-nav>.active>a:hover,
 #menu.navbar-default .navbar-nav>.active>a:focus {
     color: rgba(85, 85, 85, 1);
-    background-color: rgba(86, 168, 90, 1);
+    background-color: rgba(39, 129, 106, 1);
 }
 #menu.navbar-default .navbar-toggle {
-    border-color: #56a85a;
+    border-color: rgba(39, 129, 106, 1);
 }
 #menu.navbar-default .navbar-toggle:hover,
 #menu.navbar-default .navbar-toggle:focus {
-    background-color: #56a85a;
+    background-color: rgba(39, 129, 106, 1);
 }
 #menu.navbar-default .navbar-toggle .icon-bar {
-    background-color: #56a85a;
+    background-color: rgba(39, 129, 106, 1);
 }
 #menu.navbar-default .navbar-toggle:hover .icon-bar,
 #menu.navbar-default .navbar-toggle:focus .icon-bar {

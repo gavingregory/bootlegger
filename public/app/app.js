@@ -21,6 +21,10 @@ angular.module('bootleggerApp')
       templateUrl: '/app/views/shoots/view.html'
     })
     .when('/shoots/:id/task/create', {
+      controller: 'selectTemplateController',
+      templateUrl: '/app/views/tasks/selectTemplate.html'
+    })
+    .when('/shoots/:id/task/create/:templateid', {
       controller: 'taskCreateController',
       templateUrl: '/app/views/tasks/create.html'
     })

@@ -1,0 +1,13 @@
+<h2>Select a Template</h2>
+<div class="row">
+  <div class="col-sm-6 col-md-3" ng-repeat="template in templates | orderBy : 'name'">
+    <div class="thumbnail">
+      <img class="img-rounded" src="{{template.imageurl}}">
+      <div class="caption text-center">
+        <h3>{{template.name}}</h3>
+        <p>{{template.description}}</p>
+        <p><a href="#/shoots/{{$parent.shootId}}/task/create/{{template._id}}" class="btn btn-warning" role="button">Select</a></p>
+      </div>
+    </div>
+  </div>
+</div>

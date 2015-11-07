@@ -10,10 +10,9 @@ var express = require('express')
   , mongoose = require('mongoose')
   , session = require('express-session')
   , swig = require('swig')
-  , routes = require('./src/routes/index')
-  , auth = require('./src/routes/auth')
-  , tasks = require('./src/routes/tasks')
-  , taskTemplates = require('./src/routes/task-templates')
+  , indexRoute = require('./src/routes/index')
+  , apiRoute = require('./src/routes/api')
+  , seed = require('./src/config/seed')
   , app = express();
 
 // database
@@ -40,17 +39,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-
+// Routes
+app.use('/', indexRoute);
 app.get('/dbseed', function (req, res) {
-    var seed = require('./src/config/seed');
     seed.seed();
     return res.send('successful');
 });
-
-app.use('/api/v1/auth', auth);
-app.use('/api/v1/tasks', tasks);
-app.use('/api/v1/task-templates', taskTemplates);
+app.use('/api/v1', apiRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

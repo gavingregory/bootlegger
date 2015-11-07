@@ -1,55 +1,36 @@
-<h2>Create a Task</h2>
+<h2>Create a {{template.name}} Task</h2>
 <form name="taskForm">
-  <div class="row">
-    <div class="col-md-12">
-      <h3>#1: Choose a Template</h3>
-      <div class="form-group">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <td>name</td>
-              <td>description</td>
-              <td>select</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="template in templates">
-              <td>{{template.name}}</td>
-              <td>{{template.description}}</td>
-              <td><input type="radio" ng-model="$parent.selectedTemplate" name="name" value="{{$index}}" required /> </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 
   <div class="row">
-    <h3>#2: Enter Task Details</h3>
+    <h3>Enter Task Details</h3>
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <div class="form-group">
-        <label for="task.name">Task Name</label>
-        <input type="text" class="form-control" id="task.name" placeholder="Name" ng-model="task.name" required>
+        <label for="formData.name">Task Name</label>
+        <input type="text" class="form-control" id="formData.name" placeholder="Name" ng-model="formData.name" required>
       </div>
       <div class="form-group">
-        <label for="task.instructions">Instructions</label>
-        <textarea class="form-control" id="task.instructions" rows="3" ng-model="task.instructions" placeholder="Enter instructions for operators" required></textarea>
+        <label for="formData.instructions">Instructions</label>
+        <textarea class="form-control" id="formData.instructions" rows="3" ng-model="formData.instructions" placeholder="Enter instructions for operators" required></textarea>
       </div>
-
+      <div class="form-group">
+        dd
+      </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
+      <h4>Preview</h4>
+      
         <div class="form-group">
-          <label for="task.jobs">Task Jobs</label>
-          <input type="range" class="form-control" id="task.jobs" ng-model="task.jobs" min="1" max="1000" value="100" required />
-          <div>{{task.jobs}}</div>
+          <label for="formData.jobs">Task Jobs</label>
+          <input type="range" class="form-control" id="formData.jobs" ng-model="formData.jobs" min="1" max="1000" value="100" required />
+          <div>{{formData.jobs}}</div>
         </div>
 
         <div class="form-group">
-          <label for="task.passes">Task Passes</label>
-          <input type="range" class="form-control" id="task.passes" ng-model="task.passes" min="1" max="5" value="1" required />
-          <div>{{task.passes}}</div>
+          <label for="formData.passes">Task Passes</label>
+          <input type="range" class="form-control" id="formData.passes" ng-model="formData.passes" min="1" max="5" value="1" required />
+          <div>{{formData.passes}}</div>
         </div>
 
         <div class="form-group" ng-show="templates[selectedTemplate].imagereq">
@@ -66,4 +47,5 @@
   </div>
   <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
   <button type="submit" class="btn btn-primary" ng-click="submit(task)" ng-disabled="taskForm.$invalid">Submit</button>
+
 </form>

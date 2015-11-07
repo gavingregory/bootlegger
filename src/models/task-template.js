@@ -11,7 +11,9 @@ var schema = Schema({
   updated		: { type: Date, default: Date.now },
   imagereq   : { type: Boolean, default: true  },
   showvideo     : { type: Boolean, default: true  },
-  validationreq : { type: Boolean, default: true  }
+  validationreq : { type: Boolean, default: true  },
+  metatype      : { type: String, required: true }, // static_meta/timed_meta
+  metafield     : { type: String, required: true }
 });
 
 schema.pre('save', function (next) {
