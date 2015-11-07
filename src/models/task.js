@@ -5,10 +5,7 @@ var restful  = require('node-restful')
 var schema = Schema({
   creator		    : { type: String, required: true  },
   name          : { type: String, required: true  },
-  shoot         : {
-      name  : { type: String, required: true  },
-      id    : { type: String, required: true  }
-  },
+  shoot_id      : { type: String, required: true  },
   template_id   : { type: Schema.Types.ObjectId, ref: 'TaskTemplate', required: true },
   created 		  : { type: Date, default: Date.now },
   updated		    : { type: Date, default: Date.now },
@@ -17,6 +14,7 @@ var schema = Schema({
   instructions  : { type: String, required: true  },
   job_count     : { type: Number, required: true  }, /* number of jobs to generate */
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */
+  segment_size : { type: Number, required: true },   /* size (in seconds) of desired segment */
   jobs          : [{
       id: {type: String},
       video_id: { type: String, required: true },
@@ -25,7 +23,10 @@ var schema = Schema({
       issued_to: {type: String},
       completed_at: {type: Date},
       result: {type: String}
-  }]
+  }],
+  meta_object  : { type: String, required: true },
+  meta_key     : { type: String, required: true },
+  meta_value   : [{ type: String, required: true }]
 });
 
 schema.pre('save', function (next) {

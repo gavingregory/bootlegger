@@ -1,10 +1,14 @@
 angular.module('bootleggerApp')
-.controller('taskCreateController', function ($scope, $log, taskTemplateFactory, taskFactory, localStorage, $routeParams, FileUploader) {
+.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, localStorage, $routeParams, FileUploader) {
 
   // the initial state, used for reset
   var initialTask = {
-    jobs: 50,
-    passes: 1
+    job_count: 50,
+    passes: 1,
+    segment_size: 15,
+    creator: localStorage.getObject('me').profile.displayName,
+    shoot_id: $routeParams.id,
+    template_id: $routeParams.templateid
   };
 
   // the form data
@@ -23,22 +27,23 @@ angular.module('bootleggerApp')
     //item.formData.push({title: $scope.formData.title });
   });
 
-  $scope.templateChanged = function (data) {
-    selectedTemplate = data;
-  }
-
+  // load template
   taskTemplateFactory.getTemplate($routeParams.templateid)
     .success(function (data) {
       $scope.template = data;
+      $scope.formData.meta_object = data.meta_object;
+      $scope.formData.meta_key = data.meta_key;
     })
     .error(function (data, status, headers, config) {
-      $log.log(data.error + ' ' + status);
+      $log.log(data.errors + ' ' + status);
     });
 
+  // reset form
   $scope.reset = function () {
     $scope.formData = angular.copy(initialTask);
   }
 
+  // submit form
   $scope.submit = function (task) {
     // upload the files in fileloader
     taskFactory.createTask(task)
@@ -46,7 +51,7 @@ angular.module('bootleggerApp')
         console.log(data);
       })
       .error(function (data, status, headers, config) {
-        $log.log(data.error + ' ' + status);
+        $log.log(data.errors + ' ' + status);
       });
   };
 

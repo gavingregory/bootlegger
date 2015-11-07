@@ -4,7 +4,5 @@ angular.module('bootleggerApp')
   function init() {
     authFactory.setApiKey();
   }
-  console.log($cookies.get('sails.sid'));
-
   init();
 });

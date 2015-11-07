@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('navbarController', function ($scope, $cookies, $log, authFactory) {
+.controller('navbarController', function ($scope, $cookies, $log, authFactory, localStorage) {
   $scope.loggedIn = false;
 
   $scope.logout = function () {
@@ -21,6 +21,7 @@ angular.module('bootleggerApp')
        authFactory.profile()
          .success(function(me){
            $scope.me = me;
+           localStorage.setObject('me', me);
          });
      }
     })

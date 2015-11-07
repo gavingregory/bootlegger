@@ -10,8 +10,8 @@ module.exports = {
         t.imagereq = true;
         t.showvideo = true;
         t.validationreq = true;
-        t.metatype = 'static_meta';
-        t.metafield = 'validation';
+        t.meta_object = 'static_meta';
+        t.meta_key = 'validation';
         t.save(function (err) {
             if (err)    console.log(err);
         });
@@ -23,8 +23,8 @@ module.exports = {
         t2.imagereq = true;
         t2.showvideo = true;
         t2.validationreq = true;
-        t2.metatype = 'static_meta';
-        t2.metafield = 'things_found';
+        t2.meta_object = 'found_entity';
+        t2.meta_key = 'tags';
         t2.save(function (err) {
             if (err) console.log(err);
         });
@@ -36,8 +36,8 @@ module.exports = {
         t3.imagereq = false;
         t3.showvideo = true;
         t3.validationreq = true;
-        t3.metatype = 'static_meta';
-        t3.metafield = 'subjective';
+        t3.meta_object = 'static_meta';
+        t3.meta_key = 'subjective';
         t3.save(function (err) {
             if (err) console.log(err);
         });
@@ -48,8 +48,8 @@ module.exports = {
         t4.imageurl = 'img/hand/256x256/user-woman.png';
         t4.showvideo = true;
         t.validationreq = true;
-        t4.metatype = 'static_meta';
-        t4.metafield = 'subjective';
+        t4.meta_object = 'static_meta';
+        t4.meta_key = 'subjective';
         t4.save(function (err) {
             if (err) console.log(err);
         });

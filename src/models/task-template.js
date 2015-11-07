@@ -12,8 +12,8 @@ var schema = Schema({
   imagereq   : { type: Boolean, default: true  },
   showvideo     : { type: Boolean, default: true  },
   validationreq : { type: Boolean, default: true  },
-  metatype      : { type: String, required: true }, // static_meta/timed_meta
-  metafield     : { type: String, required: true }
+  meta_object   : { type: String, required: true }, // 'found_entity: [{}]'
+  meta_key     : { type: String, required: true }
 });
 
 schema.pre('save', function (next) {
