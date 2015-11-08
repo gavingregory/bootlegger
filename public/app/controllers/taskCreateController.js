@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, localStorage, $routeParams, FileUploader) {
+.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, localStorage, $routeParams, Upload, $timeout) {
 
   // the initial state, used for reset
   var initialTask = {
@@ -17,15 +17,29 @@ angular.module('bootleggerApp')
   // template (filled in from factory below)
   $scope.template = {};
 
-  $scope.uploader = new FileUploader({
-    url: '/api/v1/fileupload/', //TODO: change this url, or create it
-    alias: 'refimage',
-    removeAfterUpload: true
-  });
+  /*****************************
+   * FILE UPLOAD
+   **/
+   $scope.uploadPic = function(file) {
+     file.upload = Upload.upload({
+       url: '/api/v1/tasks/',
+       method: 'POST',
+       data: $scope.formData,
+       file: file
+     });
 
-  $scope.uploader.onBeforeUploadItem = (function (item) {
-    //item.formData.push({title: $scope.formData.title });
-  });
+     file.upload.then(function (response) {
+       $timeout(function () {
+         file.result = response.data;
+       });
+     }, function (response) {
+       if (response.status > 0)
+         $log.log(response.status + ': ' + response.data);
+     }, function (evt) {
+       // Math.min is to fix IE which reports 200% sometimes
+       file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+     });
+   }
 
   // load template
   taskTemplateFactory.getTemplate($routeParams.templateid)

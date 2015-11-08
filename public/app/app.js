@@ -1,4 +1,4 @@
-angular.module('bootleggerApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'angularFileUpload']);
+angular.module('bootleggerApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngFileUpload']);
 
 angular.module('bootleggerApp')
   .config(function ($routeProvider, $httpProvider) {
