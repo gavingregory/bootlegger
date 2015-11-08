@@ -10,7 +10,15 @@ var schema = Schema({
   created 		  : { type: Date, default: Date.now },
   updated		    : { type: Date, default: Date.now },
   running       : { type: Boolean, default: false, required: true },
-  ref_images    : [{ url: {type: String, required: true} }],
+  ref_images    : [{
+    originalname: {type: String, required: true},
+    encoding: {type: String, required: true},
+    mimetype: {type: String, required: true},
+    destination: {type: String, required: true},
+    filename: {type: String, required: true},
+    path: {type: String, required: true},
+    size: {type: Number, required: true}
+  }],
   instructions  : { type: String, required: true  },
   job_count     : { type: Number, required: true  }, /* number of jobs to generate */
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */

@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
 // post a new task
 router.post('/', upload.single('file'), function (req, res) {
   var t = new Task(req.body);
-
+  t.ref_images.push(req.file);
   t.save(function (err) {
     if (err) return res.send(err);
     return res.json({status: 'success'});
