@@ -22,7 +22,7 @@ angular.module('bootleggerApp')
    **/
    $scope.uploadPic = function(file) {
      file.upload = Upload.upload({
-       url: '/api/v1/tasks/',
+       url: '/api/v1/shoots/' + $routeParams.id + '/tasks/',
        method: 'POST',
        data: $scope.formData,
        file: file
