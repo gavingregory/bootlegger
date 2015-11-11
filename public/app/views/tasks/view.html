@@ -13,12 +13,57 @@
       </div>
 
       <!-- Video CENTRE -->
-      <div class="col-md-4">
-        {{task}}
+      <div class="col-md-5">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                id
+              </th>
+              <th>
+                _id
+              </th>
+              <th>
+                video index
+              </th>
+              <th>
+                video start
+              </th>
+              <th>
+                video end
+              </th>
+              <th>
+                video length
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="job in task.jobs">
+              <td>
+                {{job.id}}
+              </td>
+              <td>
+                {{job._id}}
+              </td>
+              <td>
+                {{job.video.index}}
+              </td>
+              <td>
+                {{job.video.start}}
+              </td>
+              <td>
+                {{job.video.end}}
+              </td>
+              <td>
+                {{job.video.length}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- Instructions RHS -->
-      <div class="col-md-4">
+      <div class="col-md-3">
         {{task.instructions}}
       </div>
 

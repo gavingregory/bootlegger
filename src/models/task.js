@@ -27,9 +27,15 @@ var schema = Schema({
   videos        : [{}],
   jobs          : [{
       id: {type: String},
-      video_id: { type: String, required: true },
-      start: { type: Number, required: true },
-      finish: { type: Number, required: true },
+      video: {
+        index: { type: String, required: true },
+        start: { type: Number, required: true },
+        end: { type: Number, required: true },
+        filename: { type: String, required: true },
+        path: { type: String/*, required: true*/ },
+        length: { type: Number, required: true },
+        filesize: { type: Number, required: true },
+      },
       issued_to: {type: String},
       completed_at: {type: Date},
       result: {type: String}

@@ -13,11 +13,12 @@ angular.module('bootleggerApp')
 
   // the form data
   $scope.formData = angular.copy(initialTask);
-
-  // template (filled in from factory below)
+  // template (fetched from factory)
   $scope.template = {};
-  $scope.metaRegex = /[a-zA-Z\,]/;
+  // array of videos + meta data (fetched from factory)
   $scope.videos = {};
+  // regex for meta field
+  $scope.metaRegex = /[a-zA-Z\,]/;
 
   /*****************************
    * FILE UPLOAD
@@ -66,6 +67,8 @@ angular.module('bootleggerApp')
   // reset form
   $scope.reset = function () {
     $scope.formData = angular.copy(initialTask);
+    if ($scope.taskForm)
+      $scope.taskForm.$setPristine(true);
   }
 
   // submit form
@@ -80,7 +83,6 @@ angular.module('bootleggerApp')
       });
   };
 
+  // call reset to init formData
   $scope.reset();
-
-
 });
