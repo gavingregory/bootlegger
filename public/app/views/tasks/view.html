@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- Main Page Heading -->
+    <h2>Task</h2>
+    <div class="loader" ng-show="loading">Loading...</div>
+    <div class="row" ng-hide="loading">
+
+      <!-- Reference Image RHS -->
+      <div class="col-md-4">
+        <div ng-repeat="img in task.ref_images">
+          <img ng-src="files/{{img.filename}}" class="col-md-12"/>
+        </div>
+      </div>
+
+      <!-- Video CENTRE -->
+      <div class="col-md-4">
+        {{task}}
+      </div>
+
+      <!-- Instructions RHS -->
+      <div class="col-md-4">
+        {{task.instructions}}
+      </div>
+
+    </div>
+  </div>
+</div>

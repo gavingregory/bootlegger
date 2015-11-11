@@ -13,6 +13,7 @@
     "express": "~4.12.4",
     "express-session": "^1.12.0",
     "jade": "~1.9.2",
+    "mime": "^1.3.4",
     "mongoose": "^4.2.2",
     "morgan": "~1.5.3",
     "multer": "^1.1.0",

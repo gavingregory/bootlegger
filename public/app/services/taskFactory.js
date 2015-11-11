@@ -4,8 +4,8 @@ angular.module('bootleggerApp')
     factory.getTasks = function (shoot_id) {
       return $http.get('http://localhost:3000/api/v1/shoots/' + shoot_id + '/tasks');
     };
-    factory.getTask = function (id) {
-      return $http.get('http://localhost:3000/api/v1/tasks/' + id);
+    factory.getTask = function (shoot_id, task_id) {
+      return $http.get('http://localhost:3000/api/v1/shoots/' + shoot_id + '/tasks/' + task_id);
     };
     factory.createTask = function (task) {
       return $http.post('/api/v1/tasks/', task);

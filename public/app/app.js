@@ -1,4 +1,4 @@
-angular.module('bootleggerApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngFileUpload']);
+angular.module('bootleggerApp', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ngFileUpload', 'ngMessages']);
 
 angular.module('bootleggerApp')
   .config(function ($routeProvider, $httpProvider) {
@@ -27,6 +27,10 @@ angular.module('bootleggerApp')
     .when('/shoots/:id/task/create/:templateid', {
       controller: 'taskCreateController',
       templateUrl: '/app/views/tasks/create.html'
+    })
+    .when('/shoots/:shoot_id/task/:task_id', {
+      controller: 'taskViewController',
+      templateUrl: '/app/views/tasks/view.html'
     })
     .when('/orders/:customerId',{
         controller: 'ordersController',

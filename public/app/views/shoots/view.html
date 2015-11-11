@@ -65,7 +65,7 @@
                   <tbody>
                     <tr ng-repeat="task in tasks">
                       <td></td>
-                      <td>{{task.name}}</td>
+                      <td><a href="#/shoots/{{$parent.eventId}}/task/{{task._id}}">{{task.name}}</a></td>
                       <td><span class="label label-{{running ? 'success' : 'danger' }}">{{ task.running }}</span></td>
                     </tr>
                   </tbody>

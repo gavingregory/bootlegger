@@ -16,11 +16,12 @@ angular.module('bootleggerApp')
 
   // template (filled in from factory below)
   $scope.template = {};
+  $scope.metaRegex = /[a-zA-Z\,]/;
 
   /*****************************
    * FILE UPLOAD
    **/
-   $scope.uploadPic = function(file) {
+   $scope.submitForm = function(file) {
      file.upload = Upload.upload({
        url: '/api/v1/shoots/' + $routeParams.id + '/tasks/',
        method: 'POST',
