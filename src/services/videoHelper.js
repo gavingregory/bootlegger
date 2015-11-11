@@ -13,6 +13,7 @@ module.exports = {
       ms = this.secondsToMillis(clip_length);
     else
       ms = this.durationToMillis(clip_length);
+
     var seg_size_ms = seg_size * 1000;
     // no_segments - the exact number of segments ie 2.53
     var no_segments = ms / seg_size_ms;
@@ -21,10 +22,10 @@ module.exports = {
 
     var segments = [];
     var current_index = 0;
-    for (var i = 0; i < no_segments; i++) {
-      var start = i * (ms / no_segments);
-      var end = (i+1) * (ms / no_segments) - 1;
-      if (i == (no_segments - 1)) end += 1; // don't lose last ms of video!
+    for (var i = 0; i < rounded_segments; i++) {
+      var start = i * (ms / rounded_segments);
+      var end = (i+1) * (ms / rounded_segments) - 1;
+      end = Math.min(end, ms) // cap the end ms
       segments.push({start: start, end: end});
     }
     cb({count: rounded_segments, segments: segments});

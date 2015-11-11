@@ -33,12 +33,10 @@ router.post('/', upload.single('file'), function (req, res) {
   var videos = req.body.videos;
   // iterate over videos
   var id = 0; // id for each job
-
   for (var i = 0; i < videos.length; i++) {
     videoHelper.distributeVideoIndexes(videos[i].meta.static_meta.clip_length, req.body.segment_size, function (result) {
-      for (j = 0; j < result.segments.length; j++) {
-        console.log(videos[i].path);
 
+      for (j = 0; j < result.segments.length; j++) {
         var o = {
           id: id++,
           video: {
@@ -51,13 +49,11 @@ router.post('/', upload.single('file'), function (req, res) {
             filesize: videos[i].meta.static_meta.filesize
           }
         };
-
-        console.log('OBJECT.VIDEO.PATH: ' + o.video.path);
-
         t.jobs.push(o);
       }
     });
   }
+  console.log(t.jobs);
   t.save(function (err) {
     if (err) {
       console.log(err);

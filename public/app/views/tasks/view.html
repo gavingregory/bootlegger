@@ -33,7 +33,10 @@
                 video end
               </th>
               <th>
-                video length
+                clip length
+              </th>
+              <th>
+                total video length
               </th>
             </tr>
           </thead>
@@ -53,6 +56,9 @@
               </td>
               <td>
                 {{job.video.end}}
+              </td>
+              <td>
+                {{(job.video.end - job.video.start)/1000}}
               </td>
               <td>
                 {{job.video.length}}
