@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, localStorage, $routeParams, Upload, $timeout) {
+.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, shootFactory, localStorage, $routeParams, Upload, $timeout) {
 
   // the initial state, used for reset
   var initialTask = {
@@ -7,7 +7,7 @@ angular.module('bootleggerApp')
     passes: 1,
     segment_size: 15,
     creator: localStorage.getObject('me').profile.displayName,
-    shoot_id: $routeParams.id,
+    shoot_id: $routeParams.shoot_id,
     template_id: $routeParams.templateid
   };
 
@@ -17,13 +17,15 @@ angular.module('bootleggerApp')
   // template (filled in from factory below)
   $scope.template = {};
   $scope.metaRegex = /[a-zA-Z\,]/;
+  $scope.videos = {};
 
   /*****************************
    * FILE UPLOAD
    **/
    $scope.submitForm = function(file) {
+     $scope.formData.videos = $scope.videos;
      file.upload = Upload.upload({
-       url: '/api/v1/shoots/' + $routeParams.id + '/tasks/',
+       url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
        method: 'POST',
        data: $scope.formData,
        file: file
@@ -48,6 +50,14 @@ angular.module('bootleggerApp')
       $scope.template = data;
       $scope.formData.meta_object = data.meta_object;
       $scope.formData.meta_key = data.meta_key;
+    })
+    .error(function (data, status, headers, config) {
+      $log.log(data.errors + ' ' + status);
+    });
+
+  shootFactory.getShoot($routeParams.shoot_id)
+    .success(function (data) {
+      $scope.videos = data;
     })
     .error(function (data, status, headers, config) {
       $log.log(data.errors + ' ' + status);

@@ -24,6 +24,7 @@ var schema = Schema({
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */
   segment_size : { type: Number, required: true },   /* size (in seconds) of desired segment */
   cent_per_job : { type: Number, required: true },
+  videos        : [{}],
   jobs          : [{
       id: {type: String},
       video_id: { type: String, required: true },
