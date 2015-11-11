@@ -18,6 +18,12 @@ describe('videoHelper#secondsToMillis', function () {
 
 describe('videoHelper#distributeVideoIndexes', function () {
   describe('count', function () {
+    it('should accept a formatted text clip_length \'00:00:17.2171043\'', function () {
+      videoHelper.distributeVideoIndexes('00:00:17.2171043', 5, function (result) {
+        assert.equal(4, result.count);
+        assert.equal(4, result.segments.length);
+      })
+    });
     it('should split a 10s video with desired segment 5s into 2 segments', function () {
       videoHelper.distributeVideoIndexes(10, 5, function (result) {
         assert.equal(2, result.count);

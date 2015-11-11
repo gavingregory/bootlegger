@@ -8,7 +8,11 @@ module.exports = {
    // callback with object:
    // { count: 2, segments: [{start: 0 =, end: 5000 }, ... ]}
   distributeVideoIndexes : function (clip_length, seg_size, cb) {
-    var ms = this.secondsToMillis(clip_length);
+    var ms;
+    if (typeof clip_length == 'number')
+      ms = this.secondsToMillis(clip_length);
+    else
+      ms = this.durationToMillis(clip_length);
     var seg_size_ms = seg_size * 1000;
     // no_segments - the exact number of segments ie 2.53
     var no_segments = ms / seg_size_ms;
