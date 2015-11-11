@@ -13,15 +13,12 @@
       </div>
 
       <!-- Video CENTRE -->
-      <div class="col-md-5">
+      <div class="col-md-4">
         <table class="table table-striped">
           <thead>
             <tr>
               <th>
                 id
-              </th>
-              <th>
-                _id
               </th>
               <th>
                 video index
@@ -46,22 +43,19 @@
                 {{job.id}}
               </td>
               <td>
-                {{job._id}}
-              </td>
-              <td>
                 {{job.video.index}}
               </td>
               <td>
-                {{job.video.start}}
+                {{job.video.start / 1000 | setDecimal:2}}
               </td>
               <td>
-                {{job.video.end}}
+                {{job.video.end / 1000 | setDecimal:2}}
               </td>
               <td>
-                {{(job.video.end - job.video.start)/1000}}
+                {{(job.video.end - job.video.start)/1000 | setDecimal:2}}s
               </td>
               <td>
-                {{job.video.length}}
+                {{job.video.length/1000 | setDecimal:2}}s
               </td>
             </tr>
           </tbody>
@@ -69,9 +63,18 @@
       </div>
 
       <!-- Instructions RHS -->
-      <div class="col-md-3">
+      <div class="col-md-4">
+        <h4>Instructions</h4>
         {{task.instructions}}
+        <h4>Number of jobs</h4>
+        {{task.jobs.length}}
+        <h4>Cost per job</h4>
+        ${{task.cent_per_job / 100}}
+        <h4>Total cost</h4>
+        ${{(task.cent_per_job / 100) * task.jobs.length | setDecimal:2}}
       </div>
+
+      
 
     </div>
   </div>
