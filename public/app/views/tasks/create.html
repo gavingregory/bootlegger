@@ -10,7 +10,7 @@
 
   <!-- lhs column -->
   <div class="col-md-7 col-md-offset-1">
-    <form class="form-horizontal" name="taskForm" enctype="multipart/form-data" ng-submit="submitForm(picFile)" novalidate>
+    <form class="form-horizontal" name="taskForm" enctype="multipart/form-data" ng-submit="submitForm(picFiles)" novalidate>
       <h4>Meta</h4>
 
       <!-- META TAGS -->
@@ -143,21 +143,19 @@
       </div> <!-- /TASK INSTRUCTIONS -->
 
       <!-- REFERENCE IMAGES -->
-      <div class="form-group" ng-class="{ 'has-error': taskForm.file.$touched && taskForm.file.$invalid }">
-        <label for="file" class="col-sm-2 control-label">ref image</label>
-        <input type="file" name="file" ngf-select ng-model="picFile" name="file" accept="image/*"
+      <div class="form-group" ng-class="{ 'has-error': taskForm.files.$touched && taskForm.files.$invalid }">
+        <label for="files" class="col-sm-2 control-label">ref images</label>
+        <input type="file" name="files" ngf-select multiple ng-model="picFiles" accept="image/*"
                ngf-max-size="2MB" required>
-        <div ng-if="taskForm.file.$touched" ng-messages="taskForm.file.$error">
+        <div ng-if="taskForm.files.$touched" ng-messages="taskForm.files.$error">
           <p ng-message="required">Reference image is required.</p>
-          <p ng-message="maxSize">File too large. {{picFile.size / 1000000|number:1}}MB: max 2M</p>
+          <p ng-message="maxSize">File too large. {{picFiles.size / 1000000|number:1}}MB: max 2M</p>
         </div>
-        <img ng-show="taskForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-        <br />
-        <span class="progress" ng-show="picFile.progress >= 0">
-          <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
-        </span>
-        <span ng-show="picFile.result">Upload Successful</span>
-        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+        <div class="row">
+          <div class="col-md-3" ng-repeat="file in picFiles" ng-show="picFiles[$index]">
+            <img ng-thumbnail="taskForm.files.$valid" ngf-src="file" class="thumb"> <button ng-click="picFiles[$index] = null" ng-show="picFiles[$index]">Remove</button>
+          </div>
+        </div>
       </div> <!-- /REFERENCE IMAGES -->
 
       <!-- SUBMIT -->
@@ -182,7 +180,8 @@
               <div class="col-md-4">
                 Ref Images:
                 <div>
-                  <img ng-show="taskForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                  TODO: correct this for multiple files:
+                  <img ng-show="taskForm.files.$valid" ngf-thumbnail="picFiles" class="thumb">
                 </div>
               </div>
               <div class="col-md-4">

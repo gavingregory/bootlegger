@@ -23,25 +23,31 @@ angular.module('bootleggerApp')
   /*****************************
    * FILE UPLOAD
    **/
-   $scope.submitForm = function(file) {
-     $scope.formData.videos = $scope.videos;
-     file.upload = Upload.upload({
-       url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
-       method: 'POST',
-       data: $scope.formData,
-       file: file
-     });
+  $scope.submitForm = function(files) {
+    $scope.formData.videos = $scope.videos;
 
-     file.upload.then(function (response) {
+    var newfiles = {};
+    for (var i = 0; i < files.length; i++) {
+      newfiles[i + ', ' + files[i].name] = files[i];
+    }
+
+    files.upload = Upload.upload({
+      url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
+      method: 'POST',
+      arrayKey: '',
+      data: $scope.formData,
+      file: files
+    });
+
+     files.upload.then(function (response) {
        $timeout(function () {
-         file.result = response.data;
+         files.result = response.data;
        });
      }, function (response) {
        if (response.status > 0)
          $log.log(response.status + ': ' + response.data);
      }, function (evt) {
-       // Math.min is to fix IE which reports 200% sometimes
-       file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+       //
      });
    }
 

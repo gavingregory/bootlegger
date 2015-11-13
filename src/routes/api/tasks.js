@@ -26,9 +26,15 @@ router.get('/', function (req, res) {
 });
 
 // post a new task
-router.post('/', upload.single('file'), function (req, res) {
+router.post('/', upload.array('file'), function (req, res) {
   var t = new Task(req.body);
-  t.ref_images.push(req.file);
+
+  console.log(req.files.length);
+
+  for (var i = 0; i < req.files.length; i++) {
+    t.ref_images.push(req.files[i]);
+  }
+
 
   var videos = req.body.videos;
   // iterate over videos
@@ -53,7 +59,6 @@ router.post('/', upload.single('file'), function (req, res) {
       }
     });
   }
-  console.log(t.jobs);
   t.save(function (err) {
     if (err) {
       console.log(err);
