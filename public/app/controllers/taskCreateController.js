@@ -25,30 +25,46 @@ angular.module('bootleggerApp')
    **/
   $scope.submitForm = function(files) {
     $scope.formData.videos = $scope.videos;
+    taskFactory.createTask($routeParams.shoot_id, $scope.formData)
+      .success(function (data) {
+        $log.log(data);
+        files.upload = Upload.upload({
+          url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
+          method: 'POST',
+          arrayKey: '',
+          file: files
+        }).then(function (resp) {
+           window.location.replace('#/');
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.errors + ' ' + status);
+      });
 
-    var newfiles = {};
-    for (var i = 0; i < files.length; i++) {
-      newfiles[i + ', ' + files[i].name] = files[i];
-    }
 
-    files.upload = Upload.upload({
-      url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
-      method: 'POST',
-      arrayKey: '',
-      data: $scope.formData,
-      file: files
-    });
-
-     files.upload.then(function (response) {
-       $timeout(function () {
-         files.result = response.data;
-       });
-     }, function (response) {
-       if (response.status > 0)
-         $log.log(response.status + ': ' + response.data);
-     }, function (evt) {
-       //
-     });
+    // files.upload = Upload.upload({
+    //   url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
+    //   method: 'POST',
+    //   arrayKey: '',
+    //   data: $scope.formData,
+    //   file: files
+    // });
+    //
+    //  files.upload.then(function (response) {
+    //    $timeout(function () {
+    //      files.result = response.data;
+    //    });
+    //  }, function (response) {
+    //    if (response.status > 0)
+    //      $log.log(response.status + ': ' + response.data);
+    //  }, function (evt) {
+    //    //
+    //  });
    }
 
   // load template

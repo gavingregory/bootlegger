@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse">
             <a href="" ng-click="play(shot.lowres, shot.id)">
-              <img src="{{ shot.thumb }}" height="75"  width="100" />
+              <img ng-src="{{ shot.thumb }}" height="75"  width="100" />
             </a>
             <span>{{shot.user.profile.displayName}}</span>
           </div>

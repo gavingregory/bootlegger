@@ -26,22 +26,17 @@ router.get('/', function (req, res) {
 });
 
 // post a new task
-router.post('/', upload.array('file'), function (req, res) {
+router.post('/', function (req, res) {
   var t = new Task(req.body);
-
-  console.log(req.files.length);
-
-  for (var i = 0; i < req.files.length; i++) {
-    t.ref_images.push(req.files[i]);
-  }
-
-
   var videos = req.body.videos;
+
+console.log(videos)
+
   // iterate over videos
   var id = 0; // id for each job
   for (var i = 0; i < videos.length; i++) {
     videoHelper.distributeVideoIndexes(videos[i].meta.static_meta.clip_length, req.body.segment_size, function (result) {
-
+      console.log('segments length: ' + result.segments.length);
       for (j = 0; j < result.segments.length; j++) {
         var o = {
           id: id++,
@@ -55,18 +50,44 @@ router.post('/', upload.array('file'), function (req, res) {
             filesize: videos[i].meta.static_meta.filesize
           }
         };
+        console.log('pushing o');
         t.jobs.push(o);
       }
     });
   }
-  t.save(function (err) {
+  t.save(function (err, newTask) {
     if (err) {
       console.log(err);
       return res.status(400).send(err);
     }
-    return res.json({status: 'success'});
+    return res.json({status: 'success', data: newTask});
   });
 });
+
+// post a new reference image
+router.post('/:task_id/upload-image', upload.array('file'), function (req, res) {
+  console.log('uploading an image file!');
+  Task.findById(req.params.task_id, function (err, data) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!data) {
+      console.log('no task found');
+      return res.status(400).json({status: 'failed', message: 'no task found.'});
+    }
+    for (var i = 0; i < req.files.length; i++) {
+      data.ref_images.push(req.files[i]);
+    }
+    data.save(function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      }
+      return res.json({status: 'success'});
+    });
+  });
+})
 
 router.get('/:task_id', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {

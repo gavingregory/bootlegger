@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-sm-4 col-md-2 col-md-offset-1" ng-repeat="template in templates | orderBy : 'name'">
     <div class="thumbnail">
-      <img class="img-rounded hidden-xs" src="{{template.imageurl}}">
+      <img class="img-rounded hidden-xs" ng-src="{{template.imageurl}}">
       <div class="caption text-center">
         <h3>{{template.name}}</h3>
         <p>{{template.description}}</p>
