@@ -25,6 +25,7 @@ angular.module('bootleggerApp')
    **/
   $scope.submitForm = function(files) {
     $scope.formData.videos = $scope.videos;
+
     taskFactory.createTask($routeParams.shoot_id, $scope.formData)
       .success(function (data) {
         $log.log(data);
@@ -34,7 +35,7 @@ angular.module('bootleggerApp')
           arrayKey: '',
           file: files
         }).then(function (resp) {
-           window.location.replace('#/');
+           window.location.replace('#/shoots/' + $routeParams.shoot_id + '/task/' + data.data._id);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
@@ -45,26 +46,6 @@ angular.module('bootleggerApp')
       .error(function (data, status, headers, config) {
         $log.log(data.errors + ' ' + status);
       });
-
-
-    // files.upload = Upload.upload({
-    //   url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/',
-    //   method: 'POST',
-    //   arrayKey: '',
-    //   data: $scope.formData,
-    //   file: files
-    // });
-    //
-    //  files.upload.then(function (response) {
-    //    $timeout(function () {
-    //      files.result = response.data;
-    //    });
-    //  }, function (response) {
-    //    if (response.status > 0)
-    //      $log.log(response.status + ': ' + response.data);
-    //  }, function (evt) {
-    //    //
-    //  });
    }
 
   // load template

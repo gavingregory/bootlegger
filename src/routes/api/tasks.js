@@ -30,8 +30,6 @@ router.post('/', function (req, res) {
   var t = new Task(req.body);
   var videos = req.body.videos;
 
-console.log(videos)
-
   // iterate over videos
   var id = 0; // id for each job
   for (var i = 0; i < videos.length; i++) {
