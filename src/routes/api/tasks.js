@@ -27,6 +27,7 @@ router.get('/', function (req, res) {
 
 // post a new task
 router.post('/', function (req, res) {
+
   var t = new Task(req.body);
   var videos = req.body.videos;
 
@@ -53,12 +54,12 @@ router.post('/', function (req, res) {
       }
     });
   }
-  t.save(function (err, newTask) {
+  t.save(function (err, data) {
     if (err) {
       console.log(err);
       return res.status(400).send(err);
     }
-    return res.json({status: 'success', data: newTask});
+    return res.json({status: 'success', data: data});
   });
 });
 

@@ -1,19 +1,16 @@
 angular.module('bootleggerApp')
-.controller('taskViewController', function ($scope, $log, taskFactory, $routeParams) {
+.controller('annotateController', function ($window, $scope, $log, taskFactory, $routeParams) {
 
-  $scope.loading = 1;
-  $scope.task = {};
-  $scope.shoot_id = $routeParams.shoot_id;
+  $scope.task = {}
+  $scope.crowdflowerId = '';
 
   taskFactory.getTask($routeParams.shoot_id, $routeParams.task_id)
   .success(function (task) {
     $scope.task = task;
+    $scope.task.running = true;
   })
   .error(function (data, status, headers, config) {
     $log.log(data.error + ' ' + status);
-  })
-  .finally(function () {
-    $scope.loading--;
   });
 
 });

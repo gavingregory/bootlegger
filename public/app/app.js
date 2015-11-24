@@ -32,6 +32,14 @@ angular.module('bootleggerApp')
       controller: 'taskViewController',
       templateUrl: '/app/views/tasks/view.html'
     })
+    .when('/shoots/:shoot_id/task/:task_id/annotate', {
+      controller: 'annotateWelcomeController',
+      templateUrl: '/app/views/annotate/welcome.html'
+    })
+    .when('/shoots/:shoot_id/task/:task_id/annotate/:crowdflower_id', {
+      controller: 'annotateController',
+      templateUrl: '/app/views/annotate/annotate.html'
+    })
     .when('/orders/:customerId',{
         controller: 'ordersController',
         templateUrl: '/app/views/orders/list.html'

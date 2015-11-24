@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" ng-show="task.running">
+    <h2>Welcome</h2>
+    <p>
+      You will be asked to view a series of video clips. You may stop at any time, but must complete a minimum of 10 for payment.
+    </p>
+    <p>
+      Please watch each video carefully, and answer the question(s) provided to you.
+    </p>
+    <p>
+      To proceed, we require your Crowdflower ID. YOU WILL NOT GET PAID UNLESS YOU ENTER THIS CORRECTLY
+    </p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Job instructions</h3>
+      </div>
+      <div class="panel-body">
+        {{task.instructions}}
+      </div>
+    </div>
+    <p>
+      Please enter your crowdflower ID and click Go to start...
+    </p>
+    <input type="text" ng-model="crowdflowerId"/>
+    <button name="Go" ng-click="go()">Go</button>
+  </div>
+  <div class="col-md-10 col-md-offset-1" ng-hide="task.running">
+    Unfortunately this task is not running.
+  </div>
+</div>
