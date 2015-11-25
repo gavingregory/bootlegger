@@ -1,6 +1,8 @@
 var express = require('express')
   , multer = require('multer')
+  , requestify = require('requestify')
   , mime = require('mime')
+  , params = require('../../config/params')
   , router = express.Router({mergeParams: true})
   , moment = require('moment')
   , videoHelper = require('../../services/videoHelper')
@@ -90,9 +92,70 @@ router.post('/:task_id/upload-image', upload.array('file'), function (req, res) 
 
 router.get('/:task_id', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
-    if (err) { return res.status(400).send(err); }
-    return res.json(data);
+    if (err) { return res.status(400).send(err); } else {
+      return res.json(data);
+    }
   })
 })
+
+router.post('/:task_id/crowdsource', function (req, res) {
+
+  Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
+    if (err) { return res.status(400).send(err);}
+    else {
+
+      requestify.request('https://api.crowdflower.com/v1/jobs/upload.json?key=' + params.cf_api, {
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        params: {
+          'job[title]':'TITLE'
+        },
+        dataType: 'json',
+        body: {
+          'one':'one', 'two':'two'
+        }
+      }).then(function (response) {
+          console.log(response);
+          return res.send(response);
+        });
+
+      // var request = https.request({
+      //   host: 'api.crowdflower.com',
+      //   method: 'POST',
+      //   path: 'v1/jobs.json?key=' + params.cf_api,
+      //   port: '443',
+      //   //form: { "job[title]":"title", "job[instructions]": "instructions" },
+      //   // headers: {
+      //   //   'Content-Type': 'application/json'
+      //   // },
+      // }, function(response) {
+      //   var str = ''
+      //   response.on('data', function (chunk) {
+      //     str += chunk;
+      //   });
+      //   response.on('end', function () {
+      //     console.log('data: ' + str);
+      //     console.log('response status code: ' + util.inspect(response.statusCode));
+      //     return res.send(str);
+      //   });
+      // });
+      // request.on('error', function (err) {
+      //   console.error('error: ' + err);
+      //   return res.send(err);
+      // });
+      // request.write('"job[title]":"title", "job[instructions]": "instructions"');
+      // request.end();
+
+      // request.post(params.cf_url + '?key=' + params.cf_api, {
+      //   body: data.jobs
+      // }, function (error, response, body) {
+      //   if (err) { return res.status(response.statusCode).send(err); }
+      //   return res.status(response.statusCode).send({response: response, body: body});
+      // });
+    }
+  })
+});
 
 module.exports = router;

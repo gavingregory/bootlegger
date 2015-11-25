@@ -21,10 +21,23 @@ angular.module('bootleggerApp')
       animation: false,
       templateUrl: 'push.html',
       size: 'lg',
-      controller: function ($scope, $uibModalInstance) {
+      resolve: {
+        data: function () {
+          return {
+            task: $scope.task,
+            shoot_id: $stateParams.shoot_id
+          }
+        }
+      },
+      controller: function ($scope, $uibModalInstance, data) {
+        $scope.status = '';
         $scope.ok = function () {
-          
-          $uibModalInstance.close();
+          taskFactory.pushTask(data.shoot_id, data.task._id) // empty data
+          .then(function (response) {
+            $uibModalInstance.close();
+          }, function (response) {
+            $scope.status = 'failed';
+          });
         };
         $scope.cancel = function () {
           $uibModalInstance.dismiss('cancel');
