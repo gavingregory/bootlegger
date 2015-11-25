@@ -75,7 +75,7 @@
       <!-- Instructions RHS -->
       <div class="col-md-4">
         <h4>Annotate Link</h4>
-        <a href="#/shoots/{{shoot_id}}/task/{{task._id}}/annotate">Annotate</a>
+        <a ui-sref="#/shoots/{{shoot_id}}/task/{{task._id}}/annotate">Annotate</a>
         <h4>Instructions</h4>
         {{task.instructions}}
         <h4>Number of jobs</h4>
@@ -84,9 +84,23 @@
         ${{task.cent_per_job / 100}}
         <h4>Total cost</h4>
         ${{(task.cent_per_job / 100) * task.jobs.length | setDecimal:2}}
+        <h4>Push</h4>
+        <button type="button" class="btn btn-default" ng-click="push()">Open me!</button>
+
       </div>
 
-
+      <script type="text/ng-template" id="push.html">
+          <div class="modal-header">
+              <h3 class="modal-title">Push to Crowdflower</h3>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to push this task to crowdflower?
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+              <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+          </div>
+      </script>
 
     </div>
   </div>

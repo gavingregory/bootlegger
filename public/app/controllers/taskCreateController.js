@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, shootFactory, localStorage, $routeParams, Upload, $timeout) {
+.controller('taskCreateController', function ($location, $scope, $log, taskTemplateFactory, taskFactory, shootFactory, localStorage, $stateParams, Upload, $timeout) {
 
   // the initial state, used for reset
   var initialTask = {
@@ -7,8 +7,8 @@ angular.module('bootleggerApp')
     passes: 1,
     segment_size: 15,
     creator: localStorage.getObject('me').profile.displayName,
-    shoot_id: $routeParams.shoot_id,
-    template_id: $routeParams.templateid
+    shoot_id: $stateParams.shoot_id,
+    template_id: $stateParams.template_id
   };
 
   // the form data
@@ -26,16 +26,16 @@ angular.module('bootleggerApp')
   $scope.submitForm = function(files) {
     $scope.formData.videos = $scope.videos;
 
-    taskFactory.createTask($routeParams.shoot_id, $scope.formData)
+    taskFactory.createTask($stateParams.shoot_id, $scope.formData)
       .success(function (data) {
         $log.log(data);
         files.upload = Upload.upload({
-          url: '/api/v1/shoots/' + $routeParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
+          url: '/api/v1/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
           method: 'POST',
           arrayKey: '',
           file: files
         }).then(function (resp) {
-           window.location.replace('#/shoots/' + $routeParams.shoot_id + '/task/' + data.data._id);
+           window.location.replace('#/shoots/' + $stateParams.shoot_id + '/task/' + data.data._id);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
@@ -49,7 +49,7 @@ angular.module('bootleggerApp')
    }
 
   // load template
-  taskTemplateFactory.getTemplate($routeParams.templateid)
+  taskTemplateFactory.getTemplate($stateParams.template_id)
     .success(function (data) {
       $scope.template = data;
       $scope.formData.meta_object = data.meta_object;
@@ -59,7 +59,7 @@ angular.module('bootleggerApp')
       $log.log(data.errors + ' ' + status);
     });
 
-  shootFactory.getShoot($routeParams.shoot_id)
+  shootFactory.getShoot($stateParams.shoot_id)
     .success(function (data) {
       $scope.videos = data;
     })

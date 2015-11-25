@@ -5,9 +5,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/Bootflat/bootflat/css/bootflat.min.css">
   <link rel="stylesheet" href="css/loader.css">
+  <link rel="stylesheet" href="css/main.css">
   <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="bower_components/angular-ui-router-styles/ui-router-styles.js"></script>
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
   <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
   <script src="bower_components/angular-messages/angular-messages.min.js"></script>
@@ -16,12 +16,11 @@
   <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
   <script src="vendor/angular-bootstrap/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
   <script src="app/app.js"></script>
-  <script src="app/controllers/dashboardController.js"></script>
+  <script src="app/controllers/navbarController.js"></script>
   <script src="app/controllers/indexController.js"></script>
   <script src="app/controllers/loginController.js"></script>
   <script src="app/controllers/taskViewController.js"></script>
-  <script src="app/controllers/annotateJobController.js"></script>
-  <script src="app/controllers/annotateWelcomeController.js"></script>
+  <script src="app/controllers/annotateController.js"></script>
   <script src="app/controllers/taskCreateController.js"></script>
   <script src="app/controllers/selectTemplateController.js"></script>
   <script src="app/controllers/shootController.js"></script>
@@ -34,6 +33,28 @@
   <script src="app/services/values.js"></script>
   <script src="app/filters/setDecimal.js"></script>
 </head>
-<body ui-view>
+<body>
+  <div id="menu" class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="navbarController">
+    <div class="container-fluid">
+        <div class="navbar-header"><a class="navbar-brand" href="#">bootlegger</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-menubuilder">
+            <ul class="nav navbar-nav navbar-left">
+                <li ng-show="loggedIn"><a href="#/shoots">Shoots</a></li>
+                <li ng-hide="loggedIn"><a href="#/login">Login</a></li>
+                <li ng-show="loggedIn"><a href="#" ng-click="logout()">Logout</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <p ng-show="loggedIn" class="navbar-text">Welcome, {{me.profile.displayName}}</p>
+              <li ng-show="loggedIn"><a class="navbar-brand" href="#"><span class="glyphicon glyphicon-cog"></span></a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <div ng-view></div>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 angular.module('bootleggerApp')
-.controller('selectTemplateController', function ($scope, $log, taskTemplateFactory, localStorage, $routeParams) {
+.controller('selectTemplateController', function ($scope, $log, taskTemplateFactory, localStorage, $stateParams) {
 
-  $scope.shootId = $routeParams.id;
-  
+  $scope.shootId = $stateParams.shoot_id;
+
   // templates array (filled in from factory below)
   $scope.templates = [];
 

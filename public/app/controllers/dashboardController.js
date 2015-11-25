@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('navbarController', function ($scope, $cookies, $log, authFactory, localStorage) {
+.controller('dashboardController', function ($scope, $cookies, $log, authFactory, localStorage) {
   $scope.loggedIn = false;
 
   $scope.logout = function () {

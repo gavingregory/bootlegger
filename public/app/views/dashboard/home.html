@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h2>Welcome to the Bootlegger Annotation Dashboard</h2>
+      <p>
+        This application allows you to create annotation tasks for your Bootlegger video shoots. These tasks are annotated through crowdsourcing.
+      </p>
+      <p ng-hide="loggedIn">
+        Please <a ui-sref="dashboard.login">login</a> to begin.
+      </p>
+      <p ng-show="loggedIn">
+        You are successfully logged in as {{me.profile.displayName}}.
+      </p>
+    </div>
+  </div>
+</div>

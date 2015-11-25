@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('annotateController', function ($window, $scope, $log, taskFactory, $routeParams) {
+.controller('annotateJobController', function ($window, $scope, $log, taskFactory, $routeParams) {
 
   $scope.task = {}
   $scope.crowdflowerId = '';

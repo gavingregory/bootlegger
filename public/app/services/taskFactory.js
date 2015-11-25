@@ -10,5 +10,9 @@ angular.module('bootleggerApp')
     factory.createTask = function (shoot_id, data) {
       return $http.post('http://localhost:3000/api/v1/shoots/' + shoot_id + '/tasks', data);
     }
+    // pushes a task to crowdflower
+    factory.pushTask = function (task_id) {
+      
+    }
     return factory;
   });

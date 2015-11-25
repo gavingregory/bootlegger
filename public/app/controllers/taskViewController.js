@@ -1,11 +1,11 @@
 angular.module('bootleggerApp')
-.controller('taskViewController', function ($scope, $log, taskFactory, $routeParams) {
+.controller('taskViewController', function ($scope, $log, taskFactory, $stateParams, $uibModal) {
 
   $scope.loading = 1;
   $scope.task = {};
-  $scope.shoot_id = $routeParams.shoot_id;
+  $scope.shoot_id = $stateParams.shoot_id;
 
-  taskFactory.getTask($routeParams.shoot_id, $routeParams.task_id)
+  taskFactory.getTask($stateParams.shoot_id, $stateParams.task_id)
   .success(function (task) {
     $scope.task = task;
   })
@@ -15,5 +15,28 @@ angular.module('bootleggerApp')
   .finally(function () {
     $scope.loading--;
   });
+
+  $scope.push = function () {
+    var modalInstance = $uibModal.open({
+      animation: false,
+      templateUrl: 'push.html',
+      size: 'lg',
+      controller: function ($scope, $uibModalInstance) {
+        $scope.ok = function () {
+          
+          $uibModalInstance.close();
+        };
+        $scope.cancel = function () {
+          $uibModalInstance.dismiss('cancel');
+        };
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
 
 });

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h2>Please select a template below</h2>
+  </div>
+</div>
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="centering text-center">
+      <div class="row">
+        <div class="col-md-6" ng-repeat="template in templates | orderBy : 'name'">
+          <a ui-sref="dashboard.createtask-form({shoot_id: shootId, template_id: template._id})">
+            <div class="jumbotron orange padding">
+                <h3>{{template.name}}</h3>
+                <p>{{template.description}}</p>
+                <p>Select</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

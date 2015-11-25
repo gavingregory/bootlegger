@@ -1,7 +1,7 @@
 angular.module('bootleggerApp')
-.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, localStorage, $routeParams) {
+.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, localStorage, $stateParams) {
   $scope.sortBy = 'name';
-  $scope.eventId = $routeParams.id;
+  $scope.eventId = $stateParams.shoot_id;
   $scope.reverse = false;
   $scope.shoot = [];
   $scope.taskTemplates = [];
@@ -11,7 +11,7 @@ angular.module('bootleggerApp')
   $scope.meta = 'No video selected';
 
   function init() {
-    taskFactory.getTasks($routeParams.id)
+    taskFactory.getTasks($stateParams.shoot_id)
       .success(function (tasks) {
         $scope.tasks = tasks;
       })
@@ -31,7 +31,7 @@ angular.module('bootleggerApp')
       .finally(function () {
         $scope.loading--;
       });
-    shootFactory.getShoot($routeParams.id)
+    shootFactory.getShoot($stateParams.shoot_id)
       .success(function (shoot) {
         $scope.shoot = shoot;
         $scope.shoot.forEach(function (s) {
