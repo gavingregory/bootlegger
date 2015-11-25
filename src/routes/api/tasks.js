@@ -104,21 +104,21 @@ router.post('/:task_id/crowdsource', function (req, res) {
     if (err) { return res.status(400).send(err);}
     else {
 
-      requestify.request('https://api.crowdflower.com/v1/jobs/upload.json?key=' + params.cf_api, {
+      requestify.request('https://api.crowdflower.com/v1/jobs.json?key=' + params.cf_api, {
         method: 'POST',
-        headers: {
-          'Content-Type':'application/json'
-        },
         params: {
           'job[title]':'TITLE'
         },
-        dataType: 'json',
-        body: {
-          'one':'one', 'two':'two'
-        }
+        dataType: 'form-url-encoded',
       }).then(function (response) {
           console.log(response);
-          return res.send(response);
+          requestify.request('https://api.crowdflower.com/v1/jobs/' + response.body.id + '/upload', {
+            method: 'POST',
+            dataType: 'json',
+            body: data.jobs
+          }).then(function (response2) {
+            return res.send(response2);
+          })
         });
 
       // var request = https.request({
