@@ -98,6 +98,9 @@ router.get('/:task_id', function (req, res) {
   })
 })
 
+/**
+ * Source this task to Crowdflower
+ */
 router.post('/:task_id/crowdsource', function (req, res) {
 
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
@@ -107,7 +110,7 @@ router.post('/:task_id/crowdsource', function (req, res) {
       requestify.request('https://api.crowdflower.com/v1/jobs.json?key=' + params.cf_api, {
         method: 'POST',
         params: {
-          'job[title]':'TITLE'
+          'job[title]':'New Title'
         },
         dataType: 'form-url-encoded',
       }).then(function (response) {
