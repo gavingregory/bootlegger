@@ -11,6 +11,7 @@ angular.module('bootleggerApp')
     .state('select', {
       url: '/select',
       templateUrl: 'app/views/_select.html',
+      controller : 'indexController',
       data: {
         css: 'css/select.css'
       }

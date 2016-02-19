@@ -5,7 +5,7 @@ angular.module('bootleggerApp')
       $window.localStorage[key] = value;
     };
     factory.get = function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue;
+      return $window.localStorage[key];
     };
     factory.setObject = function(key, value) {
       $window.localStorage[key] = JSON.stringify(value);

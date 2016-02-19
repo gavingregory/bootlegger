@@ -6,7 +6,8 @@ var express = require('express')
   , router = express.Router({mergeParams: true})
   , moment = require('moment')
   , videoHelper = require('../../services/videoHelper')
-  , Task = require('../../models/task').model;
+  , Task = require('../../models/task').model
+  , crowdflower = require('../../node-crowdflower/index')(params.cf_api);
 
 // multer
 var storage = multer.diskStorage({
@@ -102,61 +103,32 @@ router.get('/:task_id', function (req, res) {
  * Source this task to Crowdflower
  */
 router.post('/:task_id/crowdsource', function (req, res) {
-
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
     if (err) { return res.status(400).send(err);}
     else {
 
-      requestify.request('https://api.crowdflower.com/v1/jobs.json?key=' + params.cf_api, {
-        method: 'POST',
-        params: {
-          'job[title]':'New Title'
-        },
-        dataType: 'form-url-encoded',
-      }).then(function (response) {
-          console.log(response);
-          requestify.request('https://api.crowdflower.com/v1/jobs/' + response.body.id + '/upload', {
-            method: 'POST',
-            dataType: 'json',
-            body: data.jobs
-          }).then(function (response2) {
-            return res.send(response2);
-          })
+      var job = {
+        'job[title]' : 'Temp Title',
+        'job[instructions]' : 'Temp Instructions',
+        'job[cml]' : 'temp cml',
+        'job[css]' : 'temp css',
+        'job[js]' : 'Temp Js',
+        'job[support_email]' : 'g.i.gregory@ncl.ac.uk',
+        'job[payment_cents]' : 1,
+        'job[units_per_assignment]' : 1,
+        'job[judgments_per_unit]' : 1,
+        'job[time_per_page]' : 1
+      };
+
+      var units = [{"name":"item 1", "url":"example.com/item1"},{"name":"item 2", "url":"example.com/item2"}];
+
+      crowdflower.createJob(job)
+        .then(function (data) {
+          res.send(data);
+        })
+        .catch(function (err) {
+          res.send(err);
         });
-
-      // var request = https.request({
-      //   host: 'api.crowdflower.com',
-      //   method: 'POST',
-      //   path: 'v1/jobs.json?key=' + params.cf_api,
-      //   port: '443',
-      //   //form: { "job[title]":"title", "job[instructions]": "instructions" },
-      //   // headers: {
-      //   //   'Content-Type': 'application/json'
-      //   // },
-      // }, function(response) {
-      //   var str = ''
-      //   response.on('data', function (chunk) {
-      //     str += chunk;
-      //   });
-      //   response.on('end', function () {
-      //     console.log('data: ' + str);
-      //     console.log('response status code: ' + util.inspect(response.statusCode));
-      //     return res.send(str);
-      //   });
-      // });
-      // request.on('error', function (err) {
-      //   console.error('error: ' + err);
-      //   return res.send(err);
-      // });
-      // request.write('"job[title]":"title", "job[instructions]": "instructions"');
-      // request.end();
-
-      // request.post(params.cf_url + '?key=' + params.cf_api, {
-      //   body: data.jobs
-      // }, function (error, response, body) {
-      //   if (err) { return res.status(response.statusCode).send(err); }
-      //   return res.status(response.statusCode).send({response: response, body: body});
-      // });
     }
   })
 });

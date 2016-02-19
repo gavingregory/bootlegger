@@ -32,7 +32,7 @@ angular.module('bootleggerApp')
       controller: function ($scope, $uibModalInstance, data) {
         $scope.status = '';
         $scope.ok = function () {
-          taskFactory.pushTask(data.shoot_id, data.task._id) // empty data
+          taskFactory.crowdsourceTask(data.shoot_id, data.task._id)
           .then(function (response) {
             $uibModalInstance.close();
           }, function (response) {

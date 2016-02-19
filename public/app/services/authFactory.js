@@ -5,7 +5,7 @@ angular.module('bootleggerApp')
     var apikey = localStorage.get('apikey');
 
     factory.setApiKey = function () {
-      localStorage.set('apikey', 'a9c2e463-c12e-494a-b82a-6394183a30c3');
+      localStorage.set('apikey', '3aa68386-3a58-4c80-ac1d-a04c7fbcec15');
     };
 
     factory.login = function () {
