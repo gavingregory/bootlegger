@@ -7,7 +7,8 @@ var express = require('express')
   , moment = require('moment')
   , videoHelper = require('../../services/videoHelper')
   , Task = require('../../models/task').model
-  , crowdflower = require('../../node-crowdflower/index')(params.cf_api);
+  , crowdflower = require('../../node-crowdflower/index')(params.cf_api)
+  , Job = require('../../node-crowdflower/lib/Job');
 
 // multer
 var storage = multer.diskStorage({
@@ -106,27 +107,27 @@ router.post('/:task_id/crowdsource', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
     if (err) { return res.status(400).send(err);}
     else {
-
-      var job = {
-        'job[title]' : 'Temp Title',
-        'job[instructions]' : 'Temp Instructions',
-        'job[cml]' : 'temp cml',
-        'job[css]' : 'temp css',
-        'job[js]' : 'Temp Js',
-        'job[support_email]' : 'g.i.gregory@ncl.ac.uk',
-        'job[payment_cents]' : 1,
-        'job[units_per_assignment]' : 1,
-        'job[judgments_per_unit]' : 1,
-        'job[time_per_page]' : 1
-      };
-
       var units = [{"name":"item 1", "url":"example.com/item1"},{"name":"item 2", "url":"example.com/item2"}];
+      var job = new Job({
+        title : 'Temp Title',
+        instructions : 'Temp Instructions',
+        cml : 'Temp CML',
+        css : 'Temp CSS',
+        js : 'Temp JS',
+        support_email : 'g.i.gregory@ncl.ac.uk',
+        payment_cents : 1,
+        units_per_assignment : 1,
+        judgments_per_unit : 1,
+        units : units
+      });
 
       crowdflower.createJob(job)
         .then(function (data) {
+          console.log(data);
           res.send(data);
         })
         .catch(function (err) {
+          console.log(err);
           res.send(err);
         });
     }
