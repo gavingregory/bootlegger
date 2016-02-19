@@ -63,7 +63,33 @@ router.post('/', function (req, res) {
       console.log(err);
       return res.status(400).send(err);
     }
-    return res.json({status: 'success', data: data});
+
+    console.log(data);
+
+    // else, upload to CF
+    var job = new Job({
+      title : data.name,
+      instructions : data.instructions,
+      cml : data.cml,
+      css : data.css,
+      js : data.js,
+      support_email : data.support_email,
+      payment_cents : data.cent_per_job,
+      units_per_assignment : 1,
+      judgments_per_unit : 1,
+      units : data.jobs
+    });
+
+    crowdflower.createJob(job)
+      .then(function (cf_data) {
+        console.log(data);
+        res.json({status: 'success', data: data});
+      })
+      .catch(function (err) {
+        console.log(err);
+        res.json({status: 'failed', data: err});
+      });
+
   });
 });
 
@@ -107,29 +133,8 @@ router.post('/:task_id/crowdsource', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
     if (err) { return res.status(400).send(err);}
     else {
-      var units = [{"name":"item 1", "url":"example.com/item1"},{"name":"item 2", "url":"example.com/item2"}];
-      var job = new Job({
-        title : 'Temp Title',
-        instructions : 'Temp Instructions',
-        cml : 'Temp CML',
-        css : 'Temp CSS',
-        js : 'Temp JS',
-        support_email : 'g.i.gregory@ncl.ac.uk',
-        payment_cents : 1,
-        units_per_assignment : 1,
-        judgments_per_unit : 1,
-        units : units
-      });
 
-      crowdflower.createJob(job)
-        .then(function (data) {
-          console.log(data);
-          res.send(data);
-        })
-        .catch(function (err) {
-          console.log(err);
-          res.send(err);
-        });
+
     }
   })
 });

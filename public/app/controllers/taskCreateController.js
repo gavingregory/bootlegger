@@ -44,7 +44,7 @@ angular.module('bootleggerApp')
         });
       })
       .error(function (data, status, headers, config) {
-        $log.log(data.errors + ' ' + status);
+        $log.log(data + ' ' + status);
       });
    }
 

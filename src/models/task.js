@@ -19,8 +19,11 @@ var schema = Schema({
     path: {type: String, required: true},
     size: {type: Number, required: true}
   }],
+  CML           : { type: String, default: ' ' },
+  CSS           : { type: String, default: ' ' },
+  JS            : { type: String, default: ' ' },
+  support_email : { type: String, default: ' ' },
   instructions  : { type: String, required: true  },
-  job_count     : { type: Number, required: true  }, /* number of jobs to generate */
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */
   segment_size : { type: Number, required: true },   /* size (in seconds) of desired segment */
   cent_per_job : { type: Number, required: true },
