@@ -74,7 +74,6 @@ describe('videoHelper#distributeVideoIndexes', function () {
     });
     it('should not overlap the time between segments', function () {
       videoHelper.distributeVideoIndexes(10,5, function (result) {
-        console.log(result);
         assert.isBelow(result.segments[0].end, result.segments[1].start);
       });
     });

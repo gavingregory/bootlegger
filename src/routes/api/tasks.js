@@ -39,7 +39,6 @@ router.post('/', function (req, res) {
   var id = 0; // id for each job
   for (var i = 0; i < videos.length; i++) {
     videoHelper.distributeVideoIndexes(videos[i].meta.static_meta.clip_length, req.body.segment_size, function (result) {
-      console.log('segments length: ' + result.segments.length);
       for (j = 0; j < result.segments.length; j++) {
         var o = {
           id: id++,
@@ -53,7 +52,6 @@ router.post('/', function (req, res) {
             filesize: videos[i].meta.static_meta.filesize
           }
         };
-        console.log('pushing o');
         t.jobs.push(o);
       }
     });
@@ -63,8 +61,20 @@ router.post('/', function (req, res) {
       console.log(err);
       return res.status(400).send(err);
     }
-
-    console.log(data);
+    // create units of data for each CF job
+    var units = [];
+    for (var i = 0; i < data.jobs.length; i++) {
+      units.push({
+        id: data.jobs[i].id,
+        video_index: data.jobs[i].video.index,
+        video_start: data.jobs[i].video.start,
+        video_end: data.jobs[i].video.end,
+        video_filename: data.jobs[i].video.filename,
+        video_path: data.jobs[i].video.path,
+        video_length: data.jobs[i].video.length,
+        video_filesize: data.jobs[i].video.filesize
+      });
+    }
 
     // else, upload to CF
     var job = new Job({
@@ -77,16 +87,16 @@ router.post('/', function (req, res) {
       payment_cents : data.cent_per_job,
       units_per_assignment : 1,
       judgments_per_unit : 1,
-      units : data.jobs
+      units : units
     });
+
+    console.log(units[0]);
 
     crowdflower.createJob(job)
       .then(function (cf_data) {
-        console.log(data);
         res.json({status: 'success', data: data});
       })
       .catch(function (err) {
-        console.log(err);
         res.json({status: 'failed', data: err});
       });
 
