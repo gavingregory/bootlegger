@@ -10,7 +10,7 @@ router.get('/session', function (req, res) {
 
 //initiate bootlegger auth
 router.get('/auth', function (req, res) {
-  res.redirect(APIURL + '/api/auth/login?apikey='+APIKEY);
+  res.redirect(params.apiurl + '/api/auth/login?apikey='+APIKEY);
 });
 
 //return endpoint for bootlegger returning session key
