@@ -31,7 +31,11 @@ router.get('/logout', function (req, res) {
 //TODO: TEST THIS
 //TODO: Need to get session key and pass it along
 router.get('/profile', function (req, res) {
-  requestify.get(params.apiurl + '/api/profile/me?apikey=' + params.apikey)
+  requestify.get(params.apiurl + '/api/profile/me?apikey=' + params.apikey, {
+    cookies: {
+      'sails.sid' : req.session.sessionkey
+    }
+  })
     .then(function (data) {
       res.send(data);
     })
