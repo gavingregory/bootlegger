@@ -21,7 +21,7 @@ angular.module('bootleggerApp')
     };
 
     factory.profile = function () {
-      return $http.get('http://dev.bootlegger.tv/api/profile/me?apikey='+apikey);
+      return $http.get('/api/v1/auth/profile');
     }
 
     return factory;
