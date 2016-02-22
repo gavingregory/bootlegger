@@ -3,11 +3,11 @@ angular.module('bootleggerApp')
     var factory = {};
 
     factory.getShoots = function () {
-      return $http.get('http://localhost:1337/api/profile/mine?apikey=' + localStorage.get('apikey'));
+      return $http.get('http://dev.bootlegger.tv/api/profile/mine?apikey=' + localStorage.get('apikey'));
     };
 
     factory.getShoot = function (id) {
-      return $http.get('http://localhost:1337/api/media/shoot/' + id + '?apikey=' + localStorage.get('apikey'));
+      return $http.get('http://dev.bootlegger.tv/api/media/shoot/' + id + '?apikey=' + localStorage.get('apikey'));
     };
 
     return factory;

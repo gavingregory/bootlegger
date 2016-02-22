@@ -5,11 +5,11 @@ angular.module('bootleggerApp')
     var apikey = localStorage.get('apikey');
 
     factory.setApiKey = function () {
-      localStorage.set('apikey', '3aa68386-3a58-4c80-ac1d-a04c7fbcec15');
+      localStorage.set('apikey', '5fbeed71-e0f1-4310-83a0-f77becf3127e');
     };
 
     factory.login = function () {
-      return $window.location.href='http://localhost:1337/api/auth/login?apikey=' + apikey;
+      return $window.location.href='http://dev.bootlegger.tv/api/auth/login?apikey=' + apikey;
     };
 
     factory.logout = function () {
@@ -21,7 +21,7 @@ angular.module('bootleggerApp')
     };
 
     factory.profile = function () {
-      return $http.get('http://localhost:1337/api/profile/me?apikey='+apikey);
+      return $http.get('http://dev.bootlegger.tv/api/profile/me?apikey='+apikey);
     }
 
     return factory;
