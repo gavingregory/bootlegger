@@ -21,10 +21,13 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage:storage});
 
-// get all tasks
+// get task
 router.get('/', function (req, res) {
   Task.find({shoot_id: req.params.shoot_id}, function (err, data) {
     if (err) { return res.send(err); }
+
+    //TODO: fetch crowdflower data
+
     return res.send(data);
   });
 });
@@ -90,11 +93,14 @@ router.post('/', function (req, res) {
       units : units
     });
 
-    console.log(units[0]);
-
     crowdflower.createJob(job)
       .then(function (cf_data) {
-        res.json({status: 'success', data: data});
+        var parsed = JSON.parse(cf_data.body);
+        t.cf_job_id = parsed.id;
+        t.save(function (err, data) {
+          if (err) return res.status(400).send(err);
+          res.json({status: 'success', data: data});
+        });
       })
       .catch(function (err) {
         res.json({status: 'failed', data: err});
@@ -130,22 +136,19 @@ router.post('/:task_id/upload-image', upload.array('file'), function (req, res) 
 
 router.get('/:task_id', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
-    if (err) { return res.status(400).send(err); } else {
-      return res.json(data);
-    }
-  })
-})
-
-/**
- * Source this task to Crowdflower
- */
-router.post('/:task_id/crowdsource', function (req, res) {
-  Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
-    if (err) { return res.status(400).send(err);}
-    else {
-
-
-    }
+    if (err) return res.status(400).send(err);
+    console.log('cf job id: ' + data.cf_job_id);
+    crowdflower.pingJob(data.cf_job_id)
+      .then(function (cf_data) {
+        var r = {};
+        r.data = data;
+        r.cf = cf_data.body;
+        return res.json(r);
+      })
+      .catch(function (err) {
+        console.log('catch err')
+        return res.status(400).send(err);
+      });
   })
 });
 

@@ -25,8 +25,8 @@ var schema = Schema({
   support_email : { type: String, default: ' ' },
   instructions  : { type: String, required: true  },
   passes        : { type: Number, required: true  }, /* number of passes over each item of data */
-  segment_size : { type: Number, required: true },   /* size (in seconds) of desired segment */
-  cent_per_job : { type: Number, required: true },
+  segment_size  : { type: Number, required: true },   /* size (in seconds) of desired segment */
+  cent_per_job  : { type: Number, required: true },
   videos        : [{}],
   jobs          : [{
       id: {type: String},
@@ -43,9 +43,10 @@ var schema = Schema({
       completed_at: {type: Date},
       result: {type: String}
   }],
-  meta_object  : { type: String, required: true },
-  meta_key     : { type: String, required: true },
-  meta_value   : [{ type: String, required: true }]
+  cf_job_id     : { type: Number },
+  meta_object   : { type: String, required: true },
+  meta_key      : { type: String, required: true },
+  meta_value    : [{ type: String, required: true }]
 });
 
 schema.pre('save', function (next) {

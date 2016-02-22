@@ -3,11 +3,13 @@ angular.module('bootleggerApp')
 
   $scope.loading = 1;
   $scope.task = {};
+  $scope.cf = {};
   $scope.shoot_id = $stateParams.shoot_id;
 
   taskFactory.getTask($stateParams.shoot_id, $stateParams.task_id)
   .success(function (task) {
-    $scope.task = task;
+    $scope.task = task.data;
+    $scope.cf = JSON.parse(task.cf);
   })
   .error(function (data, status, headers, config) {
     $log.log(data.error + ' ' + status);

@@ -1,29 +1,25 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10 col-md-offset-1">
     <!-- Main Page Heading -->
     <h2>Task</h2>
     <div class="loader" ng-show="loading">Loading...</div>
     <div class="row" ng-hide="loading">
-
+</div>
+<div class="row">
       <!-- Reference Image RHS -->
       <div class="col-md-4">
+        <h3>Reference Images</h3>
         <div>
           <div style="height: 305px">
             <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
               <uib-slide ng-repeat="slide in task.ref_images" active="slide.active">
                 <img ng-src="files/{{slide.filename}}" style="margin:auto;">
-                <div class="carousel-caption">
-                  <h4>Slide {{$index}}</h4>
-                  <p>Text</p>
-                </div>
+
               </uib-slide>
             </uib-carousel>
           </div>
         </div>
-      </div>
-
-      <!-- Video CENTRE -->
-      <div class="col-md-4">
+        <h3>Data</h3>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -72,9 +68,94 @@
         </table>
       </div>
 
+      <!-- Video CENTRE -->
+      <div class="col-md-4">
+        <h3>Crowdflower Status</h3>
+        <table>
+          <tr>
+            <td>
+              Golden Units
+            </td>
+            <td>
+              {{cf.golden_units}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              All Units
+            </td>
+            <td>
+              {{cf.all_units}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Ordered Units
+            </td>
+            <td>
+              {{cf.ordered_units}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Completed Units Estimate
+            </td>
+            <td>
+              {{cf.completed_units_estimate}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Needed Judgments
+            </td>
+            <td>
+              {{cf.needed_judgments}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              All Judgments
+            </td>
+            <td>
+              {{cf.all_judgments}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Tainted Judgments
+            </td>
+            <td>
+              {{cf.tainted_judgments}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Completed Gold Estimate
+            </td>
+            <td>
+              {{cf.completed_gold_estimate}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Completed Non-gold Estimate
+            </td>
+            <td>
+              {{cf.completed_non_gold_estimate}}
+            </td>
+          </tr>
+        </table>
+      </div>
+
       <!-- Instructions RHS -->
       <div class="col-md-4">
-        <h4>Annotate Link</h4>
+        <h3>Options</h3>
         <a ui-sref="#/shoots/{{shoot_id}}/task/{{task._id}}/annotate">Annotate</a>
         <h4>Instructions</h4>
         {{task.instructions}}

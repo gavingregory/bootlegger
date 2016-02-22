@@ -8,7 +8,12 @@ angular.module('bootleggerApp')
     segment_size: 15,
     creator: localStorage.getObject('me').profile.displayName,
     shoot_id: $stateParams.shoot_id,
-    template_id: $stateParams.template_id
+    template_id: $stateParams.template_id,
+    cml: '<iframe src="{{video_path}}" width="560" height="315" frameborder="0"></iframe>\n<cml:radios label="Subject located in the video footage:" validates="required">\n<cml:radio label="Yes" value="true" />\n<cml:radio label="No" value="false" />\n</cml:radios>',
+    css: 'body { color: black }',
+    js: "require(['jquery-noconflict'], function($) {\n//Ensure MooTools is where it must be\nWindow.implement('$', function(el, nc){\nreturn document.id(el, nc, this.document);\n});\nvar $ = window.jQuery;\n//jQuery goes here\n});  ',",
+    instructions: 'Please observe the reference image and then watch the video from start to finish. If you locate the person/object shown in the image at any point within the video, please answer YES, otherwise answer NO.',
+    cent_per_job: 1,
   };
 
   // the form data
@@ -28,14 +33,13 @@ angular.module('bootleggerApp')
 
     taskFactory.createTask($stateParams.shoot_id, $scope.formData)
       .success(function (data) {
-        $log.log(data);
         files.upload = Upload.upload({
           url: '/api/v1/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
           method: 'POST',
           arrayKey: '',
           file: files
         }).then(function (resp) {
-           window.location.replace('#/shoots/' + $stateParams.shoot_id + '/task/' + data.data._id);
+           window.location.replace('#/dashboard/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
