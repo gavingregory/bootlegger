@@ -3,7 +3,6 @@ angular.module('bootleggerApp')
   $scope.session = $cookies.get('sails.sid');
   function init() {
     authFactory.setApiKey();
-    console.log('something');
   }
   init();
 });

@@ -21,7 +21,7 @@ angular.module('bootleggerApp')
        authFactory.profile()
          .success(function(me){
            $scope.me = me;
-           localStorage.setObject('me', me);
+           localStorage.setObject('me', JSON.parse(me.body));
          });
      }
     })
