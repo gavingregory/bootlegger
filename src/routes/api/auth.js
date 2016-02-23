@@ -37,8 +37,7 @@ router.get('/profile', function (req, res) {
     }
   })
     .then(function (data) {
-      console.log(data);
-      res.send(data);
+      res.json(data.body);
     })
     .catch(function (err) {
       console.log(err);

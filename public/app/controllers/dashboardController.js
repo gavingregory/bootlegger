@@ -20,7 +20,7 @@ angular.module('bootleggerApp')
        $cookies.put('sessionid', resp.session);
        authFactory.profile()
          .success(function(me){
-           $scope.me = JSON.parse(me.body);
+           $scope.me = me;
            localStorage.setObject('me', $scope.me);
          });
      }
