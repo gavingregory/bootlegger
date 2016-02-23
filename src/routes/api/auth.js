@@ -10,7 +10,7 @@ router.get('/session', function (req, res) {
 
 //initiate bootlegger auth
 router.get('/auth', function (req, res) {
-  res.redirect(APIURL + '/api/auth/login?apikey='+APIKEY);
+  res.redirect(params.apiurl + '/api/auth/login?apikey='+APIKEY);
 });
 
 //return endpoint for bootlegger returning session key
@@ -37,9 +37,11 @@ router.get('/profile', function (req, res) {
     }
   })
     .then(function (data) {
+      console.log(data);
       res.send(data);
     })
     .catch(function (err) {
+      console.log(err);
       res.status(400).send(err);
     });
 })
