@@ -37,9 +37,11 @@ router.get('/profile', function (req, res) {
     }
   })
     .then(function (data) {
+      console.log(data);
       res.send(data);
     })
     .catch(function (err) {
+      console.log(err);
       res.status(400).send(err);
     });
 })
