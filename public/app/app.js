@@ -1,4 +1,4 @@
-angular.module('bootleggerApp', ['ui.router', 'uiRouterStyles', 'ngCookies', 'ui.bootstrap', 'ngFileUpload', 'ngMessages']);
+angular.module('bootleggerApp', ['ui.router', 'ngCookies', 'ui.bootstrap', 'ngFileUpload', 'ngMessages']);
 
 angular.module('bootleggerApp')
   .config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
@@ -11,10 +11,7 @@ angular.module('bootleggerApp')
     .state('select', {
       url: '/select',
       templateUrl: 'app/views/_select.html',
-      controller : 'indexController',
-      data: {
-        css: 'css/select.css'
-      }
+      controller : 'indexController'
     })
 
     // Annotation states
@@ -38,10 +35,7 @@ angular.module('bootleggerApp')
 
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'app/views/_dashboard.html',
-      data: {
-        css: 'css/dashboard.css'
-      }
+      templateUrl: 'app/views/_dashboard.html'
     })
     .state('dashboard.home', {
       url: '/home',
@@ -73,10 +67,7 @@ angular.module('bootleggerApp')
     .state('dashboard.createtask-template', {
       url: '/shoots/:shoot_id/create-task/template',
       controller: 'selectTemplateController',
-      templateUrl: 'app/views/dashboard/shoots/tasks/selectTemplate.html',
-      data: {
-        css: 'css/select.css'
-      }
+      templateUrl: 'app/views/dashboard/shoots/tasks/selectTemplate.html'
     })
     .state('dashboard.createtask-form', {
       url: '/shoots/:shoot_id/create-task/:template_id',
@@ -85,47 +76,4 @@ angular.module('bootleggerApp')
     })
     $urlRouterProvider.otherwise('/dashboard');
 
-
-    // $routeProvider
-    // .when('/',{
-    //   controller: 'indexController',
-    //   templateUrl: 'app/views/index/index.html'
-    // })
-    // .when('/login',{
-    //   controller: 'loginController',
-    //   template: '<div></div>'
-    // })
-    // .when('/shoots',{
-    //   controller: 'shootsController',
-    //   templateUrl: '/app/views/shoots/list.html'
-    // })
-    // .when('/shoots/:id',{
-    //   controller: 'shootController',
-    //   templateUrl: '/app/views/shoots/view.html'
-    // })
-    // .when('/shoots/:id/task/create', {
-    //   controller: 'selectTemplateController',
-    //   templateUrl: '/app/views/tasks/selectTemplate.html'
-    // })
-    // .when('/shoots/:shoot_id/task/create/:templateid', {
-    //   controller: 'taskCreateController',
-    //   templateUrl: '/app/views/tasks/create.html'
-    // })
-    // .when('/shoots/:shoot_id/task/:task_id', {
-    //   controller: 'taskViewController',
-    //   templateUrl: '/app/views/tasks/view.html'
-    // })
-    // .when('/shoots/:shoot_id/task/:task_id/annotate', {
-    //   controller: 'annotateWelcomeController',
-    //   templateUrl: '/app/views/annotate/welcome.html'
-    // })
-    // .when('/shoots/:shoot_id/task/:task_id/annotate/:crowdflower_id', {
-    //   controller: 'annotateController',
-    //   templateUrl: '/app/views/annotate/annotate.html'
-    // })
-    // .when('/orders/:customerId',{
-    //     controller: 'ordersController',
-    //     templateUrl: '/app/views/orders/list.html'
-    // })
-    // .otherwise({ redirectTo: '/' });
   });
