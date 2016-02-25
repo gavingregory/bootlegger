@@ -33,22 +33,4 @@ router.get('/:shoot_id', function (req, res) {
     });
 });
 
-router.get('/:task_id', function (req, res) {
-  Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
-    if (err) return res.status(400).send(err);
-    console.log('cf job id: ' + data.cf_job_id);
-    crowdflower.pingJob(data.cf_job_id)
-      .then(function (cf_data) {
-        var r = {};
-        r.data = data;
-        r.cf = cf_data.body;
-        return res.json(r);
-      })
-      .catch(function (err) {
-        console.log('catch err')
-        return res.status(400).send(err);
-      });
-  })
-});
-
 module.exports = router;
