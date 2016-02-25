@@ -1,13 +1,13 @@
 angular.module('bootleggerApp')
-  .factory('shootFactory', function ($http, localStorage) {
+  .factory('shootFactory', function ($http, localStorage, appSettings) {
     var factory = {};
 
     factory.getShoots = function () {
-      return $http.get('http://dev.bootlegger.tv/api/profile/mine?apikey=' + localStorage.get('apikey'));
+      return $http.get('api/v1/shoots');
     };
 
     factory.getShoot = function (id) {
-      return $http.get('http://dev.bootlegger.tv/api/media/shoot/' + id + '?apikey=' + localStorage.get('apikey'));
+      return $http.get('api/v1/shoots/' + id);
     };
 
     return factory;

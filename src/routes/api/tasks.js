@@ -7,8 +7,8 @@ var express = require('express')
   , moment = require('moment')
   , videoHelper = require('../../services/videoHelper')
   , Task = require('../../models/task').model
-  , crowdflower = {} //require('../../node-crowdflower/index')(params.cf_api)
-  , Job = {} //require('../../node-crowdflower/lib/Job');
+  , crowdflower = require('../../services/crowdflower/Crowdflower')(params.cf_api)
+  , Job = require('../../services/crowdflower/Job');
 
 // multer
 var storage = multer.diskStorage({
