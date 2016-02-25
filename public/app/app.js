@@ -83,7 +83,7 @@ angular.module('bootleggerApp')
       controller: 'taskCreateController',
       templateUrl: 'app/views/dashboard/shoots/tasks/create.html'
     })
-    $urlRouterProvider.otherwise('/select');
+    $urlRouterProvider.otherwise('/dashboard');
 
 
     // $routeProvider
