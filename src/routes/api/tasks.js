@@ -43,12 +43,14 @@ router.post('/', function (req, res) {
   for (var i = 0; i < videos.length; i++) {
     videoHelper.distributeVideoIndexes(videos[i].meta.static_meta.clip_length, req.body.segment_size, function (result) {
       for (j = 0; j < result.segments.length; j++) {
+        console.log(videos[i].path);
         var o = {
           id: id++,
           video: {
             index : i,
             start : result.segments[j].start,
             end: result.segments[j].end,
+            //filename: videos[i].path,
             filename: videos[i].meta.static_meta.local_filename,
             path: videos[i].path,
             length: videoHelper.durationToMillis(videos[i].meta.static_meta.clip_length),

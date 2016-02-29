@@ -18,7 +18,6 @@ router.get('/success', function (req, res) {
   req.session.sessionkey = req.query.session;
   req.session.save();
   res.redirect('/#/dashboard/home');
-  console.log('SUCCESS: ' + req.query.session);
 });
 
 // tears down the users session

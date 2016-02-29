@@ -4,6 +4,10 @@ angular.module('bootleggerApp')
   // the initial state, used for reset
   var initialTask = {
     job_count: 50,
+    meta_value: 'lead_singer',
+    name: 'locate lead_singer',
+    description: 'Please locate the lead singer',
+    support_email: 'g.i.gregory@ncl.ac.uk',
     passes: 1,
     segment_size: 15,
     creator: localStorage.getObject('me').profile.displayName,

@@ -9,20 +9,24 @@ var express = require('express')
   , multiparty = require('connect-multiparty') // required for file upload
   , multipartyMiddleware = multiparty();
 
+// Authentication
+router.use('/auth', authRoute);
+
+router.use(function (req, res, next) {
+  if (req.session.sessionkey === undefined) return res.status(401).json({error: 'invalid session.'});
+  next();
+});
+
 // Task Templates
 var TemplateResource = router.resource = restful.model('tasktemplate', TaskTemplate.schema)
   .methods(['get', 'post', 'put']);
 TemplateResource.register(router, '/task-templates');
-
 
 // Tasks
 router.use('/shoots/:shoot_id/tasks', tasksRoute);
 
 // Shoots
 router.use('/shoots', shootRoute);
-
-// Authentication
-router.use('/auth', authRoute);
 
 // Export
 module.exports = router;
