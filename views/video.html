@@ -1,0 +1,30 @@
+<html>
+
+<head>
+  <link href="http://vjs.zencdn.net/5.7.1/video-js.css" rel="stylesheet">
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+</head>
+
+<body>
+  <video id="video" class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+    <source src="https://dev.bootlegger.tv/media/full/550803d5d5bd650306b22aa2#t=5,7" type="video/mp4">
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a web browser that
+      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+  <a onclick="playVideo()">Play</a>
+  <script src="http://vjs.zencdn.net/5.7.1/video.js"></script>
+  <script>
+    window.onload = function () {
+      var myPlayer = _V_("video");
+
+      function playVideo() {
+        myPlayer.currentTime(5);
+        myPlayer.play();
+      };
+    }
+  </script>
+</body>
+
+</html>
