@@ -12,6 +12,7 @@ var express = require('express')
   , swig = require('swig')
   , indexRoute = require('./src/routes/index')
   , apiRoute = require('./src/routes/api')
+  , crowdRoute = require('./src/routes/crowd/crowd')
   , seed = require('./src/config/seed')
   , app = express();
 
@@ -41,10 +42,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRoute);
-app.get('/dbseed', function (req, res) {
-    seed.seed();
-    return res.send('successful');
-});
+// app.get('/dbseed', function (req, res) {
+//     seed.seed();
+//     return res.send('successful');
+// });
+app.use('/crowd', crowdRoute);
 app.use('/api/v1', apiRoute);
 
 // catch 404 and forward to error handler
