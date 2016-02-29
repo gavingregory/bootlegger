@@ -30,6 +30,7 @@ app.use(session({
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', __dirname+ '/views');
+swig.setDefaults({ cache: false });
 app.set('view cache', false); // enable in production!
 
 // uncomment after placing your favicon in /public
