@@ -1,4 +1,5 @@
 var express = require('express')
+  , LEX = require('letsencrypt-express')
   , path = require('path')
   , favicon = require('serve-favicon')
   , logger = require('morgan')
@@ -83,8 +84,27 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var server = app.listen(3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Bootlegger app listening at http://%s:%s', host, port);
+var lex = LEX.create({
+  configDir: require('os').homedir() + '/.letsencrypt',
+  approveRegistration: function (hostname, cb) { // leave `null` to disable automatic registration
+    // Note: this is the place to check your database to get the user associated with this domain
+    cb(null, {
+      domains: ['crowd.bootegger.tv']
+    , email: 'g.i.gregory@ncl.ac.uk' // user@example.com
+    , agreeTos: true
+    });
+  }
 });
+
+lex.onRequest = app;
+
+lex.listen([80], [443, 5001], function () {
+  var protocol = ('requestCert' in this) ? 'https': 'http';
+  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+});
+
+// var server = app.listen(3000, function () {
+//   var host = server.address().address;
+//   var port = server.address().port;
+//   console.log('Bootlegger app listening at http://%s:%s', host, port);
+// });
