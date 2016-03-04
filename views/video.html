@@ -1,13 +1,11 @@
 <html>
-
 <head>
   <link href="http://vjs.zencdn.net/5.7.1/video-js.css" rel="stylesheet">
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 </head>
-
 <body>
   <video id="video" class="video-js" preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-    <source src="https://dev.bootlegger.tv/media/full/550803d5d5bd650306b22aa2#t={{start_time}}, {{end_time}}" type="video/mp4">
+    <source src="https://dev.bootlegger.tv/media/full/{{video}}t={{start_time}},{{end_time}}" type="video/mp4">
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a web browser that
       <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -35,29 +33,6 @@
 
       });
     }
-
-    function playVideo() {
-    var starttime = {{start_time}};
-    var endtime = {{end_time}};
-
-    var video = document.getElementById('player1');
-
-    //handler should be bound first
-    video.addEventListener("timeupdate", function() {
-       if (this.currentTime >= endtime) {
-            this.pause();
-        }
-    }, false);
-
-    //suppose that video src has been already set properly
-    video.load();
-    video.play();    //must call this otherwise can't seek on some browsers, e.g. Firefox 4
-    try {
-        video.currentTime = starttime;
-    } catch (ex) {
-        //handle exceptions here
-    }
-}
   </script>
 </body>
 

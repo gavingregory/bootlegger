@@ -25,9 +25,6 @@ var upload = multer({storage:storage});
 router.get('/', function (req, res) {
   Task.find({shoot_id: req.params.shoot_id}, function (err, data) {
     if (err) { return res.send(err); }
-
-    //TODO: fetch crowdflower data
-
     return res.send(data);
   });
 });
@@ -77,7 +74,9 @@ router.post('/', function (req, res) {
         video_filename: data.jobs[i].video.filename,
         video_path: data.jobs[i].video.path,
         video_length: data.jobs[i].video.length,
-        video_filesize: data.jobs[i].video.filesize
+        video_filesize: data.jobs[i].video.filesize,
+        task_id: data._id,
+        ref_image: 0
       });
     }
 

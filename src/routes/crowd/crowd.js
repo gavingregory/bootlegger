@@ -5,7 +5,6 @@ var express = require('express')
   , swig = require('swig')
   , params = require('../../config/params.js');
 
-
 swig.setDefaults({ cache: false });
 
 // Get Reference Image for use in Crowdflower Job
@@ -19,11 +18,11 @@ router.get('/image/:taskid/:i?', function (req, res) {
 });
 
 // Get Video for use in Crowdflower IFrame
-
-router.get('/video/:taskid/:jobid', function (req, res) {
+router.get('/video/:video/:start/:end', function (req, res) {
   res.render('video.html', {
-    start_time: 6,
-    end_time: 8
+    start_time: req.params.start,
+    end_time: req.params.end,
+    video: req.params.video
   });
 });
 
