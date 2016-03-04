@@ -6,7 +6,7 @@ var express = require('express')
 
 // get shoots
 router.get('/', function (req, res) {
-  requestify.get(params.apiurl + '/api/profile/mine?apikey=' + params.apikey,
+  requestify.get(params.bootlegger_api_url + '/api/profile/mine?apikey=' + params.bootlegger_api_key,
   { cookies: {'sails.sid' : req.session.sessionkey} })
     .then(function (data) {
       data = JSON.parse(data.body);
@@ -23,7 +23,7 @@ router.get('/', function (req, res) {
 
 // get shoot
 router.get('/:shoot_id', function (req, res) {
-  requestify.get(params.apiurl + '/api/media/shoot/' + req.params.shoot_id + '?apikey=' + params.apikey,
+  requestify.get(params.bootlegger_api_url + '/api/media/shoot/' + req.params.shoot_id + '?apikey=' + params.bootlegger_api_key,
   { cookies: {'sails.sid' : req.session.sessionkey} })
     .then(function (data) {
       res.json(JSON.parse(data.body));

@@ -9,7 +9,8 @@ angular.module('bootleggerApp')
     };
 
     factory.login = function () {
-      return $window.location.href='http://dev.bootlegger.tv/api/auth/login?apikey=' + apikey;
+      return $window.location.href='/api/v1/auth/auth';
+      //return $window.location.href='http://dev.bootlegger.tv/api/auth/login?apikey=' + apikey;
     };
 
     factory.logout = function () {
