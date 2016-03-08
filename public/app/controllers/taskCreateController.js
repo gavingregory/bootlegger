@@ -13,7 +13,7 @@ angular.module('bootleggerApp')
     creator: localStorage.getObject('me').profile.displayName,
     shoot_id: $stateParams.shoot_id,
     template_id: $stateParams.template_id,
-    cml: '<img src="https://crowd.bootlegger.tv/crowd/image/{{task_id}}/0"/>\n<iframe src="https://crowd.bootlegger.tv/crowd/video/{{video_path}}/{{video_start}}/{{video_end}}" frameBorder="0" width="100%" height="100%" style="height: 320px; width: 100%;" ></iframe>\n<cml:radios label="Subject located in the video footage:" validates="required">\n<cml:radio label="Yes" value="true" />\n<cml:radio label="No" value="false" />\n<cml:radio label="I''m unable to verify" value="na" />\n</cml:radios>',
+    cml: '<img src="https://crowd.bootlegger.tv/crowd/image/{{task_id}}/0"/>\n<iframe src="https://crowd.bootlegger.tv/crowd/video/{{video_path}}/{{video_start}}/{{video_end}}" frameBorder="0" width="100%" height="100%" style="height: 320px; width: 100%;" ></iframe>\n<cml:radios label="Subject located in the video footage:" validates="required">\n<cml:radio label="Yes" value="true" />\n<cml:radio label="No" value="false" />\n<cml:radio label="I am unable to verify" value="na" />\n</cml:radios>',
     css: 'body { color: black }',
     js: "require(['jquery-noconflict'], function($) {\n//Ensure MooTools is where it must be\nWindow.implement('$', function(el, nc){\nreturn document.id(el, nc, this.document);\n});\nvar $ = window.jQuery;\n//jQuery goes here\n});  ',",
     instructions: 'Please observe the reference image and then watch the video from start to finish. If you locate the person/object shown in the image at any point within the video, please answer YES, otherwise answer NO.',
@@ -35,8 +35,10 @@ angular.module('bootleggerApp')
   $scope.submitForm = function(files) {
     $scope.formData.videos = $scope.videos;
 
+    // create a new task
     taskFactory.createTask($stateParams.shoot_id, $scope.formData)
       .success(function (data) {
+        // if successful, upload the reference image(s)
         files.upload = Upload.upload({
           url: '/api/v1/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
           method: 'POST',
@@ -48,7 +50,7 @@ angular.module('bootleggerApp')
             console.log('Error status: ' + resp.status);
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
       })
       .error(function (data, status, headers, config) {
