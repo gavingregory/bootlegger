@@ -70,8 +70,8 @@ router.post('/', function (req, res) {
         video_index: data.jobs[i].video.index,
         video_start: data.jobs[i].video.start,
         video_end: data.jobs[i].video.end,
-        video_filename: data.jobs[i].video.filename,
-        video_path: data.jobs[i].video.path,
+        video_filename: data.jobs[i].video.path,
+        //video_path: ,
         video_length: data.jobs[i].video.length,
         video_filesize: data.jobs[i].video.filesize,
         task_id: data._id,
@@ -114,6 +114,7 @@ router.post('/:task_id/upload-image', upload.array('file'), function (req, res) 
   console.log('uploading an image file!');
   Task.findById(req.params.task_id, function (err, data) {
     if (err) {
+      console.log('Unable to find the task?');
       console.log(err);
       return res.status(500).send(err);
     }
@@ -126,6 +127,7 @@ router.post('/:task_id/upload-image', upload.array('file'), function (req, res) 
     }
     data.save(function (err) {
       if (err) {
+        console.log('Found the task when uploading image, but unable to save back to database ...');
         console.log(err);
         return res.status(500).send(err);
       }

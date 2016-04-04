@@ -5,7 +5,8 @@ var requestify = require('requestify'),
   qs = require('querystring'),
   Job = require('./Job');
 
-var defaultCML = '<img src="https://crowd.bootlegger.tv/crowd/image/{{task_id}}/0" />\n<iframe src="https://crowd.bootlegger.tv/crowd/video/{{video_path}}/{{video_start}}/{{video_end}}" frameBorder="0" width="100%" height="100%" style="height: 320px; width: 100%;"></iframe>\n<cml:radios validates="required" label="I have located a whisper in the video footage:">\n<cml:radio label="Yes" value="true"></cml:radio>\n<cml:radio label="No" value="false"></cml:radio>\n<cml:radio label="I am unable to verify" value="na"></cml:radio>\n</cml:radios>'
+//var defaultCML = '<img src="https://crowd.bootlegger.tv/crowd/image/{{task_id}}/0" />\n<iframe src="https://crowd.bootlegger.tv/crowd/video/{{video_path}}/{{video_start}}/{{video_end}}" frameBorder="0" width="100%" height="100%" style="height: 320px; width: 100%;"></iframe>\n<cml:radios validates="required" label="I have located a whisper in the video footage:">\n<cml:radio label="Yes" value="true"></cml:radio>\n<cml:radio label="No" value="false"></cml:radio>\n<cml:radio label="I am unable to verify" value="na"></cml:radio>\n</cml:radios>'
+var defaultCML = 'test';
 
 /**
  * Constants
