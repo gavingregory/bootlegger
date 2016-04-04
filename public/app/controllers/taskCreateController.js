@@ -43,7 +43,7 @@ angular.module('bootleggerApp')
           url: '/api/v1/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id + '/upload-image',
           method: 'POST',
           arrayKey: '',
-          file:
+          file: files
 
         }).then(function (resp) {
            window.location.replace('#/dashboard/shoots/' + $stateParams.shoot_id + '/tasks/' + data.data._id);

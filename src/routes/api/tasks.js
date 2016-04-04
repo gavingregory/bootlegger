@@ -47,9 +47,8 @@ router.post('/', function (req, res) {
             index : i,
             start : result.segments[j].start,
             end: result.segments[j].end,
-            //filename: videos[i].path,
             filename: videos[i].meta.static_meta.local_filename,
-            path: videos[i].path,
+            path: videos[i].meta.static_meta.path,
             length: videoHelper.durationToMillis(videos[i].meta.static_meta.clip_length),
             filesize: videos[i].meta.static_meta.filesize
           }

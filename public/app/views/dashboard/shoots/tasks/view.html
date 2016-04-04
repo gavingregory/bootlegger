@@ -41,6 +41,9 @@
               <th>
                 total video length
               </th>
+              <th>
+                path
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -62,6 +65,9 @@
               </td>
               <td>
                 {{job.video.length/1000 | setDecimal:2}}s
+              </td>
+              <td>
+                {{job.video.path}}
               </td>
             </tr>
           </tbody>

@@ -197,38 +197,14 @@
       <button ng-click="reset()" class="btn btn-info btn-lg">Reset</button>
     </form>
   </div> <!-- end lhs column -->
+  
   <!-- rhs column -->
   <div class="col-md-4">
     <div class="row">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">Task Preview</div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-4">
-                <h4>Task</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                Ref Images:
-                <div>
-                  TODO: correct this for multiple files:
-                  <img ng-show="taskForm.files.$valid" ngf-thumbnail="picFiles" class="thumb">
-                </div>
-              </div>
-              <div class="col-md-4">
-                Video:
-              </div>
-              <div class="col-md-4">
-                Instructions:
-                <p>
-                  {{formData.instructions}}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <table>
+          <tr ng-repeat="video in videos"><td>{{video}}</td></tr>
+        </table>
       </div>
     </div>
   </div> <!-- end rhs column -->
