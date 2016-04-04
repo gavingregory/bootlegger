@@ -17,6 +17,8 @@ var express = require('express')
   , seed = require('./src/config/seed')
   , app = express();
 
+'use strict';
+
 // database
 mongoose.connect(db.url, function (err) {
   if (err) {console.log(err);}
@@ -98,13 +100,13 @@ var lex = LEX.create({
 
 lex.onRequest = app;
 
-lex.listen([80], [443, 5001], function () {
-  var protocol = ('requestCert' in this) ? 'https': 'http';
-  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
-});
+//lex.listen([80], [443, 5001], function () {
+//  var protocol = ('requestCert' in this) ? 'https': 'http';
+//  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
+//});
 
-// var server = app.listen(3000, function () {
-//   var host = server.address().address;
-//   var port = server.address().port;
-//   console.log('Bootlegger app listening at http://%s:%s', host, port);
-// });
+ var server = app.listen(3000, function () {
+   var host = server.address().address;
+   var port = server.address().port;
+   console.log('Bootlegger app listening at http://%s:%s', host, port);
+ });

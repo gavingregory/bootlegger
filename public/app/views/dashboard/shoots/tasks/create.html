@@ -106,7 +106,7 @@
         <label for="cml" class="col-sm-2 control-label">CML</label>
         <div class="col-sm-10">
           <textarea rows="3" class="form-control" name="cml" ng-model="formData.cml" placeholder="enter CML"
-          ng-minlength="3" ng-maxlength="500" required></textarea>
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
           <div ng-if="taskForm.cml.$touched" ng-messages="taskForm.cml.$error">
             <p ng-message="minlength">CML is too short.</p>
             <p ng-message="maxlength">CML is too long.</p>
@@ -121,7 +121,7 @@
         <label for="css" class="col-sm-2 control-label">CSS</label>
         <div class="col-sm-10">
           <textarea rows="3" class="form-control" name="css" ng-model="formData.css" placeholder="enter CSS"
-          ng-minlength="3" ng-maxlength="500" required></textarea>
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
           <div ng-if="taskForm.css.$touched" ng-messages="taskForm.css.$error">
             <p ng-message="minlength">CSS is too short.</p>
             <p ng-message="maxlength">CSS is too long.</p>
@@ -136,7 +136,7 @@
         <label for="js" class="col-sm-2 control-label">JS</label>
         <div class="col-sm-10">
           <textarea rows="3" class="form-control" name="js" ng-model="formData.js" placeholder="enter JS"
-          ng-minlength="3" ng-maxlength="500" required></textarea>
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
           <div ng-if="taskForm.js.$touched" ng-messages="taskForm.js.$error">
             <p ng-message="minlength">JS is too short.</p>
             <p ng-message="maxlength">JS is too long.</p>
