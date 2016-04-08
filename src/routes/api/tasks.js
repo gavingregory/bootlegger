@@ -8,6 +8,7 @@ var express = require('express')
   , videoHelper = require('../../services/videoHelper')
   , Task = require('../../models/task').model
   , crowdflower = require('../../services/crowdflower/Crowdflower')(params.cf_api)
+  , qs = require('querystring')
   , Job = require('../../services/crowdflower/Job');
 
 // multer
@@ -47,8 +48,9 @@ router.post('/', function (req, res) {
             index : i,
             start : result.segments[j].start,
             end: result.segments[j].end,
+            bootlegger_id: videos[i].id,
             filename: videos[i].meta.static_meta.local_filename,
-            path: videos[i].meta.static_meta.path,
+            path: videos[i].path,
             length: videoHelper.durationToMillis(videos[i].meta.static_meta.clip_length),
             filesize: videos[i].meta.static_meta.filesize
           }
@@ -70,8 +72,9 @@ router.post('/', function (req, res) {
         video_index: data.jobs[i].video.index,
         video_start: data.jobs[i].video.start,
         video_end: data.jobs[i].video.end,
-        video_filename: data.jobs[i].video.path,
-        //video_path: ,
+        video_filename: data.jobs[i].video.filename,
+        video_path: data.jobs[i].video.path,
+        bootlegger_id: data.jobs[i].video.bootlegger_id,
         video_length: data.jobs[i].video.length,
         video_filesize: data.jobs[i].video.filesize,
         task_id: data._id,

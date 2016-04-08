@@ -12,10 +12,10 @@ var express = require('express')
 // Authentication
 router.use('/auth', authRoute);
 
-router.use(function (req, res, next) {
-  if (req.session.sessionkey === undefined) return res.status(401).json({error: 'invalid session.'});
-  next();
-});
+//router.use(function (req, res, next) {
+//  if (req.session.sessionkey === undefined) return res.status(401).json({error: 'invalid session.'});
+//  next();
+//});
 
 // Task Templates
 var TemplateResource = router.resource = restful.model('tasktemplate', TaskTemplate.schema)

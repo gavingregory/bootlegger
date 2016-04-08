@@ -33,6 +33,7 @@ var schema = Schema({
       video: {
         index: { type: String, required: true },
         start: { type: Number, required: true },
+        bootlegger_id: { type: String },
         end: { type: Number, required: true },
         filename: { type: String },
         path: { type: String },
