@@ -2,6 +2,7 @@
 <head>
   <link href="https://vjs.zencdn.net/5.7.1/video-js.css" rel="stylesheet">
   <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
   <video id="video" class="video-js" preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
@@ -11,7 +12,7 @@
       <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
   </video>
-  <a id="playButton" href="#">Play</a>
+  <a class="btn btn-primary" id="playButton" href="#">Play</a>
   <script src="https://vjs.zencdn.net/5.7.1/video.js"></script>
   <script>
     window.onload = function () {
