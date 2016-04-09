@@ -18,12 +18,27 @@ router.get('/image/:taskid/:i?', function (req, res) {
 });
 
 // Get Video for use in Crowdflower IFrame
-router.get('/video/:video/:start/:end', function (req, res) {
-  res.render('video.html', {
-    start_time: req.params.start,
-    end_time: req.params.end,
-    video: req.params.video
+router.get('/video/:task_id/:video_id/:start/:end', function (req, res) {
+  // find the task by the task id provided
+
+  Task.findById(req.params.task_id, function (err, data) {
+      if (err) return res.send('Unfortunately there has been an error loading this video.');
+
+      for (var i = 0; i < data.jobs.length; i++) {
+        if (data.jobs[i].video.bootlegger_id === req.params.video_id) {
+          console.log('secure url: ' + data.jobs[i].video.path);
+          return res.render('video.html', {
+            start_time: req.params.start,
+            end_time: req.params.end,
+            video: data.jobs[i].video.path
+          });
+        }
+      }
+
+      // it seems a video has not been found
+      return res.send('Unfortunately that video Id was not found on the server.');
   });
+
 });
 
 module.exports = router;

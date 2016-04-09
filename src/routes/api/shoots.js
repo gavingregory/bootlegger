@@ -2,28 +2,7 @@ var express = require('express')
   , requestify = require('requestify')
   , videoHelper = require('../../services/videoHelper')
   , params = require('../../config/params')
-  , router = express.Router({mergeParams: true})
-
-// get secure video url
-router.get('/media/:video_id', function (req, res) {
-  var url = params.bootlegger_media_url(req.params.video_id);
-
-  requestify.head(url, { cookies: {'sails.sid' : req.session.sessionkey} })
-    .then(function (response) {
-      var message = 'ERROR: should not actually succeed, we are expecting a 302 redirect code here!';
-      console.log(message);
-      res.send(message);
-    })
-    .catch(function (response) {
-      if (response.code === 302) {
-        res.send(response.headers.location);
-      } else {
-      var message = 'ERROR: not a 302?!';
-      console.log(message);
-      res.send(message);
-      }
-    });
-});
+  , router = express.Router({mergeParams: true});
 
 // get shoots
 router.get('/', function (req, res) {
