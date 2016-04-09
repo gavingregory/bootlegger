@@ -19,8 +19,8 @@
       playButton.addEventListener("click", function () {
 
         var myPlayer = videojs("video");
-        var starttime = {{start_time}};
-        var endtime = {{end_time}};
+        var starttime = {{start_time}} / 1000;
+        var endtime = {{end_time}} / 1000;
 
         myPlayer.currentTime(starttime);
         myPlayer.play();
