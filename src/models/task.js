@@ -40,9 +40,25 @@ var schema = Schema({
         length: { type: Number, required: true },
         filesize: { type: Number, required: true },
       },
-      issued_to: {type: String},
-      completed_at: {type: Date},
-      result: {type: String}
+      judgments: [{
+        created_at: { type: Date }
+        golden: { type: Boolean, default: false },
+        missed: { type: Boolean, default: false },
+        started_at: { type: Date },
+        tainted: { type: Boolean },
+        channel: { type: String },
+        trust: { type: Number },
+        worker_id: { type: Number },
+        country: { type: String },
+        region: { type: String },
+        city: { type: String },
+        ip: { type: String },
+        result: { type: String }
+      }]
+      issued_to: {type: String },
+      completed_at: {type: Date },
+      result: {type: String},
+      cf_job_id: { type: Number }
   }],
   cf_job_id     : { type: Number },
   meta_object   : { type: String, required: true },
