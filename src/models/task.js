@@ -41,7 +41,7 @@ var schema = Schema({
         filesize: { type: Number, required: true },
       },
       judgments: [{
-        created_at: { type: Date }
+        created_at: { type: Date },
         golden: { type: Boolean, default: false },
         missed: { type: Boolean, default: false },
         started_at: { type: Date },
@@ -54,7 +54,7 @@ var schema = Schema({
         city: { type: String },
         ip: { type: String },
         result: { type: String }
-      }]
+      }],
       issued_to: {type: String },
       completed_at: {type: Date },
       result: {type: String},

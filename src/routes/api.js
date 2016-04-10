@@ -3,6 +3,7 @@ var express = require('express')
   , authRoute = require('./api/auth')
   , tasksRoute = require('./api/tasks')
   , shootRoute = require('./api/shoots')
+  , webhookRoute = require('./api/webhook')
   , restful = require('node-restful')
   , TaskTemplate = require('../models/task-template')
   , Task = require('../models/task')
@@ -27,6 +28,10 @@ router.use('/shoots/:shoot_id/tasks', tasksRoute);
 
 // Shoots
 router.use('/shoots', shootRoute);
+
+// Webhook (Crowdflower results)
+
+router.use('/webhook', webhookRoute);
 
 // Export
 module.exports = router;
