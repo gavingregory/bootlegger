@@ -1,5 +1,4 @@
 var express = require('express')
-  , LEX = require('letsencrypt-express')
   , path = require('path')
   , favicon = require('serve-favicon')
   , logger = require('morgan')
@@ -10,6 +9,7 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , mongoose = require('mongoose')
   , session = require('express-session')
+  , MongoDBStore = require('connect-mongodb-session')(session)
   , swig = require('swig')
   , indexRoute = require('./src/routes/index')
   , apiRoute = require('./src/routes/api')
@@ -19,15 +19,30 @@ var express = require('express')
 
 'use strict';
 
+// mongodb session storage
+var store = new MongoDBStore({
+  uri : 'mongodb://localhost:27017/connect_mongodb_session_test',
+  collection : 'mySessions'
+});
+
+store.on('error', function (error) {
+  assert.ifError(error);
+  assert.ok(false);
+})
+
+app.use(session({
+  secret: 'lkashdklajsdklajsdkljaskldjaklsdjaklsjd',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  store: store
+}));
+
 // database
 mongoose.connect(db.url, function (err) {
   if (err) {console.log(err);}
   else {console.log('Successfully connected to the mongo database');}
 });
-
-app.use(session({
-  secret: 'lkashdklajsdklajsdkljaskldjaklsdjaklsjd'
-}));
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -86,27 +101,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var lex = LEX.create({
-  configDir: require('os').homedir() + '/.letsencrypt',
-  approveRegistration: function (hostname, cb) { // leave `null` to disable automatic registration
-    // Note: this is the place to check your database to get the user associated with this domain
-    cb(null, {
-      domains: ['crowd.bootegger.tv']
-    , email: 'g.i.gregory@ncl.ac.uk' // user@example.com
-    , agreeTos: true
-    });
-  }
+// Start server
+var server = app.listen(3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('Bootlegger app listening at http://%s:%s', host, port);
 });
-
-lex.onRequest = app;
-
-//lex.listen([80], [443, 5001], function () {
-//  var protocol = ('requestCert' in this) ? 'https': 'http';
-//  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
-//});
-
- var server = app.listen(3000, function () {
-   var host = server.address().address;
-   var port = server.address().port;
-   console.log('Bootlegger app listening at http://%s:%s', host, port);
- });
