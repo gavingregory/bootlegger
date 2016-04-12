@@ -6,16 +6,16 @@ angular.module('bootleggerApp')
   $scope.loading = true;
 
   function init() {
-      shootFactory.getShoots()
-        .success(function (shoots) {
-          $scope.shoots = shoots;
-        })
-        .error(function (data, status, headers, config) {
-          $log.log(data.error + ' ' + status);
-        })
-        .finally(function () {
-          $scope.loading = false;
-        });
+    shootFactory.getShoots()
+      .success(function (shoots) {
+        $scope.shoots = shoots;
+      })
+      .error(function (data, status, headers, config) {
+        $log.log(data.body + ' ' + status);
+      })
+      .finally(function () {
+        $scope.loading = false;
+      });
   };
 
   init();

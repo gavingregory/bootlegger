@@ -69,11 +69,17 @@ angular.module('bootleggerApp')
       controller: 'selectTemplateController',
       templateUrl: 'app/views/dashboard/shoots/tasks/selectTemplate.html'
     })
-    .state('dashboard.createtask-form', {
-      url: '/shoots/:shoot_id/create-task/:template_id',
-      controller: 'taskCreateController',
-      templateUrl: 'app/views/dashboard/shoots/tasks/create.html'
+    .state('dashboard.createtask-addition', {
+      url: '/shoots/:shoot_id/create-task-addition/',
+      controller: 'additionTaskCreateController',
+      templateUrl: 'app/views/dashboard/shoots/tasks/addition/create.html'
     })
+    .state('dashboard.createtask-validation', {
+      url: '/shoots/:shoot_id/create-task-validation/',
+      controller: 'validationTaskCreateController',
+      templateUrl: 'app/views/dashboard/shoots/tasks/validation/create.html'
+    });
+
     $urlRouterProvider.otherwise('/dashboard');
 
   });

@@ -22,6 +22,19 @@ router.get('/', function (req, res) {
     });
 });
 
+// get template list
+router.get('/templates', function (req, res) {
+  requestify.get(params.bootlegger_api_url + '/api/commission/shots?apikey=' + params.bootlegger_api_key,
+  { cookies: {'sails.sid' : req.session.sessionkey} })
+    .then(function (data) {
+      res.json(JSON.parse(data.body));
+    })
+    .catch(function (err) {
+      console.log(err);
+      res.status(err.code).send(err);
+    });
+});
+
 // get shoot
 router.get('/:shoot_id', function (req, res) {
   requestify.get(params.bootlegger_api_url + '/api/media/shoot/' + req.params.shoot_id + '?apikey=' + params.bootlegger_api_key,
@@ -30,27 +43,9 @@ router.get('/:shoot_id', function (req, res) {
       res.json(JSON.parse(data.body));
     })
     .catch(function (err) {
-      res.status(400).send(err);
+      res.status(err.code).send(err);
     });
 });
 
-// get template list
-router.get('/templates', function (req, res) {
-  requestify.get(params.bootlegger_api_url + '/api/profile/mine?apikey=' + params.bootlegger_api_key,
-  { cookies: {'sails.sid' : req.session.sessionkey} })
-    .then(function (data) {
-      data = JSON.parse(data.body);
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].status !== "OWNER")
-          data.splice(i);
-      }
-      console.log(data);
-      res.json(data);
-    })
-    .catch(function (err) {
-      console.log(err);
-      res.send(err);
-    });
-});
 
 module.exports = router;

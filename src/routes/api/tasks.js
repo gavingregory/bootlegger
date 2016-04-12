@@ -33,6 +33,7 @@ router.get('/', function (req, res) {
 // post a new task
 router.post('/', function (req, res) {
 
+  var type = req.body.type; // 'validation' or 'addition'
   var t = new Task(req.body);
   var videos = req.body.videos;
 
@@ -80,6 +81,20 @@ router.post('/', function (req, res) {
     promises.push(p);
   }
 
+  // fetch templates from bootlegger
+  var templates = {};
+  var fetchTemplate = requestify.get(params.bootlegger_api_url + '/api/commission/shots?apikey=' + params.bootlegger_api_key,
+    { cookies: {'sails.sid' : req.session.sessionkey} })
+    .then(function (data) {
+      templates = JSON.parse(data.body);
+    })
+    .catch(function (err) {
+      res.status(err.code).send(err);
+    });
+
+  // also add templates to the promises array
+  promises.push(fetchTemplate);
+
   Promise.all(promises).then(function (values) {
     // all promises have been resolved .... continue ...!
     console.log('all promises resolved.');
@@ -105,7 +120,10 @@ router.post('/', function (req, res) {
               filename: videos[i].meta.static_meta.local_filename,
               path: path,
               length: videoHelper.durationToMillis(videos[i].meta.static_meta.clip_length),
-              filesize: videos[i].meta.static_meta.filesize
+              filesize: videos[i].meta.static_meta.filesize,
+              template_id : videos[i].meta.shot_ex.id,
+              template_url : videos[i].meta.shot_ex.image,
+              template_desc : videos[i].meta.shot_ex.description
             }
           };
           t.jobs.push(o);
@@ -117,10 +135,12 @@ router.post('/', function (req, res) {
         console.log(err);
         return res.status(400).send(err);
       }
+
       // create units of data for each CF job
       var units = [];
       for (var i = 0; i < data.jobs.length; i++) {
-        units.push({
+
+        var row = {
           id: data.jobs[i].id,
           video_index: data.jobs[i].video.index,
           video_start: data.jobs[i].video.start,
@@ -132,10 +152,44 @@ router.post('/', function (req, res) {
           video_filesize: data.jobs[i].video.filesize,
           task_id: data._id,
           ref_image: 0
-        });
+        };
+
+        if (type === 'validation') {
+          console.log('performing additional validation steps ...');
+          // this is a validation event, so we need to upload 4 templates (one of them correct, 3 random)
+
+          var template_count = 1; // start at 1, as the first one is always the ACTUAL template
+          var rng = Math.floor(Math.random() * 4); // rng between 0 ~ 3
+          var template_index = 0;
+
+          // find the index in the array of TEMPLATES for the actual selected template
+          for (var template_index = 0; template_index < templates.length; template_index++)
+            if (templates[template_index].id === data.jobs[i].video.template_id) break; // found the index hopefully
+
+          // the actual template
+          row['template_' + rng + '_id'] = data.jobs[i].video.template_id;
+          row['template_' + rng + '_img'] = data.jobs[i].video.template_img;
+          row['template_' + rng + '_desc'] = data.jobs[i].video.template_desc;
+          row['template_' + rng + '_selected'] = true;
+          rng = (rng + 1) % 4; // increment and overflow the rng
+          template_index = (template_index + 1) % templates.length; // increment and overflow the template index
+
+          while (template_count < 4) {
+            console.log(templates);
+            row['template_' + rng + '_id'] = templates[template_index].id;
+            row['template_' + rng + '_img'] = templates[template_index].image;
+            row['template_' + rng + '_desc'] = templates[template_index].description;
+            row['template_' + rng + '_selected'] = false;
+            template_count++; // we have assigned one more template
+            rng = (rng + 1) % 4; // increment and overflow the rng
+            template_index = (template_index + 1) % templates.length; // increment and overflow the template index
+          }
+        }
+
+        units.push(row);
       }
 
-      // else, upload to CF
+      // then upload to CF
       var job = new Job({
         title : data.name,
         instructions : data.instructions,

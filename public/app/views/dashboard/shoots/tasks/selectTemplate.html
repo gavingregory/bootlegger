@@ -8,12 +8,22 @@
   <div class="row-fluid">
     <div class="centering text-center">
       <div class="row">
-        <div class="col-md-6" ng-repeat="template in templates | orderBy : 'name'">
-          <a ui-sref="dashboard.createtask-form({shoot_id: shootId, template_id: template._id})">
+        <div class="col-md-6">
+          <a ui-sref="dashboard.createtask-addition({shoot_id: shootId, template_id: template._id})">
             <div class="jumbotron orange padding">
-                <h3>{{template.name}}</h3>
-                <p>{{template.description}}</p>
-                <p>Select</p>
+                <h3>Addition</h3>
+                <p>Use this template to generate NEW metadata by asking a question (or several questions) about a video shoot.</p>
+                <p>Please click to begin.</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6">
+          <a ui-sref="dashboard.createtask-validation({shoot_id: shootId, template_id: template._id})">
+            <div class="jumbotron orange padding">
+                <h3>Validation</h3>
+                <p>Use this template to validate EXISTING metadata. Currently this supports validation of existing metadata by 
+                 asking workers to confirm whether the template chosen for a video is correct or not.</p>
+                <p>Please click to begin.</p>
             </div>
           </a>
         </div>

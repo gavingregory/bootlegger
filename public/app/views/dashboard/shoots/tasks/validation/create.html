@@ -1,0 +1,199 @@
+<!-- HEADER ROW -->
+<div class="row">
+  <div class="col-md-12">
+    <h2>Create a Task</h2>
+    <h3>Validate EXISTING metadata</h3>
+  </div>
+</div> <!-- /HEADER ROW -->
+
+<!-- LAYOUT ROW -->
+<div class="row">
+
+  <!-- lhs column -->
+  <div class="col-md-6">
+    <form class="form-horizontal" name="taskForm" enctype="multipart/form-data" ng-submit="submitForm(picFiles)" novalidate>
+      <h4>Meta</h4>
+
+      <!-- META PREVIEW -->
+      <div class="form-group">
+        <label for="meta_preview" class="col-sm-2 control-label">meta preview</label>
+        <div class="col-sm-10">
+          <code>
+            static_meta: {<br />
+            &nbsp;&nbsp;{{formData.meta_object}}: [{<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;{{formData.meta_key}}: '{{formData.meta_value}}'<br />
+            &nbsp;&nbsp;}],<br />
+            &nbsp;&nbsp;...<br />
+            }
+          </code>
+        </div>
+      </div> <!-- /META PREVIEW -->
+
+      <h4>Task Settings</h4>
+
+      <!-- TASK NAME -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.name.$touched && taskForm.name.$invalid }">
+        <label for="name" class="col-sm-2 control-label">task name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="name" ng-model="formData.name" placeholder="enter a name for this task"
+                 ng-minlength="3" ng-maxlength="30" required>
+          <div ng-if="taskForm.name.$touched" ng-messages="taskForm.name.$error">
+            <p ng-message="minlength">Name is too short.</p>
+            <p ng-message="maxlength">Name is too long.</p>
+            <p ng-message="required">Name is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK NAME -->
+
+      <!-- TASK DESCRIPTION -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.description.$touched && taskForm.description.$invalid }">
+        <label for="description" class="col-sm-2 control-label">task description</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" name="description" ng-model="formData.description" placeholder="enter a description"
+          ng-minlength="3" ng-maxlength="500" required></textarea>
+          <div ng-if="taskForm.description.$touched" ng-messages="taskForm.description.$error">
+            <p ng-message="minlength">Description is too short.</p>
+            <p ng-message="maxlength">Description is too long.</p>
+            <p ng-message="required">Description is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK DESCRIPTION -->
+
+      <!-- SEGMENT SIZE -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.segment_size.$touched && taskForm.segment_size.$invalid }">
+        <label for="segment_size" class="col-sm-2 control-label">segment size (seconds)</label>
+        <div class="col-sm-8">
+          <input type="range" class="form-control" name="segment_size" ng-model="formData.segment_size"
+                 min="5" max="120", value="15" required>
+          <div ng-if="taskForm.segment_size.$touched" ng-messages="taskForm.segment_size.$error">
+            <p ng-message="required">Segment size required.</p>
+          </div>
+          <div class="col-sm-2">{{formData.segment_size}}</div>
+        </div>
+      </div> <!-- /SEGMENT SIZE -->
+
+      <!-- CENT PER JOB -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.cent_per_job.$touched && taskForm.cent_per_job.$invalid }">
+        <label for="name" class="col-sm-2 control-label">cent per job</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" name="cent_per_job" ng-model="formData.cent_per_job" placeholder="how many cents will be paid per job?"
+                 step="1" min="0" max="30" required>
+          <div ng-if="taskForm.cent_per_job.$touched" ng-messages="taskForm.cent_per_job.$error">
+            <p ng-message="min">Must be above or equal to 0.</p>
+            <p ng-message="max">Must be less than or equal to 30.</p>
+            <p ng-message="required">Cents per job is required.</p>
+          </div>
+        </div>
+      </div> <!-- /CENT PER JOB -->
+
+
+      <!-- TASK CML -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.cml.$touched && taskForm.cml.$invalid }">
+        <label for="cml" class="col-sm-2 control-label">CML</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" name="cml" ng-model="formData.cml" placeholder="enter CML"
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
+          <div ng-if="taskForm.cml.$touched" ng-messages="taskForm.cml.$error">
+            <p ng-message="minlength">CML is too short.</p>
+            <p ng-message="maxlength">CML is too long.</p>
+            <p ng-message="required">CML is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK CML -->
+
+
+      <!-- TASK CSS -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.css.$touched && taskForm.css.$invalid }">
+        <label for="css" class="col-sm-2 control-label">CSS</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" name="css" ng-model="formData.css" placeholder="enter CSS"
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
+          <div ng-if="taskForm.css.$touched" ng-messages="taskForm.css.$error">
+            <p ng-message="minlength">CSS is too short.</p>
+            <p ng-message="maxlength">CSS is too long.</p>
+            <p ng-message="required">CSS is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK CSS -->
+
+
+      <!-- TASK JS -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.js.$touched && taskForm.js.$invalid }">
+        <label for="js" class="col-sm-2 control-label">JS</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" name="js" ng-model="formData.js" placeholder="enter JS"
+          ng-minlength="3" ng-maxlength="1000" required></textarea>
+          <div ng-if="taskForm.js.$touched" ng-messages="taskForm.js.$error">
+            <p ng-message="minlength">JS is too short.</p>
+            <p ng-message="maxlength">JS is too long.</p>
+            <p ng-message="required">JS is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK JS -->
+
+      <!-- TASK EMAIL -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.support_email.$touched && taskForm.support_email.$invalid }">
+        <label for="support_email" class="col-sm-2 control-label">task email</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="support_email" ng-model="formData.support_email" placeholder="enter an email for this task"
+                 ng-minlength="3" ng-maxlength="30" required>
+          <div ng-if="taskForm.support_email.$touched" ng-messages="taskForm.support_email.$error">
+            <p ng-message="minlength">Email is too short.</p>
+            <p ng-message="maxlength">Email is too long.</p>
+            <p ng-message="required">Email is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK NAME -->
+
+      <h4>Task Instructions</h4>
+
+      <!-- TASK INSTRUCTIONS -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.instructions.$touched && taskForm.instructions.$invalid }">
+        <label for="instructions" class="col-sm-2 control-label">task instructions</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" name="instructions" ng-model="formData.instructions" placeholder="enter the instructions that the user will follow"
+                    ng-minlength="3" ng-maxlength="2000" required></textarea>
+          <div ng-if="taskForm.instructions.$touched" ng-messages="taskForm.instructions.$error">
+            <p ng-message="minlength">Description is too short.</p>
+            <p ng-message="maxlength">Description is too long.</p>
+            <p ng-message="required">Description is required.</p>
+          </div>
+        </div>
+      </div> <!-- /TASK INSTRUCTIONS -->
+
+      <!-- REFERENCE IMAGES -->
+      <div class="form-group" ng-class="{ 'has-error': taskForm.files.$touched && taskForm.files.$invalid }">
+        <label for="files" class="col-sm-2 control-label">ref images</label>
+        <input type="file" name="files" ngf-select multiple ng-model="picFiles" accept="image/*"
+               ngf-max-size="2MB" required>
+        <div ng-if="taskForm.files.$touched" ng-messages="taskForm.files.$error">
+          <p ng-message="required">Reference image is required.</p>
+          <p ng-message="maxSize">File too large. {{picFiles.size / 1000000|number:1}}MB: max 2M</p>
+        </div>
+        <div class="row">
+          <div class="col-md-3" ng-repeat="file in picFiles" ng-show="picFiles[$index]">
+            <img ng-thumbnail="taskForm.files.$valid" ngf-src="file" class="thumb"> <button ng-click="picFiles[$index] = null" ng-show="picFiles[$index]">Remove</button>
+          </div>
+        </div>
+      </div> <!-- /REFERENCE IMAGES -->
+
+      <!-- SUBMIT -->
+      <button type="submit" ng-disabled="taskForm.$invalid" class="btn btn-success btn-lg">Submit</button>
+      <!-- RESET -->
+      <button ng-click="reset()" class="btn btn-info btn-lg">Reset</button>
+    </form>
+  </div> <!-- end lhs column -->
+  
+  <!-- rhs column -->
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <table>
+          <thead><tr><th>Video</th><th>Template</th></tr></thead>
+          <tr ng-repeat="video in videos"><td><img ng-src="{{video.thumb}}" class="img-rounded"></td><td><img ng-src="https://bootlegger.tv/data/icons/{{video.meta.shot_ex.image}}" /><br />{{video.meta.shot_ex.description}}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div> <!-- end rhs column -->
+
+</div>

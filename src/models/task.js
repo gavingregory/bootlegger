@@ -4,9 +4,10 @@ var restful  = require('node-restful')
 
 var schema = Schema({
   creator		    : { type: String, required: true  },
+  type          : { type: String }, 
   name          : { type: String, required: true  },
   shoot_id      : { type: String, required: true  },
-  template_id   : { type: Schema.Types.ObjectId, ref: 'TaskTemplate', required: true },
+  template_id   : { type: Schema.Types.ObjectId, ref: 'TaskTemplate' },
   created 		  : { type: Date, default: Date.now },
   updated		    : { type: Date, default: Date.now },
   running       : { type: Boolean, default: false, required: true },
@@ -39,6 +40,9 @@ var schema = Schema({
         path: { type: String },
         length: { type: Number, required: true },
         filesize: { type: Number, required: true },
+        template_id : { type: Number },
+        template_url : { type: String },
+        template_desc : { type: String }
       },
       judgments: [{
         // created_at: { type: Date },
