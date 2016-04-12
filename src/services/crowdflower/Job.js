@@ -24,16 +24,17 @@ function Job(options) {
     if (!Array.isArray(options.units))
       throw new TypeError('units must be a valid array');
 
-    this['job[title]'] = options.title;
-    this['job[instructions]'] = options.instructions;
-    this['job[cml]'] = options.cml || '';
-    this['job[css]'] = options.css || '';
-    this['job[js]'] = options.js || '';
-    this['job[support_email]'] = options.support_email || '';
-    this['job[payment_cents]'] = options.payment_cents || 1;
-    this['job[units_per_assignment]'] = options.units_per_assignment || 1;
-    this['job[judgments_per_unit]'] = options.judgments_per_unit || 1;
-    this['job[time_per_page]'] = options.time_per_page || '';
+    this['job[title]'] = options.title ? options.title : 'No title';
+    this['job[instructions]'] = options.instructions ? options.instructions : 'No instructions';
+    this['job[cml]'] = options.cml ? options.cml : ' ';
+    this['job[css]'] = options.css ? options.css : ' ';
+    this['job[js]'] = options.js ? options.js : ' ';
+    this['job[support_email]'] = options.support_email ? options.support_email : ' ';
+    this['job[payment_cents]'] = options.payment_cents ? options.payment_cents : 5;
+    this['job[units_per_assignment]'] = options.units_per_assignment ? options.units_per_assignment : 10;
+    this['job[judgments_per_unit]'] = options.judgments_per_unit ? options.judgments_per_unit : 5;
+    this['job[time_per_page]'] = options.time_per_page ? options.time_per_page : 0;
+    this['job[webhook_uri]'] = 'https://crowd.bootlegger.tv/api/v1/webhook';
     this.units = (options.units) ? options.units.slice(0) : [];
 }
 
