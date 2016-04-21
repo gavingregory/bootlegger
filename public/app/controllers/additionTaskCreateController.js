@@ -3,7 +3,7 @@ angular.module('bootleggerApp')
 
   // the initial state, used for reset
   var initialTask = {
-    type: 'addition', // Type of task is an ADDITION task
+    type: 'addition', // Type of task is an ADDITION task. The API will handle different types differently
     job_count: 50,
     meta_object: 'crowdsourced',
     meta_key: 'search_object',

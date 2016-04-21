@@ -70,7 +70,6 @@ router.post('/', function (req, res) {
       // update the path in the video array
       for (var j = 0; j < videos.length; j++) {
         if (videos[j].id === value.id) {
-          console.log('UPDATING: ' + value.location);
           videos[j].path = value.location;
           break;
         }
@@ -109,7 +108,6 @@ router.post('/', function (req, res) {
 
         for (j = 0; j < result.segments.length; j++) {
           var path = videos[i].path;
-          console.log('generating secure url: ' + path);
           var o = {
             id: id++,
             video: {
@@ -175,7 +173,6 @@ router.post('/', function (req, res) {
           template_index = (template_index + 1) % templates.length; // increment and overflow the template index
 
           while (template_count < 4) {
-            console.log(templates);
             row['template_' + rng + '_id'] = templates[template_index].id;
             row['template_' + rng + '_img'] = templates[template_index].image;
             row['template_' + rng + '_desc'] = templates[template_index].description;
@@ -253,7 +250,6 @@ router.post('/:task_id/upload-image', upload.array('file'), function (req, res) 
 router.get('/:task_id', function (req, res) {
   Task.findOne({shoot_id: req.params.shoot_id, _id: req.params.task_id }, function (err, data) {
     if (err) return res.status(400).send(err);
-    console.log('cf job id: ' + data.cf_job_id);
     crowdflower.pingJob(data.cf_job_id)
       .then(function (cf_data) {
         var r = {};
