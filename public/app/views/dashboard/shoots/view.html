@@ -8,11 +8,20 @@
         <div class="col-md-8">
           <!-- Results Panel (left hand side) -->
           <div class="row">
-            <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse">
-              <a href="" ng-click="play(shot.lowres, shot.id)">
-                <img ng-src="{{ shot.thumb }}" height="75"  width="100" />
-              </a>
-              <span>{{shot.user.profile.displayName}}</span>
+            <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse" >
+              <div style="background-color: #fafafa; margin: 3px">
+                <div class="row">
+                  <div class="col-md-6">
+                    <a href="" ng-click="play(shot.lowres, shot.id)">
+                      <img ng-src="{{ shot.thumb }}" class="img-rounded" style="width: 100px; height: 75px; padding: 3px" />
+                    </a>
+                  </div>
+                  <div class="col-md-6 small">
+                    <div><span class="glyphicon glyphicon-camera"></span>&nbsp;{{shot.user.profile.displayName | limitTo: 15 }}</div>
+                    <div><span class="glyphicon glyphicon-tag"></span>&nbsp;{{shot.meta.shot_ex.description | limitTo: 30 }}</div>
+                  </div>
+                </div>
+              </div>
             </div> <!--#/col-md-4-->
           </div> <!--#/row-->
         </div> <!--#/col-md-8-->
