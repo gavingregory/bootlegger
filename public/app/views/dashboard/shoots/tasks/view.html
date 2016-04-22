@@ -1,25 +1,24 @@
 <div class="row">
-  <div class="col-md-10 col-md-offset-1">
+  <div class="col-md-12">
     <!-- Main Page Heading -->
     <h2>Task</h2>
+    <hr />
     <div class="loader" ng-show="loading">Loading...</div>
-    <div class="row" ng-hide="loading">
-</div>
-<div class="row">
-      <!-- Reference Image RHS -->
-      <div class="col-md-4">
-        <h3>Reference Images</h3>
-        <div>
-          <div style="height: 305px">
-            <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
-              <uib-slide ng-repeat="slide in task.ref_images" active="slide.active">
-                <img ng-src="files/{{slide.filename}}" style="margin:auto;">
+    <div class="row" ng-hide="loading"></div>
+  </div>  <!--#/col-md-12-->
+</div> <!--#/row-->
 
-              </uib-slide>
-            </uib-carousel>
-          </div>
-        </div>
-        <h3>Data</h3>
+<div class="row">
+  <div class="col-md-8">
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><img src="/img/3d.png" width="20" height="26" />&nbsp;Bootlegger</div>
+      <div class="panel-body">
+
+        <h4>Reference Image</h4>
+        <img src="/files/{{task.ref_images[0].filename}}" width="320" height="240" />
+
+        <h4>Data</h4>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -52,10 +51,10 @@
           <tbody>
             <tr ng-repeat="job in task.jobs">
               <td>
-                {{job.id}}
+                {{job.id | limitTo : 5}}
               </td>
               <td>
-                {{job.video.index}}
+                {{job.video.index | limitTo : 5}}
               </td>
               <td>
                 {{job.video.start / 1000 | setDecimal:2}}
@@ -70,114 +69,103 @@
                 {{job.video.length/1000 | setDecimal:2}}s
               </td>
               <td>
-                {{job.video.path}}
+                {{job.video.path | limitTo : 30}}...
               </td>
               <td>
-                {{job.video.filename}}
+                {{job.video.filename | limitTo : 30}}
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <!-- Video CENTRE -->
-      <div class="col-md-4">
-        <h3>Crowdflower Status</h3>
-        <table>
-          <tr>
-            <td>
-              Golden Units
-            </td>
-            <td>
-              {{cf.golden_units}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              All Units
-            </td>
-            <td>
-              {{cf.all_units}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Ordered Units
-            </td>
-            <td>
-              {{cf.ordered_units}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              Completed Units Estimate
-            </td>
-            <td>
-              {{cf.completed_units_estimate}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              Needed Judgments
-            </td>
-            <td>
-              {{cf.needed_judgments}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              All Judgments
-            </td>
-            <td>
-              {{cf.all_judgments}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              Tainted Judgments
-            </td>
-            <td>
-              {{cf.tainted_judgments}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              Completed Gold Estimate
-            </td>
-            <td>
-              {{cf.completed_gold_estimate}}
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              Completed Non-gold Estimate
-            </td>
-            <td>
-              {{cf.completed_non_gold_estimate}}
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <!-- Instructions RHS -->
-      <div class="col-md-4">
-        <h4>Instructions</h4>
-        {{task.instructions}}
-        <h4>Number of jobs</h4>
-        {{task.jobs.length}}
-        <h4>Cost per job</h4>
-        ${{task.cent_per_job / 100}}
-        <h4>Total cost</h4>
-        ${{(task.cent_per_job / 100) * task.jobs.length | setDecimal:2}}
 
       </div>
-
     </div>
-  </div>
-</div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><img src="/img/crowdflower.png" width="32" height="26" />&nbsp;Crowdflower Results</div>
+      <div class="panel-body">
+      
+        <p ng-hide="cf.completed">To view results, the task must first be completed.</p>
+        <a class="button button-primary" ui-sref="dashboard.task-results({shoot_id: shootId, task_id: task._id})">Results</a>
+      </div>
+    </div>
+
+  </div> <!--#/col-md-8-->
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><img src="/img/crowdflower.png" width="32" height="26" />&nbsp;Crowdflower</div>
+      <div class="panel-body" ng-show="cf.id">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">ID</h4>
+            <p class="list-group-item-text">{{cf.id}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Title</h4>
+            <p class="list-group-item-text">{{cf.title}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Instructions</h4>
+            <p class="list-group-item-text">{{cf.instructions}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Judgments Per Unit</h4>
+            <p class="list-group-item-text">{{cf.judgments_per_unit}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Payment in Cents</h4>
+            <p class="list-group-item-text">{{cf.payment_cents}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Crowd Costs</h4>
+            <p class="list-group-item-text">{{cf.crowd_costs}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Completed</h4>
+            <p class="list-group-item-text">{{cf.completed}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">State</h4>
+            <p class="list-group-item-text">{{cf.state}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Created</h4>
+            <p class="list-group-item-text">{{cf.created_at}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Updated</h4>
+            <p class="list-group-item-text">{{cf.updated_at}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">CML</h4>
+            <p class="list-group-item-text">{{cf.cml}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">CSS</h4>
+            <p class="list-group-item-text">{{cf.css}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Unit Count</h4>
+            <p class="list-group-item-text">{{cf.units_count}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Gold Units Count</h4>
+            <p class="list-group-item-text">{{cf.golds_count}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Judgments Count</h4>
+            <p class="list-group-item-text">{{cf.judgments_count}}</p>
+          </li>
+          <li class="list-group-item">
+            <h4 class="list-group-item-heading">Support Email</h4>
+            <p class="list-group-item-text">{{cf.support_email}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> <!--#/col-md-4-->
+</div> <!--#/row-->
+
+
+</div> <!--#/row-->

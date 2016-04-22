@@ -1,4 +1,4 @@
-angular.module('bootleggerApp', ['ui.router', 'ngCookies', 'ui.bootstrap', 'ngFileUpload', 'ngMessages']);
+angular.module('bootleggerApp', ['chart.js', 'ui.router', 'ngCookies', 'ui.bootstrap', 'ngFileUpload', 'ngMessages']);
 
 angular.module('bootleggerApp')
   .config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
@@ -59,6 +59,11 @@ angular.module('bootleggerApp')
     .state('dashboard.tasks', {
       url: '/shoots/:shoot_id/tasks',
       templateUrl: 'app/views/dashboard/shoots/tasks/list.html'
+    })
+    .state('dashboard.task-results', {
+      url: '/shoots/:shoot_id/tasks/:task_id/results',
+      controller: 'taskResultsController',
+      templateUrl: 'app/views/dashboard/shoots/tasks/results.html'
     })
     .state('dashboard.task', {
       url: '/shoots/:shoot_id/tasks/:task_id',

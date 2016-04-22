@@ -227,8 +227,6 @@ router.post('/', function(req, res) {
     .catch(function(err) {
       res.status(err.code).send(err);
     });
-
-
 });
 
 // post a new reference image
@@ -269,11 +267,11 @@ router.get('/:task_id', function(req, res) {
     _id: req.params.task_id
   }, function(err, data) {
     if (err) return res.status(400).send(err);
-    crowdflower.pingJob(data.cf_job_id)
+    crowdflower.getJob(data.cf_job_id)
       .then(function(cf_data) {
         var r = {};
         r.data = data;
-        r.cf = cf_data.body;
+        r.cf = JSON.parse(cf_data.body);
         return res.json(r);
       })
       .catch(function(err) {

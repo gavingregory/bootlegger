@@ -1,8 +1,7 @@
 angular.module('bootleggerApp')
-.controller('taskViewController', function ($scope, $log, taskFactory, $stateParams, $uibModal) {
+.controller('taskResultsController', function ($scope, $log, taskFactory, $stateParams, $uibModal) {
 
   $scope.loading = 1;
-  $scope.shootId = $stateParams.shoot_id;
   $scope.task = {};
   $scope.cf = {};
   $scope.shoot_id = $stateParams.shoot_id;
