@@ -1,6 +1,5 @@
 var express = require('express'),
   multer = require('multer'),
-  requestify = require('requestify'),
   bootlegger = require('../../services/bootlegger/bootlegger'),
   mime = require('mime'),
   params = require('../../config/params'),
@@ -46,6 +45,7 @@ router.post('/', function(req, res) {
   var t = new Task(req.body);
   var videos = {};
 
+  // GET SHOOT FROM BOOTLEGGER
   bootlegger.getShoot(req.session.sessionkey, req.params.shoot_id)
     .then(function(data) {
 
@@ -58,12 +58,9 @@ router.post('/', function(req, res) {
       // bootlegger API to resolve the secure URL of the video file
       var promises = [];
 
-      // we need to iterate over all the videos and update their URL's to the secure URL's
+      // ITERATE OVER ALL VIDEOS, OBTAIN 'SECURE URL' FOR EACH VIDEO
       var i = 0;
       var running_promises = 0;
-
-      console.log(videos);
-
       videos.forEach(function (v) {
         // create a new promise
         var p = bootlegger.getSecureVideoUrl(req.session.sessionkey, v.id)
@@ -82,36 +79,28 @@ router.post('/', function(req, res) {
         promises.push(p);
       });
 
-      // fetch templates from bootlegger
+      // FETCH TEMPLATES FROM BOOTLEGGER
       var templates = {};
-      var fetchTemplate = requestify.get(params.bootlegger_api_url + '/api/commission/shots?apikey=' + params.bootlegger_api_key, {
-          cookies: {
-            'sails.sid': req.session.sessionkey
-          }
-        })
-        .then(function(data) {
-          templates = JSON.parse(data.body);
-        })
-        .catch(function(err) {
-          res.status(err.code).send(err);
-        });
+      var fetchTemplate = bootlegger.getTemplates(req.session.sessionkey)
+        .then(function(data) { templates = JSON.parse(data.body); console.log(templates); })
+        .catch(function(err) { res.status(err.code).send(err); });
 
       // also add templates to the promises array
       promises.push(fetchTemplate);
 
       Promise.all(promises).then(function(values) {
-        // all promises have been resolved .... continue ...!
-        console.log('all promises resolved.');
+        
+        // ALL PROMISES RESOLVED, CONTINUE WITH CROWDFLOWER UPLOAD
+        console.log('All promises resolved.');
 
-        // continue ...........
-
-        // iterate over videos
+        // GENERATE SEGMENTS
         var id = 0; // id for each job
         for (var i = 0; i < videos.length; i++) {
           videoHelper.distributeVideoIndexes(videos[i].meta.static_meta.clip_length, req.body.segment_size, function(result) {
 
             for (j = 0; j < result.segments.length; j++) {
               var path = videos[i].path;
+              console.log('i: ' + i + ', VIDEOID: ' + videos[i].id + ', TEMPLATE ID: ' + videos[i].meta.shot_ex.id);
               var o = {
                 id: id++,
                 video: {
@@ -138,7 +127,7 @@ router.post('/', function(req, res) {
             return res.status(400).send(err);
           }
 
-          // create units of data for each CF job
+          // CREATE CROWDFLOWER 'ROWS/UNITS' FOR EACH JOB IN DATABASE, WHICH NEED TO BE 1-DIMENSIONAL OBJECTS
           var units = [];
           for (var i = 0; i < data.jobs.length; i++) {
 
@@ -156,21 +145,26 @@ router.post('/', function(req, res) {
               ref_image: 0
             };
 
+            // IF THIS IS VALIDATION TASK, WE NEED TO PERFORM ADDITIONAL STEPS
             if (type === 'validation') {
-              console.log('performing additional validation steps ...');
-              // this is a validation event, so we need to upload 4 templates (one of them correct, 3 random)
 
+              // WE NEED TO POPULATE EACH ROW WITH 4 TEMPLATES - 1 CORRECT, 3 RANDOM
               var template_count = 1; // start at 1, as the first one is always the ACTUAL template
               var rng = Math.floor(Math.random() * 4); // rng between 0 ~ 3
               var template_index = 0;
 
+              console.log('searching for ' + data.jobs[i].video.template_url);
+              
               // find the index in the array of TEMPLATES for the actual selected template
               for (var template_index = 0; template_index < templates.length; template_index++)
-                if (templates[template_index].id === data.jobs[i].video.template_id) break; // found the index hopefully
+                if (templates[template_index].image === data.jobs[i].video.template_url) { break; console.log('found index!'); }// found the index hopefully
+              
+              console.log('template index = ' + template_index);
+              console.log('templates[template_index].id = ' + templates[template_index].id);
 
                 // the actual template
               row['template_' + rng + '_id'] = data.jobs[i].video.template_id;
-              row['template_' + rng + '_img'] = data.jobs[i].video.template_img;
+              row['template_' + rng + '_img'] = data.jobs[i].video.template_url;
               row['template_' + rng + '_desc'] = data.jobs[i].video.template_desc;
               row['template_' + rng + '_selected'] = true;
               rng = (rng + 1) % 4; // increment and overflow the rng

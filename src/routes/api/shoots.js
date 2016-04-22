@@ -1,25 +1,22 @@
 var express = require('express'),
-  requestify = require('requestify'),
   videoHelper = require('../../services/videoHelper'),
   params = require('../../config/params'),
+  bootlegger = require('../../services/bootlegger/bootlegger')
   router = express.Router({
     mergeParams: true
   });
 
-// get shoots
+/**
+ * GET: Shoots
+ */
 router.get('/', function(req, res) {
-  requestify.get(params.bootlegger_api_url + '/api/profile/mine?apikey=' + params.bootlegger_api_key, {
-      cookies: {
-        'sails.sid': req.session.sessionkey
-      }
-    })
+  bootlegger.getShoots(req.session.sessionkey)
     .then(function(data) {
-      console.log(req.session.sessionkey);
       data = JSON.parse(data.body);
-      for (var i = 0; i < data.length; i++) {
+      // REMOVE SHOOTS THAT WE ARE NOT THE OWNER FOR
+      for (var i = 0; i < data.length; i++)
         if (data[i].status !== "OWNER")
           data.splice(i);
-      }
       res.json(data);
     })
     .catch(function(err) {
@@ -27,13 +24,11 @@ router.get('/', function(req, res) {
     });
 });
 
-// get template list
+/**
+ * GET: Templates
+ */
 router.get('/templates', function(req, res) {
-  requestify.get(params.bootlegger_api_url + '/api/commission/shots?apikey=' + params.bootlegger_api_key, {
-      cookies: {
-        'sails.sid': req.session.sessionkey
-      }
-    })
+  bootlegger.getTemplates(req.session.sessionkey)
     .then(function(data) {
       res.json(JSON.parse(data.body));
     })
@@ -43,13 +38,11 @@ router.get('/templates', function(req, res) {
     });
 });
 
-// get shoot
+/**
+ * GET: Shoot
+ */
 router.get('/:shoot_id', function(req, res) {
-  requestify.get(params.bootlegger_api_url + '/api/media/shoot/' + req.params.shoot_id + '?apikey=' + params.bootlegger_api_key, {
-      cookies: {
-        'sails.sid': req.session.sessionkey
-      }
-    })
+  bootlegger.getShoot(req.session.sessionkey, req.params.shoot_id)
     .then(function(data) {
       res.json(JSON.parse(data.body));
     })
@@ -57,6 +50,5 @@ router.get('/:shoot_id', function(req, res) {
       res.status(err.code).send(err);
     });
 });
-
 
 module.exports = router;

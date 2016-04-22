@@ -1,7 +1,7 @@
 var express = require('express')
   , router = express.Router({mergeParams: true})
   , params = require('../../config/params.js')
-  , requestify = require('requestify');
+  , bootlegger = require('../../services/bootlegger/bootlegger');
 
 //get current bootlegger session key
 router.get('/session', function (req, res) {
@@ -27,21 +27,11 @@ router.get('/logout', function (req, res) {
   res.json({message: 'logged out successfully.'});
 });
 
-//TODO: TEST THIS
-//TODO: Need to get session key and pass it along
+// returns the bootlegger user profile
 router.get('/profile', function (req, res) {
-  requestify.get(params.bootlegger_api_url + '/api/profile/me?apikey=' + params.bootlegger_api_key, {
-    cookies: {
-      'sails.sid' : req.session.sessionkey
-    }
-  })
-    .then(function (data) {
-      res.json(data.body);
-    })
-    .catch(function (err) {
-      console.log(err);
-      res.status(400).send(err);
-    });
+  bootlegger.getProfile(req.session.sessionkey)
+    .then(function (data) { res.json(data.body); })
+    .catch(function (err) { res.status(400).send(err); });
 })
 
 module.exports = router;

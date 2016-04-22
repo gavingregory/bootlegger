@@ -40,7 +40,7 @@ var schema = Schema({
         path: { type: String },
         length: { type: Number, required: true },
         filesize: { type: Number, required: true },
-        template_id : { type: Number },
+        template_id : { type: String },
         template_url : { type: String },
         template_desc : { type: String }
       },
