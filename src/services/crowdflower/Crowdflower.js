@@ -223,6 +223,7 @@ module.exports = function (k) {
     getUnits: getUnits,
     uploadUnits: uploadUnits,
     pingJob: pingJob,
+    getJob: getJob,
     pingUnits: pingUnits,
     cancelJob: cancelJob
   };
