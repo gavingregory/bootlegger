@@ -68,7 +68,6 @@ module.exports = function (k) {
   /**
    * Create a job with the specified parameters
    *
-   * @param {String} key
    * @param {Object} params
    * @return {Object}
    */
@@ -97,7 +96,6 @@ module.exports = function (k) {
   /**
    * Delete the given job.
    *
-   * @param {String} key
    * @param {String} jobId
    * @return {Object}
    */
@@ -110,7 +108,6 @@ module.exports = function (k) {
   /**
    * Updates a job with the provided parameters
    *
-   * @param {String} key
    * @param {String} jobId
    * @param {Object} params
    * @return {Object}
@@ -129,7 +126,6 @@ module.exports = function (k) {
   /**
    * Uploads rows for the job
    *
-   * @param {String} key
    * @param {String} jobId
    * @param {Object} data
    * @return {Object}
@@ -143,9 +139,8 @@ module.exports = function (k) {
   };
 
   /**
-   * Retrieves the status of the given job.
+   * Retrieves a brief summary and status of the given job.
    *
-   * @param {String} key
    * @param {String} jobId
    * @return {Object}
    */
@@ -154,11 +149,35 @@ module.exports = function (k) {
     return fetch(r);
   };
 
+  /**
+   * Retrieves detailed information about the given job from Crowdflower.
+   *
+   * @param {String} jobId
+   * @return {Object}
+   */
+  var getJob = function (jobId) {
+    var r = new RequestOptions('jobs/' + jobId + '.json');
+    return fetch(r);
+  };
+
+  /**
+   * Retrieves the units of the given job.
+   *
+   * @param {String} jobId
+   * @return {Object}
+   *
+   */
   var getUnits = function (jobId) {
     var r = new RequestOptions('jobs/' + jobId + '/units.json');
     return fetch(r);
   }
 
+  /**
+   * Retrieves information about the units of a given job.
+   *
+   * @param {String} jobId
+   * @return {Object}
+   */
   var pingUnits = function (jobId) {
     var r = new RequestOptions('jobs/' + jobId + '/units/ping.json');
     return fetch(r);
