@@ -22,6 +22,7 @@ angular.module('bootleggerApp')
             for (var i = 0; i < $scope.tasks.length; i++) {
               // initialise state to be 'cancelled'. It will remain as error at the end if there are no tasks that match this task.
               $scope.tasks[i].state = 'cancelled';
+              $scope.tasks[i].state_progress = 0;
               // check each crowdflower task
               for (var j = 0; j < summary.data.length; j++) {
                 if ($scope.tasks[i].cf_job_id === summary.data[j].id) {
@@ -35,12 +36,15 @@ angular.module('bootleggerApp')
                   break;
                 case 'unordered':
                   $scope.tasks[i].state_tooltip = 'This job is currently waiting to be executed on Crowdflower.';
+                  $scope.tasks[i].state_progress = 10;
                   break;
                 case 'finished':
                   $scope.tasks[i].state_tooltip = 'This job has been successfully completed on Crowdflower.';
+                  $scope.tasks[i].state_progress = 100;
                   break;
                 case 'running':
                   $scope.tasks[i].state_tooltip = 'This job is currently in progress. Check back soon to see if has been completed!';
+                  $scope.tasks[i].state_progress = 50;
                   break;
               }
             }
