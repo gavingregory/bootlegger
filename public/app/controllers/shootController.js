@@ -1,5 +1,5 @@
 angular.module('bootleggerApp')
-.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, localStorage, $stateParams) {
+.controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, authFactory, localStorage, $stateParams) {
   $scope.sortBy = 'name';
   $scope.eventId = $stateParams.shoot_id;
   $scope.reverse = false;
@@ -14,6 +14,41 @@ angular.module('bootleggerApp')
     taskFactory.getTasks($stateParams.shoot_id)
       .success(function (tasks) {
         $scope.tasks = tasks;
+
+        // get task status from Crowdflower
+        authFactory.summary()
+          .then(function (summary) {
+            // for each task
+            for (var i = 0; i < $scope.tasks.length; i++) {
+              // initialise state to be 'cancelled'. It will remain as error at the end if there are no tasks that match this task.
+              $scope.tasks[i].state = 'cancelled';
+              // check each crowdflower task
+              for (var j = 0; j < summary.data.length; j++) {
+                if ($scope.tasks[i].cf_job_id === summary.data[j].id) {
+                  $scope.tasks[i].state = summary.data[j].state; break;
+                }
+              }
+              // create a tooltip for each type
+              switch ($scope.tasks[i].state) {
+                case 'cancelled':
+                  $scope.tasks[i].state_tooltip = 'This job has been cancelled from Crowdflower. No data is available.';
+                  break;
+                case 'unordered':
+                  $scope.tasks[i].state_tooltip = 'This job is currently waiting to be executed on Crowdflower.';
+                  break;
+                case 'finished':
+                  $scope.tasks[i].state_tooltip = 'This job has been successfully completed on Crowdflower.';
+                  break;
+                case 'running':
+                  $scope.tasks[i].state_tooltip = 'This job is currently in progress. Check back soon to see if has been completed!';
+                  break;
+              }
+            }
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);
@@ -45,6 +80,7 @@ angular.module('bootleggerApp')
       .finally(function () {
         $scope.loading--;
       });
+
   };
 
   init();
