@@ -39,6 +39,7 @@ angular.module('bootleggerApp')
     })
     .state('dashboard.home', {
       url: '/home',
+      controller: 'homeController',
       templateUrl: 'app/views/dashboard/home.html'
     })
     .state('dashboard.login', {
@@ -80,6 +81,6 @@ angular.module('bootleggerApp')
       templateUrl: 'app/views/dashboard/shoots/tasks/validation/create.html'
     });
 
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/dashboard/home');
 
   });

@@ -1,19 +1,20 @@
 var express = require('express')
   , router = express.Router({mergeParams: true})
   , params = require('../../config/params.js')
+  , crowdflower = require('../../services/crowdflower/Crowdflower')(params.cf_api)
   , bootlegger = require('../../services/bootlegger/bootlegger');
 
-//get current bootlegger session key
+// get current bootlegger session key
 router.get('/session', function (req, res) {
   res.json({session:req.session.sessionkey});
 });
 
-//initiate bootlegger auth
+// initiate bootlegger auth
 router.get('/auth', function (req, res) {
   res.redirect(params.bootlegger_api_url + '/api/auth/login?apikey=' + params.bootlegger_api_key);
 });
 
-//return endpoint for bootlegger returning session key
+// return endpoint for bootlegger returning session key
 router.get('/success', function (req, res) {
   req.session.sessionkey = req.query.session;
   req.session.save();
@@ -32,6 +33,12 @@ router.get('/profile', function (req, res) {
   bootlegger.getProfile(req.session.sessionkey)
     .then(function (data) { res.json(data.body); })
     .catch(function (err) { res.status(400).send(err); });
-})
+});
+
+router.get('/summary', function (req, res) {
+  crowdflower.getAllJobs()
+    .then(function (data) { res.json(JSON.parse(data.body)); })
+    .catch(function (err) { res.status(400).send(err); });
+});
 
 module.exports = router;

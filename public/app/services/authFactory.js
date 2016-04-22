@@ -25,6 +25,10 @@ angular.module('bootleggerApp')
       return $http.get('/api/v1/auth/profile');
     }
 
+    factory.summary = function () {
+      return $http.get('api/v1/auth/summary');
+    }
+
     return factory;
 
   });
