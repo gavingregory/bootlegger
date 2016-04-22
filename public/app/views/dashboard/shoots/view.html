@@ -50,7 +50,7 @@
                       <tr ng-repeat="task in tasks">
                         <td></td>
                         <td><a ui-sref="dashboard.task({shoot_id: $parent.eventId, task_id: task._id})">{{task.name}}</a></td>
-                        <td><span data-toggle="tooltip" title="{{task.state_tooltip}}" class="label label-{{task.state === 'finished' ? 'success' : 'primary' }}">{{ task.state }}</span></td>
+                        <td><span data-toggle="tooltip" title="{{task.state_tooltip}}" class="label label-{{task.state === 'finished' ? 'success' : task.state === 'unordered' ? 'primary' : task.state === 'cancelled' ? 'danger' : 'warning' }}">{{ task.state }}</span></td>
                       </tr>
                     </tbody>
                   </table>
