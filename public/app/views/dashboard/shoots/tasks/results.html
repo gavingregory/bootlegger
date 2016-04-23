@@ -1,8 +1,13 @@
 <div class="row">
-  <div class="col-md-10 col-md-offset-1">
 
-    <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-options="options" width="523" height="261" style="width: 523px; height: 261px"></canvas>           
+  <div class="loader" ng-show="loading">Loading...</div>
+  <div class="col-md-10 col-md-offset-1" ng-hide="loading">
 
+    <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-options="options" chart-colours="colours" width="523" height="80" style="width: 523px; height: 80px"></canvas>
+
+    <button type="button" class="btn btn-primary" ng-click="prevPage()">Prev Page</button>
+    <span>Current Page: {{page}}</span>
+    <button type="button" class="btn btn-primary" ng-click="nextPage()">Next Page</button>
   </div>
 
 </div>

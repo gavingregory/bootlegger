@@ -28,23 +28,17 @@ var upload = multer({
 
 // get task
 router.get('/', function(req, res) {
-  Task.find({
-    shoot_id: req.params.shoot_id
-  }, function(err, data) {
-    if (err) {
-      return res.send(err);
-    }
+  Task.find({ shoot_id: req.params.shoot_id }, function(err, data) {
+    if (err) return res.send(err);
     return res.send(data);
   });
 });
 
 // post a new task
 router.post('/', function(req, res) {
-
   var type = req.body.type; // 'validation' or 'addition'
   var t = new Task(req.body);
   var videos = {};
-
   // GET SHOOT FROM BOOTLEGGER
   bootlegger.getShoot(req.session.sessionkey, req.params.shoot_id)
     .then(function(data) {
@@ -255,6 +249,19 @@ router.post('/:task_id/upload-image', upload.array('file'), function(req, res) {
   });
 })
 
+// get results
+router.get('/:task_id/results/:page', function (req, res) {
+  crowdflower.getResults(req.params.task_id, req.params.page)
+    .then(function (data) {
+      return res.send(JSON.parse(data.body));
+    })
+    .catch(function (err) {
+      console.log(err);
+      return res.status(400).send(err);
+    });
+});
+
+// get a single task
 router.get('/:task_id', function(req, res) {
   Task.findOne({
     shoot_id: req.params.shoot_id,
@@ -273,6 +280,24 @@ router.get('/:task_id', function(req, res) {
         return res.status(400).send(err);
       });
   })
+});
+
+// delete a task
+router.delete('/:task_id', function (req, res) {
+  //FBFriendModel.find({ id:333 }).remove( callback );
+  Task.find({_id : req.params.task_id }, function (err, task) {
+    if (err) return res.status(400).send(err);
+    crowdflower.deleteJob(task[0].cf_job_id)
+      .then(function (response) {
+        Task.remove({_id: task._id }, function (err) {
+          if (err) return res.status(400).send(err);
+          return res.json({status: 'success'});
+        });
+      }).catch (function (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      });
+  });
 });
 
 module.exports = router;

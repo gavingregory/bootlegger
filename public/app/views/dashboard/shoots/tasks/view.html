@@ -91,7 +91,16 @@
       </div>
     </div>
 
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Delete</div>
+      <div class="panel-body">
+        <p ng-hide="cf.completed">Warning: this will delete all traces of the job from both the server and Crowdflower. This will not affect the Bootlegger shoot in any way.</p>
+        <button type="button" ng-click="deleteTask(task._id)" class="btn btn-warning btn-sm">Delete</button>
+      </div>
+    </div>
+
   </div> <!--#/col-md-8-->
+
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading"><img src="/img/crowdflower.png" width="32" height="26" />&nbsp;Crowdflower</div>

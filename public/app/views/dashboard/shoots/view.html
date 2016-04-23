@@ -55,7 +55,7 @@
                             </div>
                           </div>
                         </td>
-                        <td><a ui-sref="dashboard.task({shoot_id: $parent.eventId, task_id: task._id})">{{task.name}}</a></td>
+                        <td><a ui-sref="dashboard.task({shoot_id: $parent.eventId, task_id: task._id})">{{task.name}}</a><br/>{{task._id}}</td>
                         <td><span data-toggle="tooltip" title="{{task.state_tooltip}}" class="label label-{{task.state === 'finished' ? 'success' : task.state === 'unordered' ? 'primary' : task.state === 'cancelled' ? 'danger' : 'warning' }}">{{ task.state }}</span></td>
                       </tr>
                     </tbody>

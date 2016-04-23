@@ -100,6 +100,7 @@ module.exports = function (k) {
    * @return {Object}
    */
   var deleteJob = function (jobId) {
+    //https://api.crowdflower.com/v1/jobs/900318.json?key=vcHXAQLo4Q4LvMv4Ks8X
     var r = new RequestOptions('jobs/' + jobId + '.json');
     r.options.method = METHOD_DELETE;
     return fetch(r);
@@ -188,7 +189,6 @@ module.exports = function (k) {
    * Note, this does not remove a job, just cancels a RUNNING job
    * Job must be running to be cancelled
    *
-   * @param {String} key
    * @param {String} jobId
    * @return {Object}
    */
@@ -197,6 +197,19 @@ module.exports = function (k) {
     var r = new RequestOptions('jobs/' + jobId + '/cancel.json');
     return fetch(r);
   };
+
+  /**
+   * Gets the results of the job.
+   * @param {String} jobId
+   * @param {Number} page
+   * @return {Object}
+   */
+  var getResults = function (jobId, page) {
+    //https://api.crowdflower.com/v1/jobs/{job_id}/judgments.json?key={api_key}&page={1}
+    var r = new RequestOptions('jobs/' + jobId + '/judgments.json');
+    r.options.params.page = page;
+    return fetch(r);
+  }
 
   /**
    * Returns a requestify promise (use .then(resp) and .catch(err) on the
@@ -225,7 +238,8 @@ module.exports = function (k) {
     pingJob: pingJob,
     getJob: getJob,
     pingUnits: pingUnits,
-    cancelJob: cancelJob
+    cancelJob: cancelJob,
+    getResults: getResults
   };
   return api;
 };
