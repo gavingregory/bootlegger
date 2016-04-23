@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
           .catch(function(response) {
             if (response.code === 302) {
               console.log('successful response');
-              v.path = response.headers.location;
+              v.path = qs.escape(response.headers.location);
             } else
               console.log('We did not get a successful response from bootlegger: ' + JSON.stringify(response) + '\nfor url: ' + v.id);
           });
