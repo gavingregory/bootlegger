@@ -26,7 +26,6 @@ router.get('/video/:task_id/:video_id/:start/:end', function (req, res) {
 
       for (var i = 0; i < data.jobs.length; i++) {
         if (data.jobs[i].video.bootlegger_id === req.params.video_id) {
-          console.log('secure url: ' + data.jobs[i].video.path);
           return res.render('video.html', {
             start_time: req.params.start,
             end_time: req.params.end,

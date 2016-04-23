@@ -82,7 +82,7 @@ router.post('/', function(req, res) {
       // FETCH TEMPLATES FROM BOOTLEGGER
       var templates = {};
       var fetchTemplate = bootlegger.getTemplates(req.session.sessionkey)
-        .then(function(data) { templates = JSON.parse(data.body); console.log(templates); })
+        .then(function(data) { templates = JSON.parse(data.body); })
         .catch(function(err) { res.status(err.code).send(err); });
 
       // also add templates to the promises array
@@ -100,7 +100,6 @@ router.post('/', function(req, res) {
 
             for (j = 0; j < result.segments.length; j++) {
               var path = videos[i].path;
-              console.log('i: ' + i + ', VIDEOID: ' + videos[i].id + ', TEMPLATE ID: ' + videos[i].meta.shot_ex.id);
               var o = {
                 id: id++,
                 video: {
@@ -152,16 +151,11 @@ router.post('/', function(req, res) {
               var template_count = 1; // start at 1, as the first one is always the ACTUAL template
               var rng = Math.floor(Math.random() * 4); // rng between 0 ~ 3
               var template_index = 0;
-
-              console.log('searching for ' + data.jobs[i].video.template_url);
               
               // find the index in the array of TEMPLATES for the actual selected template
               for (var template_index = 0; template_index < templates.length; template_index++)
                 if (templates[template_index].image === data.jobs[i].video.template_url) { break; console.log('found index!'); }// found the index hopefully
               
-              console.log('template index = ' + template_index);
-              console.log('templates[template_index].id = ' + templates[template_index].id);
-
                 // the actual template
               row['template_' + rng + '_id'] = data.jobs[i].video.template_id;
               row['template_' + rng + '_img'] = data.jobs[i].video.template_url;
