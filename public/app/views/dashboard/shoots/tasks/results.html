@@ -3,7 +3,19 @@
   <div class="loader" ng-show="loading">Loading...</div>
   <div class="col-md-10 col-md-offset-1" ng-hide="loading">
 
-    <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-options="options" chart-colours="colours" width="523" height="80" style="width: 523px; height: 80px"></canvas>
+    <canvas
+    	id="bar"
+    	class="chart chart-bar"
+    	chart-data="data"
+    	chart-labels="labels"
+    	chart-options="options"
+    	chart-colours="colours"
+    	chart-legend="true"
+    	chart-series="series"
+    	width="523"
+    	height="80"
+    	style="width: 523px; height: 80px">
+    </canvas>
 
     <button type="button" class="btn btn-primary" ng-click="prevPage()">Prev Page</button>
     <span>Current Page: {{page}}</span>
