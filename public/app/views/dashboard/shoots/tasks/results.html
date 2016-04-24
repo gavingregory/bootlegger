@@ -20,6 +20,35 @@
     <button type="button" class="btn btn-primary" ng-click="prevPage()">Prev Page</button>
     <span>Current Page: {{page}}</span>
     <button type="button" class="btn btn-primary" ng-click="nextPage()">Next Page</button>
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            0
+          </th>
+          <th>
+            1
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in parsedResults | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td ng-repeat="col in row">
+            {{col}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+          Previous
+        </button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <button ng-disabled="currentPage >= task.jobs.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+          Next
+        </button>
+
   </div>
 
 </div>

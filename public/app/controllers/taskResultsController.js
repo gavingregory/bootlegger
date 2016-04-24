@@ -2,6 +2,14 @@ angular.module('bootleggerApp')
 
 .controller('taskResultsController', function ($scope, $log, taskFactory, $stateParams, $uibModal) {
 
+  // pagination
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.parsedResults.length/$scope.pageSize);                
+    }
+  // end pagination
+
   $scope.page = 1;
 
   $scope.nextPage = function () {
@@ -61,9 +69,9 @@ angular.module('bootleggerApp')
 
         // fill chart
         $scope.labels.push(o.judgment_id);
-        $scope.data[0].push(o.correct_answers / o.total_answers * 100);
-        $scope.data[1].push((o.total_answers - o.correct_answers) / o.total_answers * 100);
-        $scope.data[2].push(o.video_fault / o.total_answers * 100);
+        $scope.data[0].push(o.correct_answers / o.total_answers * 100); // correct
+        $scope.data[1].push((o.total_answers - o.correct_answers) / o.total_answers * 100); // incorrect
+        $scope.data[2].push(o.video_fault / o.total_answers * 100); // video fault
         // set up series labels
         $scope.series = ['Correct', 'Incorrect', 'Video would not play'];
       });
@@ -100,9 +108,9 @@ angular.module('bootleggerApp')
 
         // fill chart
         $scope.labels.push(o.judgment_id);
-        $scope.data[0].push(o.total_true / o.total_answers * 100);
-        $scope.data[1].push(o.total_false / o.total_answers * 100);
-        $scope.data[2].push(o.total_na / o.total_answers * 100);
+        $scope.data[0].push(o.total_true / o.total_answers * 100); // true
+        $scope.data[1].push(o.total_false / o.total_answers * 100); // false
+        $scope.data[2].push(o.total_na / o.total_answers * 100); // video fault
 
         // set up series labels
         $scope.series = ['Located', 'Not located', 'Video would not play'];
@@ -151,23 +159,23 @@ angular.module('bootleggerApp')
     $scope.data = [[], [], []];
 
     $scope.colours = [{ 
-            "fillColor": "rgba(112, 108, 224, 1)",
-            "strokeColor": "rgba(112, 108, 224, 1)",
-            "pointColor": "rgba(112, 108, 224, 1)",
+            "fillColor":   "rgba(153, 255, 0, 1)",
+            "strokeColor": "rgba(153, 255, 0, 1)",
+            "pointColor":  "rgba(153, 255, 0, 1)",
             "pointStrokeColor": "#fff",
             "pointHighlightFill": "#fff",
             "pointHighlightStroke": "rgba(151,187,205,0.8)"
           },{ // default
-            "fillColor": "rgba(224, 108, 112, 1)",
-            "strokeColor": "rgba(207,100,103,1)",
-            "pointColor": "rgba(220,220,220,1)",
+            "fillColor":   "rgba(204, 0, 0, 1)",
+            "strokeColor": "rgba(204, 0, 0, 1)",
+            "pointColor":  "rgba(204, 0, 0, 1)",
             "pointStrokeColor": "#fff",
             "pointHighlightFill": "#fff",
             "pointHighlightStroke": "rgba(151,187,205,0.8)"
           },{ 
-            "fillColor": "rgba(112, 224, 108, 1)",
-            "strokeColor": "rgba(112, 224, 108, 1)",
-            "pointColor": "rgba(112, 224, 108, 1)",
+            "fillColor":   "rgba(255, 204, 0, 1)",
+            "strokeColor": "rgba(255, 204, 0, 1)",
+            "pointColor":  "rgba(255, 204, 0, 1)",
             "pointStrokeColor": "#fff",
             "pointHighlightFill": "#fff",
             "pointHighlightStroke": "rgba(151,187,205,0.8)"
