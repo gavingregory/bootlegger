@@ -42,7 +42,7 @@ angular.module('bootleggerApp')
         o.video_fault = 0;
         for (var j = 0; j < $scope.results[key].template.res.length; j++) {
           if ($scope.results[key].template.res[j] == o.correct_template) { o.correct_answers++; }
-          if ($scope.results[key].template.res[j] == -1) { o.video_fault++; }
+          if ($scope.results[key].template.res[j] == -2) { o.video_fault++; }
           o.total_answers++;
         }
 
