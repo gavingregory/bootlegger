@@ -8,7 +8,7 @@
         <div class="col-md-8">
           <!-- Results Panel (left hand side) -->
           <div class="row">
-            <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse" >
+            <div class="col-md-4" ng-repeat="shot in shoot | filter:shootFilter | orderBy:sortBy:reverse | startFrom:currentPage*pageSize | limitTo:pageSize" >
               <div style="background-color: #fafafa; margin: 3px">
                 <div class="row">
                   <div class="col-md-6">
@@ -23,6 +23,17 @@
                 </div>
               </div>
             </div> <!--#/col-md-4-->
+            <div class="row">
+              <div class="col-md-12">
+                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                  Previous
+                </button>
+                {{currentPage+1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= shoot.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                  Next
+                </button>  
+              </div>
+            </div>
           </div> <!--#/row-->
         </div> <!--#/col-md-8-->
         <div class="col-md-4">

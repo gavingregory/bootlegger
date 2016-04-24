@@ -1,5 +1,14 @@
 angular.module('bootleggerApp')
 .controller('shootController', function ($scope, $log, shootFactory, taskTemplateFactory, taskFactory, authFactory, localStorage, $stateParams) {
+
+  // pagination
+    $scope.currentPage = 0;
+    $scope.pageSize = 18;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.shoot.length/$scope.pageSize);                
+    }
+  // end pagination
+
   $scope.sortBy = 'name';
   $scope.eventId = $stateParams.shoot_id;
   $scope.reverse = false;

@@ -1,4 +1,5 @@
 angular.module('bootleggerApp')
+
 .controller('taskResultsController', function ($scope, $log, taskFactory, $stateParams, $uibModal) {
 
   $scope.page = 1;
@@ -17,9 +18,18 @@ angular.module('bootleggerApp')
     $scope.parsedResults = [];
     $scope.results = {};
 
+    // determine the field name of the results array, because CF for SOME reason ... generates a non static field name?!
+    var determineFieldName = function () {
+      for (key in $scope.results) {
+        for (innerKey in $scope.results[key]) {
+          if ($scope.results[key][innerKey].res != null) { return innerKey; }
+        }
+      }
+    }
+
     // parse the result set and produce some useful information or something
-    var parseResults = function () {
-      
+    var parseValidationResults = function () {
+
       // Crowdflower nicely return the results as key value pairs in an object, NOT an array
       // Sooooooooo ... we need to iterate over each key
       Object.keys($scope.results).forEach(function (key) {
@@ -57,6 +67,11 @@ angular.module('bootleggerApp')
       });
     };
 
+    var parseAdditionResults = function () {
+      var field = determineFieldName();
+      console.log(field);
+    }
+
     $scope.loading = 2;
     $scope.task = {};
     $scope.cf = {};
@@ -69,7 +84,11 @@ angular.module('bootleggerApp')
       taskFactory.getResults($stateParams.shoot_id, task.data.cf_job_id, $scope.page)
       .success(function (response) {
         $scope.results = response;
-        parseResults();
+        if ($scope.task.type === 'validation') {
+          parseValidationResults(); // this is a templated result set
+        } else { // TODO: check for type as addition here too
+          parseAdditionResults(); // this is an addition result set
+        }
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);

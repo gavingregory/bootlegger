@@ -1,6 +1,14 @@
 angular.module('bootleggerApp')
 .controller('taskViewController', function ($window, $scope, $log, taskFactory, $stateParams, $uibModal) {
 
+  // pagination
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.task.jobs.length/$scope.pageSize);                
+    }
+  // end pagination
+
   $scope.loading = 1;
   $scope.shootId = $stateParams.shoot_id;
   $scope.task = {};
