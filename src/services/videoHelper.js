@@ -2,11 +2,14 @@ var moment = require('moment');
 
 module.exports = {
 
-   // distributeVideoIndexes takes a viideo clip length, the desired segment
-   // size and provides you the total segments and the start/end time in MS
-   // for each segment
-   // callback with object:
-   // { count: 2, segments: [{start: 0 =, end: 5000 }, ... ]}
+  /**
+   * Distribute Video Indexes segments a video into desired segment sizes.
+   * Once completed, it calls the callback function with the following object:
+   * { count: 2, segments: [{start: 0, end: 5000 }], ... }
+   * @param {Number} clip_length
+   * @param {Number} seg_size
+   * @param {Function(Object)} cb
+   */
   distributeVideoIndexes : function (clip_length, seg_size, cb) {
     var ms;
     if (typeof clip_length == 'number')
@@ -30,9 +33,21 @@ module.exports = {
     }
     cb({count: rounded_segments, segments: segments});
   },
+
+  /**
+   * Converts seconds to milliseconds
+   * @param {Number} seconds
+   * @return {Number}
+   */
   secondsToMillis : function (seconds) {
     return seconds * 1000;
   },
+
+  /**
+   * Converts moment duration to milliseconds
+   * @param {Object} duration
+   * @return {Number}
+   */
   durationToMillis : function (duration) {
     return moment.duration(duration, "HH:MM:SS.SSSS").asMilliseconds();
   }
