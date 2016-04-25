@@ -1,13 +1,15 @@
 var requestify = require('requestify'),
-		params 		 = require('../../config/params'),
-  	qlimit 		 = require('qlimit'), // limit concurrent promises
-  	limit 		 = qlimit(10);          // to 10
+	params     = require('../../config/params'),
+  	qlimit     = require('qlimit'), // limit concurrent promises
+  	limit      = qlimit(10);          // to 10
 
 module.exports = {
 
 	/**
 	 * Gets a 'secure URL' from the Bootlegger API
-	 * returns a promise
+	 * @param   {String} session_key
+	 * @param   {String} video_id
+	 * @returns {Object} a promise object
 	 */
 	getSecureVideoUrl : limit(function (session_key, video_id) {
 		console.log('BOOTLEGGER: SECURE URL FUNCTION');
@@ -16,7 +18,9 @@ module.exports = {
 
 	/**
 	 * Gets a shoot from the Bootlegger API
-	 * returns a promise
+	 * @param   {String} session_key
+	 * @param   {String} video_id
+	 * @returns {Object} a promise object
 	 */
 	getShoot : limit(function (session_key, video_id) {
 		console.log('BOOTLEGGER: GET SHOOT FUNCTION');
@@ -25,7 +29,8 @@ module.exports = {
 
 	/**
 	 * Gets array of Shoots from the Bootlegger API
-	 * returns a promise
+	 * @param   {String} session_key
+	 * @returns {Object} a promise object
 	 */
 	getShoots : limit(function (session_key) {
 		console.log('BOOTLEGGER: GET SHOOTS FUNCTION');
@@ -34,7 +39,8 @@ module.exports = {
 
 	/**
 	 * Gets the list of available templates from the Bootlegger API
-	 * returns a promise
+	 * @param   {String} session_key
+	 * @returns {Object} a promise object
 	 */
 	getTemplates : limit(function (session_key) {
 		console.log('BOOTLEGGER: GET TEMPLATE FUNCTION');
@@ -43,7 +49,8 @@ module.exports = {
 
 	/**
 	 * Gets the profile of the currently logged in user from the Bootlegger API
-	 * returns a promise
+	 * @param   {String} session_key
+	 * @returns {Object} a promise object
 	 */
 	getProfile : limit(function (session_key) {
 		console.log('BOOTLEGGER: GET PROFILE');
