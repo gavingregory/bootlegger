@@ -101,7 +101,7 @@
       <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Delete</div>
       <div class="panel-body">
         <p ng-hide="cf.completed">Warning: this will delete all traces of the job from both the server and Crowdflower. This will not affect the Bootlegger shoot in any way.</p>
-        <button type="button" ng-click="deleteTask(task._id)" class="btn btn-warning btn-sm">Delete</button>
+        <a type="button" ng-click="deleteTask(task._id)" class="btn btn-warning btn-sm" confirm-click="Are you sure you wish to proceed?">Delete</a>
       </div>
     </div>
 
