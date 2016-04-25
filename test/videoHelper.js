@@ -69,7 +69,9 @@ describe('videoHelper#distributeVideoIndexes', function () {
     });
     it('should have a final segment at the total ms of video file', function () {
       videoHelper.distributeVideoIndexes(10,5, function (result) {
-        assert.equal(videoHelper.secondsToMillis(10), result.segments[result.segments.length -1].end);
+        var result = result.segments[result.segments.length -1].end;
+        assert.isAtLeast(result, videoHelper.secondsToMillis(10) - 1);
+        assert.isAtMost(result, videoHelper.secondsToMillis(10) + 1);
       });
     });
     it('should not overlap the time between segments', function () {
