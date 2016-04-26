@@ -19,11 +19,13 @@
       </p>
     </div>
     <div class="col-md-2">
-      <h4>Summary</h4>
-      <p ng-show="summary">
-        You currently have <span class="text-primary">{{summary.tasks_running}}</span> tasks running, <span class="text-success">{{summary.tasks_finished}}</span> completed tasks and <span class="text-danger">{{summary.tasks_unknown}}</span> idle tasks.
-      </p>
-      <img src="/img/spinner.gif" alt="Loading .." ng-hide="summary" />
+      <div ng-show="loggedIn">
+        <h4>Summary</h4>
+        <p ng-show="summary">
+          You currently have <span class="text-primary">{{summary.tasks_running}}</span> tasks running, <span class="text-success">{{summary.tasks_finished}}</span> completed tasks and <span class="text-danger">{{summary.tasks_unknown}}</span> idle tasks.
+        </p>
+        <img src="/img/spinner.gif" alt="Loading .." ng-hide="summary" />
+      </div>
     </div>
   </div>
   </div>
