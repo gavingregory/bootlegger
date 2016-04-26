@@ -57,11 +57,24 @@ angular.module('bootleggerApp')
         // calculate statistics on correct answers
         o.total_answers = 0;
         o.correct_answers = 0;
+	o.template0 = 0;
+	o.template1 = 0;
+	o.template2 = 0;
+	o.template3 = 0;
         o.video_fault = 0;
         for (var j = 0; j < $scope.results[key].template.res.length; j++) {
           if ($scope.results[key].template.res[j] == o.correct_template) { o.correct_answers++; }
           if ($scope.results[key].template.res[j] == -2) { o.video_fault++; }
+          o['template'+$scope.results[key].template.res[j]]++;
           o.total_answers++;
+        }
+
+        // swap templates so that the correct is at 0, better for the charts!
+        if (o.correct_template != 0) {
+          var t = o.template0;
+          o.template0 = o['template'+o.correct_template];
+          o['template'+o.correct_template] = t;
+          o.correct_template = 0;
         }
 
         // push object to array
@@ -76,6 +89,45 @@ angular.module('bootleggerApp')
         $scope.series = ['Correct', 'Incorrect', 'Video would not play'];
       });
     };
+
+    // keyword type results
+    var parseKeywordResults = function () {
+      Object.keys($scope.results).forEach(function (key) {
+
+        // create default object
+        var o = {
+          judgment_id: $scope.results[key].id,
+          video_index: $scope.results[key].video_index,
+          video_start: $scope.results[key].video_start,
+          video_end: $scope.results[key].video_end,
+          video_length: $scope.results[key].video_length,
+          keywords: ''
+        };
+
+        for (var i = 0; i < $scope.results[key].first_keyword.length; i++)
+          o.keywords += $scope.results[key].first_keyword[i] + ' ';
+        for (var i = 0; i < $scope.results[key].second_keyword.length; i++)
+          o.keywords += $scope.results[key].second_keyword[i] + ' ';
+        for (var i = 0; i < $scope.results[key].third_keyword.length; i++)
+          o.keywords += $scope.results[key].third_keyword[i] + ' ';
+        for (var i = 0; i < $scope.results[key].fourth_keyword.length; i++)
+          o.keywords += $scope.results[key].fourth_keyword[i] + ' ';
+        for (var i = 0; i < $scope.results[key].fifth_keyword.length; i++)
+          o.keywords += $scope.results[key].fifth_keyword[i] + ' ';
+
+      // push object to array
+      $scope.parsedResults.push(o);
+
+      // fill chart
+      $scope.labels.push(o.judgment_id);
+      $scope.data[0].push(o.correct_answers / o.total_answers * 100); // correct
+      $scope.data[1].push((o.total_answers - o.correct_answers) / o.total_answers * 100); // incorrect
+      $scope.data[2].push(o.video_fault / o.total_answers * 100); // video fault
+      // set up series labels
+      $scope.series = ['Correct', 'Incorrect', 'Video would not play'];
+      
+      });
+    }
 
     var parseAdditionResults = function () {
       var field = determineFieldName() // this should be the random RESULT fieldname;
@@ -130,11 +182,16 @@ angular.module('bootleggerApp')
       taskFactory.getResults($stateParams.shoot_id, task.data.cf_job_id, $scope.page)
       .success(function (response) {
         $scope.results = response;
+        console.log($scope.task.type);
         if ($scope.task.type === 'validation') {
           parseValidationResults(); // this is a templated result set
-        } else { // TODO: check for type as addition here too
+        } else if ($scope.task.type === 'addition') { // TODO: check for type as addition here too
           parseAdditionResults(); // this is an addition result set
-        }
+        } else if ($scope.task.type === 'keywords') {
+          parseKeywordResults();
+        } else {
+	  parseAdditionResults();
+	}
       })
       .error(function (data, status, headers, config) {
         $log.log(data.error + ' ' + status);

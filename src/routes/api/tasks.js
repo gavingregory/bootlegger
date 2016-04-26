@@ -285,11 +285,12 @@ router.get('/:task_id', function(req, res) {
 // delete a task
 router.delete('/:task_id', function (req, res) {
   //FBFriendModel.find({ id:333 }).remove( callback );
-  Task.find({_id : req.params.task_id }, function (err, task) {
+  Task.find({ _id : req.params.task_id }, function (err, task) {
     if (err) return res.status(400).send(err);
     crowdflower.deleteJob(task[0].cf_job_id)
       .then(function (response) {
-        Task.remove({_id: task._id }, function (err) {
+        console.log(task._id);
+        Task.findByIdAndRemove(req.params.task_id, function (err) {
           if (err) return res.status(400).send(err);
           return res.json({status: 'success'});
         });
