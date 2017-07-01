@@ -31,7 +31,7 @@ store.on('error', function (error) {
 })
 
 app.use(session({
-  secret: 'lkashdklajsdklajsdkljaskldjaklsdjaklsjd',
+  secret: 'secret',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
   },
@@ -61,10 +61,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRoute);
-// app.get('/dbseed', function (req, res) {
-//     seed.seed();
-//     return res.send('successful');
-// });
 app.use('/crowd', crowdRoute);
 app.use('/api/v1', apiRoute);
 
